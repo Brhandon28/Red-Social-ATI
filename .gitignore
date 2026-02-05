@@ -1,0 +1,31 @@
+# --- Python ---
+__pycache__/
+*.py[cod]
+*$py.class
+.env
+.venv
+env/
+venv/
+ENV/
+
+# --- Django ---
+db.sqlite3
+db.sqlite3-journal
+media/
+staticfiles/
+static/
+
+# --- WSL / Sistema ---
+.DS_Store
+Thumbs.db
+.ipynb_checkpoints
+
+# --- Editores (VS Code, PyCharm) ---
+.vscode/
+.idea/
+*.swp
+*.bak
+
+# --- Otros ---
+*.log
+.python-version
