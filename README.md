@@ -53,5 +53,5 @@ Este proyecto consiste en el desarrollo de una **Red Social** diseñada específ
 ### ⚠️ Antes de empezar a programar:
 Por favor revisa nuestras normas de contribución:
 
-* [📘 Guía de Estilo y Buenas Prácticas](STYLEGUIDE.md)
-* [🐙 Política de Git y Flujo de Trabajo](GITFLOW.md)
+* [📘 Guía de Estilo y Buenas Prácticas](docs/STYLEGUIDE.md)
+* [🐙 Política de Git y Flujo de Trabajo](docs/GITFLOW.md)
