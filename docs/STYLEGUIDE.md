@@ -77,3 +77,4 @@ Una tarea se considera terminada solo si:
 2. [ ] Funciona correctamente en el entorno local (Docker).
 3. [ ] No rompe funcionalidades previas.
 4. [ ] Ha sido fusionada (merged) en la rama `develop`.
+5. [ ] Para cumpliar con "Mobile Fisrt" ninguna issue se considera terminada (done) si no se ve bien en dispositivos moviles (adaptabilidad)
