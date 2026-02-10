@@ -1,0 +1,30 @@
+services:
+  # 1. AGREGAMOS el servicio de Base de Datos
+  db:
+    image: mysql:8.4
+    volumes:
+      - mysql_data:/var/lib/mysql
+    environment:
+      MYSQL_DATABASE: socialit_db
+      MYSQL_USER: socialit_user
+      MYSQL_PASSWORD: socialit_pass
+      MYSQL_ROOT_PASSWORD: root_pass
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      interval: 5s
+      retries: 5
+
+  # 2. SOBREESCRIBIMOS el servicio Web
+  web:
+    environment:
+      - DB_HOST=db
+      - DB_NAME=socialit_db
+      - DB_USER=socialit_user
+      - DB_PASSWORD=socialit_pass
+      - DJANGO_DEBUG=False  # Modo Producción
+    depends_on:
+      db:
+        condition: service_healthy
+
+volumes:
+  mysql_data:
