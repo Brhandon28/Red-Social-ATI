@@ -133,7 +133,7 @@ docker compose up --build
 #### Pasos para levantar el entorno (Producción)
 
 ```bash
-   docker compose -f docker-compose.yml -f docker-compose.prod.yml up --build
+docker compose -f docker-compose.yml -f docker-compose.prod.yml up --build
 ```
 
 Integrantes del equipo:
@@ -147,6 +147,15 @@ Integrantes del equipo:
 - [Yunior Moreno](https://github.com/yuunichi) - Q.A.
 
 ## 📚 Documentación y Normas
+
+### Fase Inception
+* **Modelo del Dominio**
+<img width="5360" height="5525" alt="Modelo de Dominio - ATI (1)" src="https://github.com/user-attachments/assets/66793797-bb1f-42c6-8637-374e6971becd" />
+
+
+* **Diagrama de Casos de Uso**
+<img width="9081" height="12651" alt="SOCIALIT - UC" src="https://github.com/user-attachments/assets/bdbfd35e-e49c-4f0f-a6e6-511778c73de2" />
+
 
 ### ⚠️ Antes de empezar a programar:
 Por favor revisa nuestras normas de contribución:
