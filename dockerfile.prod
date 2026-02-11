@@ -1,0 +1,39 @@
+FROM python:3.13.2-slim
+
+WORKDIR /app
+
+# Instala Apache, mod_wsgi y herramientas necesarias
+RUN apt-get update && apt-get install -y \
+    apache2 \
+    libapache2-mod-wsgi-py3 \
+    gcc \
+    pkg-config \
+    default-libmysqlclient-dev \
+    && rm -rf /var/lib/apt/lists/*
+
+# Copia e instala dependencias Python
+COPY requirements.txt .
+RUN pip install --no-cache-dir -r requirements.txt
+
+# Copia el código de la aplicación
+COPY . .
+
+# Configuración de Apache
+COPY apache/django.conf /etc/apache2/sites-available/
+RUN a2ensite django.conf && a2dissite 000-default.conf
+
+# Variables de entorno (se sobrescribirán en docker-compose)
+ENV DJANGO_DB_ENGINE=mysql
+ENV DJANGO_DB_NAME=socialit_prod
+ENV DJANGO_DB_USER=socialit_user
+ENV DJANGO_DB_PASSWORD=socialit_pass
+ENV DJANGO_DB_HOST=db
+ENV DJANGO_DB_PORT=3306
+
+# Script de entrada: migraciones + arranque de Apache
+COPY entrypoint.sh /entrypoint.sh
+RUN chmod +x /entrypoint.sh
+
+EXPOSE 80
+
+CMD ["/entrypoint.sh"]
