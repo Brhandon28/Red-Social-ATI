@@ -1,32 +1,5 @@
 services:
-  # --- CONTENEDOR 1: DJANGO ---
   web:
     build: .
-    # Comando que copia los estáticos y arranca el servidor
-    command: sh -c "python manage.py collectstatic --noinput && python manage.py runserver 0.0.0.0:8000"
-    volumes:
-      - .:/app
-      # Volumen compartido para que Apache vea los archivos de Django
-      - static-data:/vol/static
-    expose:
-      - "8000"
-    environment:
-      - DJANGO_SETTINGS_MODULE=socialit.settings
-      - DJANGO_DEBUG=True  # Modo Desarrollo
-
-  # --- CONTENEDOR 2: APACHE ---
-  apache:
-    image: httpd:2.4
-    volumes:
-      # Inyectamos nuestra configuración
-      - ./apache/apache.conf:/usr/local/apache2/conf/httpd.conf
-      # Conectamos el volumen de estáticos
-      - static-data:/vol/static
     ports:
-      # Entrada por el 8080 de tu PC
-      - "8080:80"
-    depends_on:
-      - web
-
-volumes:
-  static-data:
+      - "8000:8000"
