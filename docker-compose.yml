@@ -3,3 +3,11 @@ services:
     build: .
     ports:
       - "8000:8000"
+  apache:
+    image: httpd:2.4
+    ports:
+      - "8080:80"
+    volumes:
+      - ./apache/apache.conf:/usr/local/apache2/conf/httpd.conf
+    depends_on:
+      - web
