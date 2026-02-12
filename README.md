@@ -75,7 +75,7 @@ Este proyecto utiliza **Docker** para garantizar que el entorno de desarrollo se
 * [Docker Engine](https://docs.docker.com/get-docker/)
 * [Docker Compose](https://docs.docker.com/compose/install/)
 
-#### Pasos para levantar el entorno
+#### Pasos para levantar el entorno (Desarrollo)
 
 1. **Clonar el repositorio:**
    ```bash
@@ -88,14 +88,14 @@ Este proyecto utiliza **Docker** para garantizar que el entorno de desarrollo se
 2. **Construir y levantar los contenedores:**
 Este comando descargará las imágenes necesarias, instalará las dependencias definidas en el `Dockerfile` y levantará el servidor de desarrollo.
    ```bash
-   docker-compose up --build
+   docker compose up --build
    ```
 
 
 3. **Aplicar migraciones (Base de Datos):**
 Una vez que el contenedor esté corriendo, abre una nueva terminal y ejecuta las migraciones para inicializar la base de datos SQLite:
    ```bash
-   docker-compose exec web python manage.py migrate
+   docker compose exec web python manage.py migrate
 
    ```
 
@@ -103,7 +103,7 @@ Una vez que el contenedor esté corriendo, abre una nueva terminal y ejecuta las
 4. **Crear un superusuario (Admin):**
 Para acceder al panel de administración de Django:
    ```bash
-   docker-compose exec web python manage.py createsuperuser
+   docker compose exec web python manage.py createsuperuser
 
    ```
 
@@ -118,7 +118,7 @@ Para acceder al panel de administración de Django:
 
 * **Detener el servidor:** Presiona `Ctrl + C` en la terminal o ejecuta:
 ```bash
-docker-compose down
+docker compose down
 
 ```
 
@@ -126,7 +126,13 @@ docker-compose down
 * **Instalar una nueva dependencia:**
 Si agregas una librería a `requirements.txt`, necesitas reconstruir la imagen:
 ```bash
-docker-compose up --build
+docker compose up --build
+
+```
+
+#### Pasos para levantar el entorno (Produccion)
+```bash
+docker compose -f docker-compose.prod.yml up --build
 
 ```
 

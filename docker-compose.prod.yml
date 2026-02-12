@@ -1,0 +1,40 @@
+services:
+  db:
+    image: mysql:8.0
+    container_name: socialit_mysql
+    restart: unless-stopped
+    environment:
+      MYSQL_ROOT_PASSWORD: rootpass
+      MYSQL_DATABASE: socialit_prod
+      MYSQL_USER: socialit_user
+      MYSQL_PASSWORD: socialit_pass
+    ports:
+      - "3306:3306"   # opcional
+    volumes:
+      - mysql_data:/var/lib/mysql
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      timeout: 10s
+      retries: 5
+
+  web:
+    build:
+      context: .
+      dockerfile: dockerfile.prod
+    container_name: socialit_apache_django
+    restart: unless-stopped
+    ports:
+      - "8080:80"      
+    depends_on:
+      - db
+        #condition: service_healthy
+    environment:
+      - DJANGO_DB_ENGINE=mysql
+      - DJANGO_DB_NAME=socialit_prod
+      - DJANGO_DB_USER=socialit_user
+      - DJANGO_DB_PASSWORD=socialit_pass
+      - DJANGO_DB_HOST=db
+      - DJANGO_DB_PORT=3306
+
+volumes:
+  mysql_data:
