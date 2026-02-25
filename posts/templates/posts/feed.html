@@ -1,0 +1,163 @@
+{% extends 'base.html' %}
+
+{% block title %}Inicio - SocialIT{% endblock %}
+
+{% block content %}
+<!-- Sidebar izquierdo - Perfil -->
+<aside class="col-span-12 md:col-span-3">
+    <div class="bg-white dark:bg-slate-800 rounded-lg shadow-sm overflow-hidden border border-gray-200 dark:border-slate-700">
+        <div class="h-16 bg-primary/10 dark:bg-primary/20"></div>
+        <div class="px-4 pb-6 -mt-8 flex flex-col items-center">
+            <div class="w-32 h-32 rounded-full bg-white dark:bg-slate-800 p-1 shadow-sm">
+                <div class="w-full h-full rounded-full bg-gray-100 dark:bg-slate-700 flex items-center justify-center border-2 border-gray-100 dark:border-slate-600">
+                    <span class="material-icons-outlined text-gray-400 dark:text-gray-500 text-7xl">account_circle</span>
+                </div>
+            </div>
+            <div class="text-center mt-4">
+                {% if user.is_authenticated %}
+                <h2 class="text-xl font-bold text-gray-900 dark:text-white">{{ user.get_full_name|default:user.username }}</h2>
+                <p class="text-sm text-gray-500 dark:text-gray-400 mt-1">{{ user.profile.title|default:"Desarrollador" }}</p>
+                {% else %}
+                <h2 class="text-xl font-bold text-gray-900 dark:text-white">Invitado</h2>
+                <p class="text-sm text-gray-500 dark:text-gray-400 mt-1">Inicia sesión para ver tu perfil</p>
+                {% endif %}
+            </div>
+            <div class="w-full border-t border-gray-100 dark:border-slate-700 mt-6 pt-4">
+                <div class="flex justify-between text-xs font-medium px-2 py-1">
+                    <span class="text-gray-500 dark:text-gray-400">Visitas al perfil</span>
+                    <span class="text-primary font-bold">128</span>
+                </div>
+                <div class="flex justify-between text-xs font-medium px-2 py-1">
+                    <span class="text-gray-500 dark:text-gray-400">Impresiones</span>
+                    <span class="text-primary font-bold">1,402</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</aside>
+
+<!-- Feed central -->
+<section class="col-span-12 md:col-span-6 space-y-4">
+    <!-- Crear publicación -->
+    <div class="bg-white dark:bg-slate-800 rounded-lg shadow-sm p-4 border border-gray-200 dark:border-slate-700 flex items-center space-x-4">
+        <div class="w-12 h-12 rounded-full bg-gray-100 dark:bg-slate-700 flex-shrink-0 flex items-center justify-center">
+            <span class="material-icons-outlined text-gray-400">person</span>
+        </div>
+        <button class="flex-grow text-left px-4 py-3 rounded-full border border-gray-300 dark:border-slate-600 text-gray-400 dark:text-gray-400 hover:bg-gray-50 dark:hover:bg-slate-700 transition-colors font-medium">
+            Crear una publicación
+        </button>
+        <button class="text-primary hover:bg-primary/5 p-2 rounded-full transition-colors">
+            <span class="material-icons-outlined text-3xl">add_circle</span>
+        </button>
+    </div>
+    
+    <!-- Lista de posts -->
+    {% for post in posts %}
+    <article class="bg-white dark:bg-slate-800 rounded-lg shadow-sm border border-gray-200 dark:border-slate-700">
+        <div class="p-4">
+            <div class="flex items-start justify-between">
+                <div class="flex items-center space-x-3">
+                    <div class="w-12 h-12 bg-primary/20 flex items-center justify-center rounded overflow-hidden">
+                        <span class="material-icons-outlined text-primary text-3xl">account_circle</span>
+                    </div>
+                    <div>
+                        <h3 class="font-bold text-gray-900 dark:text-white text-sm">{{ post.author.username }}</h3>
+                        <p class="text-xs text-gray-500 dark:text-gray-400">{{ post.author.profile.title|default:"Miembro" }}</p>
+                        <div class="flex items-center text-[10px] text-gray-400 dark:text-gray-500">
+                            <span>{{ post.created_at|timesince }}</span>
+                            <span class="mx-1">•</span>
+                            <span class="material-icons-outlined text-[10px]">public</span>
+                        </div>
+                    </div>
+                </div>
+                <button class="text-gray-400 hover:text-gray-600 dark:hover:text-gray-200">
+                    <span class="material-icons-outlined">more_horiz</span>
+                </button>
+            </div>
+            
+            <div class="mt-4 text-sm text-gray-700 dark:text-gray-300 leading-relaxed">
+                {{ post.content|truncatewords:50 }}
+                {% if post.content|wordcount > 50 %}
+                <button class="text-gray-400 font-medium hover:underline ml-1">...ver más</button>
+                {% endif %}
+            </div>
+            
+            {% if post.image %}
+            <div class="mt-4">
+                <img src="{{ post.image.url }}" class="rounded-lg w-full" alt="Post image">
+            </div>
+            {% endif %}
+            
+            {% if post.has_translation %}
+            <div class="mt-4 text-primary font-medium text-sm">
+                <button class="hover:underline">Ver traducción</button>
+            </div>
+            {% endif %}
+        </div>
+        
+        <div class="px-4 py-2 border-t border-gray-100 dark:border-slate-700 flex items-center space-x-6">
+            <button class="flex items-center space-x-2 text-gray-500 dark:text-gray-400 hover:bg-gray-50 dark:hover:bg-slate-700 px-3 py-2 rounded transition-colors">
+                <span class="material-icons-outlined text-xl">thumb_up_off_alt</span>
+                <span class="text-sm font-medium">Me gusta</span>
+            </button>
+            <button class="flex items-center space-x-2 text-gray-500 dark:text-gray-400 hover:bg-gray-50 dark:hover:bg-slate-700 px-3 py-2 rounded transition-colors">
+                <span class="material-icons-outlined text-xl">chat_bubble_outline</span>
+                <span class="text-sm font-medium">Comentar</span>
+            </button>
+        </div>
+    </article>
+    {% empty %}
+    <div class="bg-white dark:bg-slate-800 rounded-lg shadow-sm p-8 text-center border border-gray-200 dark:border-slate-700">
+        <span class="material-icons-outlined text-6xl text-gray-400 mb-4">post_add</span>
+        <h3 class="text-xl font-bold text-gray-700 dark:text-gray-300 mb-2">No hay publicaciones</h3>
+        <p class="text-gray-500 dark:text-gray-400">¡Sé el primero en compartir algo!</p>
+    </div>
+    {% endfor %}
+</section>
+
+<!-- Sidebar derecho - Trending -->
+<aside class="col-span-12 md:col-span-3 space-y-4">
+    <h4 class="font-bold text-gray-900 dark:text-white px-1">Publicaciones destacadas</h4>
+    
+    {% for post in trending_posts|slice:":3" %}
+    <div class="bg-white dark:bg-slate-800 rounded-lg shadow-sm border border-gray-200 dark:border-slate-700 p-4">
+        <div class="flex items-start justify-between">
+            <div class="flex items-center space-x-2">
+                <div class="w-8 h-8 bg-primary/20 flex items-center justify-center rounded overflow-hidden">
+                    <span class="material-icons-outlined text-primary text-lg">account_circle</span>
+                </div>
+                <div>
+                    <h5 class="text-xs font-bold text-gray-900 dark:text-white leading-none">{{ post.author.username }}</h5>
+                    <p class="text-[10px] text-gray-400 mt-1">{{ post.created_at|timesince }} • <span class="material-icons-outlined text-[10px]">public</span></p>
+                </div>
+            </div>
+            <button class="text-gray-400"><span class="material-icons-outlined text-sm">more_horiz</span></button>
+        </div>
+        <div class="mt-3 text-[11px] text-gray-600 dark:text-gray-400 line-clamp-3">
+            {{ post.content|truncatewords:15 }}
+            <span class="text-gray-400 cursor-pointer">...ver más</span>
+        </div>
+    </div>
+    {% empty %}
+    <div class="bg-white dark:bg-slate-800 rounded-lg shadow-sm p-4 text-center border border-gray-200 dark:border-slate-700">
+        <p class="text-gray-500 text-sm">No hay destacados</p>
+    </div>
+    {% endfor %}
+    
+    <div class="px-1 text-[10px] text-gray-400 dark:text-gray-500 space-y-2 mt-4 text-center">
+        <div class="flex justify-center space-x-2 flex-wrap">
+            <a class="hover:underline" href="#">Acerca de</a>
+            <a class="hover:underline" href="#">Accesibilidad</a>
+            <a class="hover:underline" href="#">Centro de ayuda</a>
+        </div>
+        <div class="flex justify-center space-x-2 flex-wrap">
+            <a class="hover:underline" href="#">Privacidad</a>
+            <a class="hover:underline" href="#">Términos</a>
+            <a class="hover:underline" href="#">Preferencias</a>
+        </div>
+        <div class="pt-2">
+            SocialIT Corporation © 2024
+        </div>
+    </div>
+</aside>
+{% endblock %}
