@@ -84,3 +84,84 @@
         </a>
     </div>
 </nav>
+<header class="bg-primary sticky top-0 z-50 shadow-md">
+    <div class="max-w-7xl mx-auto px-4 h-14 flex items-center justify-between">
+        <div class="flex items-center flex-1">
+            <div class="flex items-center mr-4">
+                <div class="bg-white/20 p-1 rounded-lg mr-2">
+                    <span class="material-icons-outlined text-white text-3xl">hub</span>
+                </div>
+                <span class="text-white text-2xl font-bold tracking-tight">Social<span class="font-normal text-sky-200">IT</span></span>
+            </div>
+            <div class="relative max-w-xs w-full hidden md:block">
+                <span class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                    <span class="material-icons-outlined text-gray-300 text-lg">search</span>
+                </span>
+                <input class="block w-full pl-10 pr-3 py-1.5 border-none rounded bg-white/10 text-white placeholder-gray-300 focus:ring-2 focus:ring-white/20 sm:text-sm" placeholder="Search..." type="text"/>
+            </div>
+        </div>
+        
+        <nav class="flex h-full items-stretch">
+            <div class="nav-item {% if request.resolver_match.url_name == 'feed' %}active{% endif %}">
+                <a href="{% url 'feed' %}" class="flex flex-col items-center">
+                    <span class="material-icons-outlined">home</span>
+                    <span>Inicio</span>
+                </a>
+            </div>
+            
+            {% if user.is_authenticated %}
+            <div class="nav-item">
+                <a href="#" class="flex flex-col items-center">
+                    <span class="material-icons-outlined">add_circle_outline</span>
+                    <span>Publicar</span>
+                </a>
+            </div>
+            <div class="nav-item">
+                <a href="#" class="flex flex-col items-center">
+                    <span class="material-icons-outlined">chat_bubble_outline</span>
+                    <span>Mensajes</span>
+                </a>
+            </div>
+            <div class="nav-item">
+                <a href="#" class="flex flex-col items-center">
+                    <span class="material-icons-outlined">people_outline</span>
+                    <span>Mi Red</span>
+                </a>
+            </div>
+            <div class="nav-item">
+                <a href="#" class="flex flex-col items-center">
+                    <span class="material-icons-outlined">work_outline</span>
+                    <span>Empleos</span>
+                </a>
+            </div>
+            <div class="nav-item">
+                <a href="#" class="flex flex-col items-center">
+                    <span class="material-icons-outlined">notifications_none</span>
+                    <span>Notificaciones</span>
+                </a>
+            </div>
+            <div class="nav-item">
+                <a href="#" class="flex flex-col items-center">
+                    <div class="w-6 h-6 rounded-full bg-gray-300 flex items-center justify-center overflow-hidden">
+                        <span class="material-icons-outlined text-gray-600 text-lg">person</span>
+                    </div>
+                    <span>{{ user.username|truncatechars:8 }}</span>
+                </a>
+            </div>
+            {% else %}
+            <div class="nav-item">
+                <a href="#" class="flex flex-col items-center">
+                    <span class="material-icons-outlined">login</span>
+                    <span>Iniciar</span>
+                </a>
+            </div>
+            <div class="nav-item">
+                <a href="#" class="flex flex-col items-center">
+                    <span class="material-icons-outlined">person_add</span>
+                    <span>Registro</span>
+                </a>
+            </div>
+            {% endif %}
+        </nav>
+    </div>
+</header>
