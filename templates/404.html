@@ -1,0 +1,15 @@
+<!-- Template: 404.html -->
+{% extends "base.html" %} {% load i18n %} {% block title %}{% trans "Página no
+encontrada" %}{% endblock %} {% block content %}
+<section class="error-page">
+  <h1>404</h1>
+  <h2>{% trans "Página no encontrada" %}</h2>
+  <p>
+    {% trans "La página que buscas no existe o fue movida. Verifica la dirección
+    o regresa al inicio." %}
+  </p>
+  <a href="{% url 'feed:index' %}" class="btn btn-primary"
+    >{% trans "Volver al inicio" %}</a
+  >
+</section>
+{% endblock %}

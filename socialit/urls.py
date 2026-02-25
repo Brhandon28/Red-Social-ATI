@@ -15,8 +15,24 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
-from django.urls import path
+from django.shortcuts import render
+from django.urls import include, path
+
+
+def home_view(request):
+    return render(request, 'home.html')
+
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('', home_view, name='home'),
+    path('', include('apps.accounts.urls')),
+    path('feed/', include('apps.feed.urls')),
+    path('perfil/', include('apps.profiles.urls')),
+    path('empleos/', include('apps.jobs.urls')),
+    path('contactos/', include('apps.network.urls')),
+    path('notificaciones/', include('apps.notifications.urls')),
+    path('chat/', include('apps.chat.urls')),
 ]
+
+handler404 = 'socialit.views.custom_404'

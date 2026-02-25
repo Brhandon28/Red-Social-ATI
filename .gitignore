@@ -13,7 +13,6 @@ db.sqlite3
 db.sqlite3-journal
 media/
 staticfiles/
-static/
 
 # --- WSL / Sistema ---
 .DS_Store
