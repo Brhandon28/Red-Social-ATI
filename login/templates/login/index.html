@@ -1,0 +1,61 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="bg-background-light dark:bg-background-dark font-sans h-screen flex flex-col md:flex-row overflow-hidden">
+    <div
+        class="w-full md:w-1/2 bg-primary flex flex-col justify-center items-center p-8 md:p-12 text-center relative overflow-hidden">
+        <div class="z-10 flex flex-col items-center max-w-lg">
+
+            <h1 class="text-white text-3xl md:text-5xl font-black mb-4 uppercase tracking-wide leading-tight">
+                Bienvenido<br />Nuevamente
+            </h1>
+            <p class="text-white text-lg md:text-xl font-light opacity-90 max-w-sm mx-auto">
+                Conecta, colabora y crece con la comunidad ATI.
+            </p>
+        </div>
+    </div>
+    <div
+        class="w-full md:w-1/2 flex flex-col justify-center items-center p-4 md:p-12 bg-background-light dark:bg-background-dark relative">
+        <div
+            class="w-full max-w-md bg-surface-light dark:bg-surface-dark rounded-xl shadow-card p-8 md:p-10 border border-gray-100 dark:border-gray-800">
+            <h2 class="text-2xl font-bold text-center text-text-light dark:text-text-dark mb-8">Iniciar Sesión</h2>
+            <form action="#" class="space-y-6" method="POST">
+                <div>
+                    <label class="block text-sm font-medium text-text-light dark:text-gray-300 mb-1" for="email">
+                        Correo Electronico
+                    </label>
+                    <input
+                        class="block w-full px-4 py-3 rounded-md border border-input-border-light dark:border-input-border-dark bg-input-bg-light dark:bg-input-bg-dark text-text-light dark:text-text-dark placeholder-gray-400 focus:border-primary focus:ring-primary focus:ring-1 sm:text-sm transition-colors duration-200"
+                        id="email" name="email" placeholder="iexample@correo.com" required="" type="email" />
+                </div>
+                <div>
+                    <label class="block text-sm font-medium text-text-light dark:text-gray-300 mb-1" for="password">
+                        Contraseña
+                    </label>
+                    <input
+                        class="block w-full px-4 py-3 rounded-md border border-input-border-light dark:border-input-border-dark bg-input-bg-light dark:bg-input-bg-dark text-text-light dark:text-text-dark placeholder-gray-400 focus:border-primary focus:ring-primary focus:ring-1 sm:text-sm transition-colors duration-200"
+                        id="password" name="password" placeholder="Value" required="" type="password" />
+                </div>
+                <div>
+                    <button
+                        class="w-full flex justify-center py-3 px-4 border border-transparent rounded-md shadow-sm text-sm font-bold text-white bg-primary hover:bg-opacity-90 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary transition-all duration-200 uppercase tracking-wide"
+                        type="submit">
+                        Iniciar Sesión
+                    </button>
+                </div>
+                <div class="text-left">
+                    <a class="text-sm font-medium text-text-light dark:text-gray-400 hover:text-primary dark:hover:text-primary underline decoration-1 underline-offset-2 transition-colors"
+                        href="#">
+                        Olvido su contrasena?
+                    </a>
+                </div>
+            </form>
+        </div>
+        <div class="mt-8 text-center text-sm md:text-base">
+            <span class="text-gray-500 dark:text-gray-400">¿No tienes una cuenta?</span>
+            <a class="font-bold text-[#00B4D8] hover:text-[#0090ad] ml-1 transition-colors" href="#">
+                Únete aquí
+            </a>
+        </div>
+    </div>
+</div>
+{% endblock %}
