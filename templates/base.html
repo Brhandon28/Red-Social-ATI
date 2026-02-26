@@ -60,13 +60,21 @@
         }
     </style>
 </head>
-<body class="bg-background-light dark:bg-background-dark transition-colors duration-200">
+<body class="bg-background-light dark:bg-background-dark transition-colors duration-200 min-h-screen flex flex-col">
     
+    {% block navbar %}
     {% include 'navbar.html' %}
+    {% endblock %}
     
-    {% block content %}{% endblock %}
+    <main class="flex-1">
+        {% block content %}{% endblock %}
+    </main>
     
-    <button class="fixed bottom-6 right-6 bg-primary text-white p-3 rounded-full shadow-lg z-50" onclick="document.documentElement.classList.toggle('dark')">
+    {% block footer %}
+    {% include 'footer.html' %}
+    {% endblock %}
+    
+    <button class="fixed bottom-6 right-6 bg-primary text-white p-3 rounded-full shadow-lg z-50 hidden md:block" onclick="document.documentElement.classList.toggle('dark')">
         <span class="material-icons-outlined">dark_mode</span>
     </button>
 </body>

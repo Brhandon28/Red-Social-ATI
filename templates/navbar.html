@@ -1,4 +1,22 @@
-<header class="bg-primary sticky top-0 z-50 shadow-md">
+<!-- MOBILE TOP BAR -->
+<header class="bg-primary sticky top-0 z-50 shadow-md md:hidden">
+    <div class="px-4 h-12 flex items-center justify-between">
+        <a href="#" class="text-white">
+            <span class="material-icons-outlined text-3xl">account_circle</span>
+        </a>
+        <div class="flex items-center space-x-4">
+            <a href="#" class="text-white/80 hover:text-white">
+                <span class="material-icons-outlined text-2xl">chat_bubble_outline</span>
+            </a>
+            <a href="#" class="text-white/80 hover:text-white">
+                <span class="material-icons-outlined text-2xl">notifications_none</span>
+            </a>
+        </div>
+    </div>
+</header>
+
+<!-- DESKTOP TOP BAR -->
+<header class="bg-primary sticky top-0 z-50 shadow-md hidden md:block">
     <div class="max-w-7xl mx-auto px-4 h-14 flex items-center justify-between">
         <div class="flex items-center flex-1">
             <div class="flex items-center mr-4">
@@ -7,7 +25,7 @@
                 </div>
                 <span class="text-white text-2xl font-bold tracking-tight">Social<span class="font-normal text-sky-200">IT</span></span>
             </div>
-            <div class="relative max-w-xs w-full hidden md:block">
+            <div class="relative max-w-xs w-full">
                 <span class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
                     <span class="material-icons-outlined text-gray-300 text-lg">search</span>
                 </span>
@@ -15,30 +33,30 @@
             </div>
         </div>
         <nav class="flex h-full items-stretch">
-            <div class="nav-item active">
+            <a href="{% url 'posts:feed' %}" class="nav-item {% if request.resolver_match.namespace == 'posts' %}active{% endif %}">
                 <span class="material-icons-outlined">home</span>
                 <span>Inicio</span>
-            </div>
-            <div class="nav-item">
+            </a>
+            <a class="nav-item">
                 <span class="material-icons-outlined">add_circle_outline</span>
                 <span>Publicar</span>
-            </div>
-            <div class="nav-item">
+            </a>
+            <a class="nav-item">
                 <span class="material-icons-outlined">chat_bubble_outline</span>
                 <span>Mensajes</span>
-            </div>
-            <div class="nav-item">
+            </a>
+            <a class="nav-item">
                 <span class="material-icons-outlined">people_outline</span>
                 <span>Mi Red</span>
-            </div>
-            <div class="nav-item">
+            </a>
+            <a href="{% url 'jobs:job_list' %}" class="nav-item {% if request.resolver_match.namespace == 'jobs' %}active{% endif %}">
                 <span class="material-icons-outlined">work_outline</span>
                 <span>Empleos</span>
-            </div>
-            <div class="nav-item">
+            </a>
+            <a class="nav-item">
                 <span class="material-icons-outlined">notifications_none</span>
                 <span>Notificaciones</span>
-            </div>
+            </a>
             <div class="nav-item">
                 <div class="w-6 h-6 rounded-full bg-gray-300 flex items-center justify-center overflow-hidden">
                     <span class="material-icons-outlined text-gray-600 text-lg">person</span>
