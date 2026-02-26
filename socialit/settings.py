@@ -50,6 +50,7 @@ INSTALLED_APPS = [
     'apps.network',
     'apps.notifications',
     'apps.chat',
+    'apps.posts',
 ]
 
 MIDDLEWARE = [
@@ -60,6 +61,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'django.middleware.locale.LocaleMiddleware',
 ]
 
 ROOT_URLCONF = 'socialit.urls'
@@ -133,13 +135,27 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/6.0/topics/i18n/
 
-LANGUAGE_CODE = 'es'
+LANGUAGE_CODE = 'es-es'
 
 TIME_ZONE = 'UTC'
 
 USE_I18N = True
-
+USE_L10N = True
 USE_TZ = True
+
+# Idiomas  
+LANGUAGES = [
+    ('es', 'Español'),
+    ('en', 'Inglés'), 
+    ('fr', 'Francés'),
+    ('de', 'Alemán'),
+    ('zh', 'Chino'),
+]
+
+# Ruta donde se guardarán los archivos de traducción
+LOCALE_PATHS = [
+    BASE_DIR / 'locale',
+]
 
 
 # Static files (CSS, JavaScript, Images)

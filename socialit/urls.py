@@ -22,9 +22,9 @@ from django.urls import include, path
 def home_view(request):
     return render(request, 'home.html')
 
-
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('posts/', include('apps.posts.urls')),
     path('', home_view, name='home'),
     path('', include('apps.accounts.urls')),
     path('feed/', include('apps.feed.urls')),
