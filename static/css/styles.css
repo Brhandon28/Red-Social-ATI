@@ -1012,40 +1012,6 @@ h4 {
   font-weight: 600;
 }
 
-.feed-layout {
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: 1rem;
-}
-
-.feed-sidebar-left,
-.feed-sidebar-right {
-  display: none;
-}
-
-@media (min-width: 960px) {
-  .feed-layout {
-    grid-template-columns: 220px 1fr 260px;
-    gap: 1.25rem;
-  }
-
-  .feed-sidebar-left,
-  .feed-sidebar-right {
-    display: block;
-  }
-
-  .feed-sidebar-left,
-  .feed-sidebar-right {
-    position: sticky;
-    top: 5rem;
-    align-self: start;
-  }
-}
-
-.feed-main {
-  min-width: 0;
-}
-
 .top-post-item {
   padding-bottom: 0.75rem;
   margin-bottom: 0.75rem;

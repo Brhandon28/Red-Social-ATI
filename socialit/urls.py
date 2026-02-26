@@ -27,11 +27,10 @@ urlpatterns = [
     path('posts/', include('apps.posts.urls')),
     path('', home_view, name='home'),
     path('', include('apps.accounts.urls')),
-    path('feed/', include('apps.feed.urls')),
     path('perfil/', include('apps.profiles.urls')),
-    path('empleos/', include('apps.jobs.urls')),
-    path('contactos/', include('apps.network.urls')),
-    path('notificaciones/', include('apps.notifications.urls')),
+    path('jobs/', include('apps.jobs.urls')),
+    path('network/', include('apps.network.urls')),
+    path('notifications/', include('apps.notifications.urls')),
     path('chat/', include('apps.chat.urls')),
 ]
 

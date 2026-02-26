@@ -7,3 +7,7 @@ def job_list(request):
 
 def job_detail(request, job_id):
     return render(request, 'jobs/job_detail.html', {'job_id': job_id})
+
+
+def create_offer(request):
+    return render(request, 'jobs/create_offer.html')

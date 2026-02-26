@@ -1,16 +1,130 @@
-<!-- prettier-ignore-start -->
-{% extends "base.html" %} {% block title %}Empleos{% endblock %} {% block
-nav_jobs %}active{% endblock %} {% block mobile_nav_jobs %}active{% endblock %}
+{% extends "base.html" %}
+{% block title %}Empleos{% endblock %}
+
 {% block content %}
-<!-- prettier-ignore-end -->
-<div
-  style="
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    min-height: 60vh;
-  "
->
-  <h2>Empleos</h2>
-</div>
+<main class="max-w-7xl mx-auto px-4 py-6 grid grid-cols-12 gap-6">
+
+    <!-- LEFT SIDEBAR — Profile card (desktop only) -->
+    <aside class="hidden md:block col-span-3">
+        <div class="bg-white dark:bg-slate-800 rounded-lg shadow-sm overflow-hidden border border-gray-200 dark:border-slate-700">
+            <div class="px-6 py-8 flex flex-col items-center">
+                <div class="w-24 h-24 rounded-full border-2 border-gray-800 dark:border-gray-400 flex items-center justify-center mb-4">
+                    <span class="material-icons-outlined text-gray-800 dark:text-gray-300 text-5xl">person</span>
+                </div>
+                <h2 class="text-base font-bold text-gray-900 dark:text-white">Nombre Apellido</h2>
+                <p class="text-xs text-gray-500 dark:text-gray-400 mt-1">Desarrollador Fullstack</p>
+            </div>
+        </div>
+    </aside>
+
+    <!-- CENTER — Job listings -->
+    <section class="col-span-12 md:col-span-6 space-y-6">
+
+        <!-- Recomendaciones para ti -->
+        <h2 class="text-xl md:text-2xl font-bold text-gray-900 dark:text-white">Recomendaciones para ti</h2>
+
+        <!-- Job Card 1 -->
+        <div class="bg-white dark:bg-slate-800 rounded-lg shadow-sm border border-gray-200 dark:border-slate-700 p-4">
+            <div class="flex items-start justify-between">
+                <div class="flex items-center space-x-3">
+                    <div class="w-12 h-12 bg-gray-300 dark:bg-slate-600 rounded flex items-center justify-center flex-shrink-0">
+                        <span class="material-icons-outlined text-gray-500 dark:text-gray-400">business</span>
+                    </div>
+                    <div>
+                        <h3 class="font-bold text-sm text-gray-900 dark:text-white">Nombre de empleo</h3>
+                        <p class="text-xs text-gray-500 dark:text-gray-400">Ubicación</p>
+                        <div class="flex items-center text-[10px] text-gray-400 dark:text-gray-500 mt-0.5">
+                            <span>20 h</span>
+                            <span class="mx-1">•</span>
+                            <span class="material-icons-outlined text-[10px]">public</span>
+                        </div>
+                    </div>
+                </div>
+                <button class="text-gray-400 hover:text-gray-600 dark:hover:text-gray-200">
+                    <span class="material-icons-outlined">more_horiz</span>
+                </button>
+            </div>
+            <p class="mt-4 text-sm text-gray-700 dark:text-gray-300 leading-relaxed">
+                Commodo in proin in fermentum morbi at sem facilisi orci magna in sagittis, tortor ac maecenas eget etiam ullamcorper magna eu risus ipsum nec nibh lacus, suspendisse
+            </p>
+        </div>
+
+        <!-- Job Card 2 -->
+        <div class="bg-white dark:bg-slate-800 rounded-lg shadow-sm border border-gray-200 dark:border-slate-700 p-4">
+            <div class="flex items-start justify-between">
+                <div class="flex items-center space-x-3">
+                    <div class="w-12 h-12 bg-gray-300 dark:bg-slate-600 rounded flex items-center justify-center flex-shrink-0">
+                        <span class="material-icons-outlined text-gray-500 dark:text-gray-400">business</span>
+                    </div>
+                    <div>
+                        <h3 class="font-bold text-sm text-gray-900 dark:text-white">Nombre de empleo</h3>
+                        <p class="text-xs text-gray-500 dark:text-gray-400">Ubicación</p>
+                        <div class="flex items-center text-[10px] text-gray-400 dark:text-gray-500 mt-0.5">
+                            <span>20 h</span>
+                            <span class="mx-1">•</span>
+                            <span class="material-icons-outlined text-[10px]">public</span>
+                        </div>
+                    </div>
+                </div>
+                <button class="text-gray-400 hover:text-gray-600 dark:hover:text-gray-200">
+                    <span class="material-icons-outlined">more_horiz</span>
+                </button>
+            </div>
+            <p class="mt-4 text-sm text-gray-700 dark:text-gray-300 leading-relaxed">
+                Commodo in proin in fermentum morbi at sem facilisi orci magna in sagittis, tortor ac maecenas eget etiam ullamcorper magna eu risus ipsum nec nibh lacus, suspendisse
+            </p>
+        </div>
+
+        <!-- Búsquedas recientes -->
+        <h2 class="text-xl md:text-2xl font-bold text-gray-900 dark:text-white pt-4">Búsquedas recientes</h2>
+
+        <div class="bg-white dark:bg-slate-800 rounded-lg shadow-sm border border-gray-200 dark:border-slate-700 divide-y divide-gray-100 dark:divide-slate-700">
+            <div class="px-4 py-4">
+                <h4 class="text-sm font-semibold text-gray-900 dark:text-white">List item</h4>
+                <p class="text-xs text-gray-500 dark:text-gray-400 mt-1">Supporting line text lorem ipsum dolor sit amet, consectetur.</p>
+            </div>
+            <div class="px-4 py-4">
+                <h4 class="text-sm font-semibold text-gray-900 dark:text-white">List item</h4>
+                <p class="text-xs text-gray-500 dark:text-gray-400 mt-1">Supporting line text lorem ipsum dolor sit amet, consectetur.</p>
+            </div>
+        </div>
+
+    </section>
+
+    <!-- RIGHT SIDEBAR — Podría interesarte (desktop only) -->
+    <aside class="hidden md:block col-span-3 space-y-4">
+        <h3 class="text-lg font-bold text-gray-900 dark:text-white">Podría interesarte</h3>
+
+        <div class="bg-white dark:bg-slate-800 rounded-lg shadow-sm border border-gray-200 dark:border-slate-700 p-4 flex items-center space-x-3">
+            <div class="w-10 h-10 bg-gray-200 dark:bg-slate-600 rounded flex items-center justify-center flex-shrink-0">
+                <span class="material-icons-outlined text-gray-400 text-lg">image</span>
+            </div>
+            <div>
+                <h4 class="text-sm font-semibold text-gray-900 dark:text-white">Faucibus molestie</h4>
+                <p class="text-xs text-gray-500 dark:text-gray-400">Tellus neque</p>
+            </div>
+        </div>
+
+        <div class="bg-white dark:bg-slate-800 rounded-lg shadow-sm border border-gray-200 dark:border-slate-700 p-4 flex items-center space-x-3">
+            <div class="w-10 h-10 bg-gray-200 dark:bg-slate-600 rounded flex items-center justify-center flex-shrink-0">
+                <span class="material-icons-outlined text-gray-400 text-lg">image</span>
+            </div>
+            <div>
+                <h4 class="text-sm font-semibold text-gray-900 dark:text-white">Faucibus molestie</h4>
+                <p class="text-xs text-gray-500 dark:text-gray-400">Tellus neque</p>
+            </div>
+        </div>
+
+        <div class="bg-white dark:bg-slate-800 rounded-lg shadow-sm border border-gray-200 dark:border-slate-700 p-4 flex items-center space-x-3">
+            <div class="w-10 h-10 bg-gray-200 dark:bg-slate-600 rounded flex items-center justify-center flex-shrink-0">
+                <span class="material-icons-outlined text-gray-400 text-lg">image</span>
+            </div>
+            <div>
+                <h4 class="text-sm font-semibold text-gray-900 dark:text-white">Faucibus molestie</h4>
+                <p class="text-xs text-gray-500 dark:text-gray-400">Tellus neque</p>
+            </div>
+        </div>
+    </aside>
+
+</main>
 {% endblock %}
