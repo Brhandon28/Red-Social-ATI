@@ -1,53 +1,61 @@
-from django.contrib import messages
-from django.contrib.auth import get_user_model, login, logout
 from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
 from django.shortcuts import redirect, render
 from django.utils.translation import gettext_lazy as _
 
 
+AUTH_COOKIE_NAME = 'hardcoded_auth'
+AUTH_USER_COOKIE_NAME = 'hardcoded_user'
+AUTH_COOKIE_MAX_AGE = 60 * 60 * 8
+
+
 def login_view(request):
-    if request.user.is_authenticated:
+    if getattr(request, 'hardcoded_auth', False):
         return redirect('feed:index')
 
     form = AuthenticationForm()
     if request.method == 'POST':
-        form_data = request.POST.copy()
-        identifier = (form_data.get('username') or '').strip()
+        form = AuthenticationForm(request, data=request.POST)
+        username = (request.POST.get('username') or '').strip()
+        password = request.POST.get('password') or ''
 
-        if identifier and '@' in identifier:
-            user_model = get_user_model()
-            user = user_model.objects.filter(email__iexact=identifier).first()
-            if user:
-                form_data['username'] = user.get_username()
+        hardcoded_user = 'admin'
+        hardcoded_password = '123456'
 
-        form = AuthenticationForm(request, data=form_data)
-        if form.is_valid():
-            user = form.get_user()
-            login(request, user)
-            messages.success(request, _('¡Bienvenido de vuelta!'))
-            return redirect('feed:index')
+        if username == hardcoded_user and password == hardcoded_password:
+            next_url = request.GET.get('next') or 'feed:index'
+            response = redirect(next_url)
+            response.set_cookie(
+                AUTH_COOKIE_NAME,
+                '1',
+                max_age=AUTH_COOKIE_MAX_AGE,
+                httponly=True,
+                samesite='Lax',
+            )
+            response.set_cookie(
+                AUTH_USER_COOKIE_NAME,
+                hardcoded_user,
+                max_age=AUTH_COOKIE_MAX_AGE,
+                httponly=True,
+                samesite='Lax',
+            )
+            return response
+
+        form.add_error(None, _('Credenciales inválidas.'))
 
     return render(request, 'accounts/login.html', {'form': form})
 
 
 def register_view(request):
-    if request.user.is_authenticated:
-        return redirect('feed:index')
-
     form = UserCreationForm()
     if request.method == 'POST':
         form = UserCreationForm(request.POST)
-        if form.is_valid():
-            user = form.save()
-            login(request, user)
-            messages.success(request, _('¡Cuenta creada exitosamente! Bienvenido a SocialIT.'))
-            return redirect('feed:index')
+        form.add_error(None, _('Registro deshabilitado en modo hardcodeado.'))
 
     return render(request, 'accounts/register.html', {'form': form})
 
 
 def logout_view(request):
-    if request.method == 'POST':
-        logout(request)
-        messages.success(request, _('Has cerrado sesión correctamente.'))
-    return redirect('accounts:login')
+    response = redirect('accounts:login')
+    response.delete_cookie(AUTH_COOKIE_NAME)
+    response.delete_cookie(AUTH_USER_COOKIE_NAME)
+    return response
