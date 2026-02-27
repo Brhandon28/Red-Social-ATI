@@ -1,0 +1,182 @@
+<!--
+  Template: accounts/register.html — Standalone (no nav bars)
+  Same split layout as login
+-->
+{% load static %} {% load i18n %}
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{% trans "Crear cuenta" %} — SocialIT</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}" />
+    <link rel="stylesheet" href="{% static 'css/auth.css' %}" />
+  </head>
+  <body class="auth-body">
+    <!-- MOBILE: Small dark header with logo -->
+    <div class="auth-mobile-header">
+      <a href="/" class="landing-logo">
+        <img
+          src="{% static 'images/logo.png' %}"
+          alt="SocialIT"
+          style="height: 28px; width: auto"
+        />
+      </a>
+    </div>
+
+    <div class="auth-split">
+      <!-- LEFT: Dark navy branding panel (desktop only) -->
+      <div class="auth-brand-panel">
+        <div class="auth-brand-content">
+          <a href="/" class="landing-logo" style="margin-bottom: 2rem">
+            <img
+              src="{% static 'images/logo.png' %}"
+              alt="SocialIT"
+              style="height: 48px; width: auto"
+            />
+          </a>
+          <h1 class="auth-brand-title">{% trans "ÚNETE A LA COMUNIDAD" %}</h1>
+          <p class="auth-brand-subtitle">
+            {% trans "Conecta, colabora y crece con la comunidad ATI." %}
+          </p>
+        </div>
+      </div>
+
+      <!-- RIGHT: Register form panel -->
+      <div class="auth-form-panel">
+        <div class="auth-form-container">
+          <div class="auth-card">
+            <h2 class="auth-card-title">{% trans "Crear cuenta" %}</h2>
+
+            {% if form.non_field_errors %}
+            <div
+              class="alert alert-error"
+              role="alert"
+              style="margin-bottom: 1rem"
+            >
+              <span class="alert-icon" aria-hidden="true">⚠️</span>
+              <p class="alert-content">{{ form.non_field_errors.0 }}</p>
+            </div>
+            {% endif %}
+
+            <form
+              method="post"
+              action="{% url 'accounts:register' %}"
+              novalidate
+            >
+              {% csrf_token %}
+
+              <div class="form-group">
+                <label for="id_first_name" class="form-label"
+                  >{% trans "Nombre" %}</label
+                >
+                <input
+                  type="text"
+                  id="id_first_name"
+                  name="first_name"
+                  class="form-input"
+                  required
+                  maxlength="30"
+                  placeholder="{% trans 'Tu nombre' %}"
+                  autocomplete="given-name"
+                  value="{{ form.first_name.value|default:'' }}"
+                />
+              </div>
+
+              <div class="form-group">
+                <label for="id_last_name" class="form-label"
+                  >{% trans "Apellido" %}</label
+                >
+                <input
+                  type="text"
+                  id="id_last_name"
+                  name="last_name"
+                  class="form-input"
+                  required
+                  maxlength="30"
+                  placeholder="{% trans 'Tu apellido' %}"
+                  autocomplete="family-name"
+                  value="{{ form.last_name.value|default:'' }}"
+                />
+              </div>
+
+              <div class="form-group">
+                <label for="id_email" class="form-label"
+                  >{% trans "Correo Electronico" %}</label
+                >
+                <input
+                  type="email"
+                  id="id_email"
+                  name="email"
+                  class="form-input"
+                  required
+                  placeholder="{% trans 'ejemplo@correo.com' %}"
+                  autocomplete="email"
+                  value="{{ form.email.value|default:'' }}"
+                />
+              </div>
+
+              <div class="form-group">
+                <label for="password" class="form-label"
+                  >{% trans "Contraseña" %}</label
+                >
+                <input
+                  type="password"
+                  id="password"
+                  name="password1"
+                  class="form-input"
+                  required
+                  minlength="8"
+                  placeholder="{% trans 'Mínimo 8 caracteres' %}"
+                  autocomplete="new-password"
+                />
+                <div class="password-strength" aria-live="polite">
+                  <div class="password-strength-bar"></div>
+                </div>
+                <span class="password-strength-text" aria-live="polite"></span>
+              </div>
+
+              <div class="form-group">
+                <label for="id_password2" class="form-label"
+                  >{% trans "Confirmar contraseña" %}</label
+                >
+                <input
+                  type="password"
+                  id="id_password2"
+                  name="password2"
+                  class="form-input"
+                  required
+                  minlength="8"
+                  placeholder="{% trans 'Repite tu contraseña' %}"
+                  autocomplete="new-password"
+                />
+              </div>
+
+              <button type="submit" class="btn auth-submit-btn btn-block">
+                {% trans "Crear cuenta" %}
+              </button>
+            </form>
+          </div>
+
+          <div class="auth-footer">
+            <p>
+              {% trans "¿Ya tienes cuenta?" %}
+              <a href="{% url 'accounts:login' %}"
+                >{% trans "Inicia sesión" %}</a
+              >
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script src="{% static 'js/main.js' %}"></script>
+  </body>
+</html>

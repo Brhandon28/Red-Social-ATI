@@ -1,0 +1,94 @@
+<!--
+  Template: home.html — Landing page (usuarios no autenticados)
+  Basado en diseño Figma: Desktop 1440x1020 + Android 320x640
+  Heurísticas de Nielsen:
+  - H2: Lenguaje claro y familiar ("Iniciar sesión", "Únete aquí")
+  - H4: Consistencia con el resto de la app (misma paleta, misma tipografía)
+  - H8: Diseño minimalista — solo lo esencial: bienvenida + CTAs
+  - H10: Ayuda — texto guía para nuevos usuarios
+-->
+{% load static %} {% load i18n %}
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>
+      SocialIT — {% trans "Tu comunidad profesional de tecnología" %}
+    </title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}" />
+    <link rel="stylesheet" href="{% static 'css/landing.css' %}" />
+  </head>
+  <body class="landing-body">
+    <header class="landing-header">
+      <div class="landing-header-inner">
+        <a href="/" class="landing-logo">
+          <img
+            src="{% static 'images/logo.png' %}"
+            alt="SocialIT"
+            style="height: 36px; width: auto"
+          />
+        </a>
+
+        <nav class="landing-nav">
+          <a
+            href="{% url 'accounts:login' %}"
+            class="landing-btn landing-btn-outline"
+            >{% trans "Iniciar sesión" %}</a
+          >
+          <a
+            href="{% url 'accounts:register' %}"
+            class="landing-btn landing-btn-filled"
+            >{% trans "Únete Ahora" %}</a
+          >
+        </nav>
+      </div>
+    </header>
+
+    <main class="landing-main">
+      <div class="landing-hero">
+        <div class="landing-hero-content">
+          <h1>
+            {% trans "¡Te damos la bienvenida a tu comunidad profesional de
+            ATI!" %}
+          </h1>
+
+          <a href="{% url 'accounts:login' %}" class="landing-cta-btn"
+            >{% trans "Iniciar sesión" %}</a
+          >
+
+          <p class="landing-register-link">
+            {% trans "¿Primera vez en SocialIT?" %}
+            <a href="{% url 'accounts:register' %}">{% trans "Únete aquí" %}</a>
+          </p>
+        </div>
+
+        <div class="landing-hero-image">
+          <div class="landing-image-placeholder">
+            <svg
+              width="48"
+              height="48"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="#c0c0c0"
+              stroke-width="1.5"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              <rect x="3" y="3" width="18" height="18" rx="2" ry="2" />
+              <circle cx="8.5" cy="8.5" r="1.5" />
+              <polyline points="21 15 16 10 5 21" />
+            </svg>
+          </div>
+        </div>
+      </div>
+    </main>
+  </body>
+</html>

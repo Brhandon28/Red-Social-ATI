@@ -1,0 +1,165 @@
+<!--
+  Template: accounts/login.html — Standalone (no nav bars)
+  Basado en Figma: Desktop split layout + Mobile stacked
+-->
+{% load static %} {% load i18n %}
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{% trans "Iniciar sesión" %} — SocialIT</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}" />
+    <link rel="stylesheet" href="{% static 'css/auth.css' %}" />
+  </head>
+  <body class="auth-body">
+    <!-- MOBILE: Small dark header with logo -->
+    <div class="auth-mobile-header">
+      <a href="/" class="landing-logo block relative h-7 w-28 leading-none overflow-hidden">
+        <img
+          src="{% static 'images/logo.png' %}"
+          alt="SocialIT"
+          class="absolute inset-0 h-full w-full object-contain"
+        />
+      </a>
+    </div>
+
+    <div class="auth-split">
+      <!-- LEFT: Dark navy branding panel (desktop only) -->
+      <div class="auth-brand-panel">
+        <div class="auth-brand-content">
+          
+          <a
+            href="/"
+            class="landing-logo h-16 w-full max-w-[260px] mx-auto mb-8 leading-none overflow-hidden"
+          >
+          <div class="h-220px w-220px centered">
+            <img
+              src="{% static 'images/logo.png' %}"
+              alt="SocialIT"
+              class="h-full w-full object-contain"
+            />
+            <h1 class="auth-brand-title">{% trans "BIENVENIDO NUEVAMENTE" %}</h1>
+          <p class="auth-brand-subtitle">
+            {% trans "Conecta, colabora y crece con la comunidad ATI." %}
+          </p>
+          </div>
+          </a>
+          
+        </div>
+      </div>
+
+      <!-- RIGHT: Login form panel -->
+      <div class="auth-form-panel">
+        <div class="auth-form-container">
+          <div class="auth-card">
+            <h2 class="auth-card-title">{% trans "Iniciar Sesion" %}</h2>
+
+            {% if form.errors %}
+            <div
+              class="alert alert-error"
+              role="alert"
+              style="margin-bottom: 1rem"
+            >
+              <span class="alert-icon" aria-hidden="true">⚠️</span>
+              <p class="alert-content">
+                {% trans "Correo o contraseña incorrectos. Verifica tus datos."
+                %}
+              </p>
+            </div>
+            {% endif %}
+
+            <form method="post" action="{% url 'accounts:login' %}" novalidate>
+              {% csrf_token %}
+
+              <div
+                class="form-group {% if form.username.errors %}has-error{% endif %}"
+              >
+                <label for="id_username" class="form-label"
+                  >{% trans "Correo Electronico" %}</label
+                >
+                <input
+                  type="email"
+                  id="id_username"
+                  name="username"
+                  class="form-input"
+                  required
+                  placeholder="{% trans 'lexample@correo.com' %}"
+                  autocomplete="email"
+                  value="{{ form.username.value|default:'' }}"
+                  {%
+                  if
+                  form.username.errors
+                  %}aria-invalid="true"
+                  aria-describedby="username-error"
+                  {%
+                  endif
+                  %}
+                />
+                {% if form.username.errors %}
+                <p id="username-error" class="form-error" role="alert">
+                  {{ form.username.errors.0 }}
+                </p>
+                {% endif %}
+              </div>
+
+              <div
+                class="form-group {% if form.password.errors %}has-error{% endif %}"
+              >
+                <label for="id_password" class="form-label"
+                  >{% trans "Contraseña" %}</label
+                >
+                <input
+                  type="password"
+                  id="id_password"
+                  name="password"
+                  class="form-input"
+                  required
+                  placeholder="{% trans 'Tu contraseña' %}"
+                  autocomplete="current-password"
+                  {%
+                  if
+                  form.password.errors
+                  %}aria-invalid="true"
+                  aria-describedby="password-error"
+                  {%
+                  endif
+                  %}
+                />
+                {% if form.password.errors %}
+                <p id="password-error" class="form-error" role="alert">
+                  {{ form.password.errors.0 }}
+                </p>
+                {% endif %}
+              </div>
+
+              <button type="submit" class="btn auth-submit-btn btn-block">
+                {% trans "Iniciar Sesión" %}
+              </button>
+            </form>
+
+            <a href="#" class="auth-forgot-link"
+              >{% trans "Olvido su contraseña?" %}</a
+            >
+          </div>
+
+          <div class="auth-footer">
+            <p>
+              {% trans "¿No tienes una cuenta?" %}
+              <a href="{% url 'accounts:register' %}"
+                >{% trans "Únete aquí" %}</a
+              >
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
