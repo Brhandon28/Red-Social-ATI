@@ -24,5 +24,14 @@ def home_view(request):
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('login/', login_view, name='login'),
+    path('posts/', include('apps.feed.urls')),
+    path('', home_view, name='home'),
+    path('', include('apps.accounts.urls')),
+    path('perfil/', include('apps.profiles.urls')),
+    path('jobs/', include('apps.jobs.urls')),
+    path('network/', include('apps.network.urls')),
+    path('notifications/', include('apps.notifications.urls')),
+    path('chat/', include('apps.chat.urls')),
 ]
+
+handler404 = 'socialit.views.custom_404'

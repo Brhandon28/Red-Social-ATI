@@ -1,5 +1,5 @@
 from django.contrib import messages
-from django.contrib.auth import login, logout
+from django.contrib.auth import get_user_model, login, logout
 from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
 from django.shortcuts import redirect, render
 from django.utils.translation import gettext_lazy as _
@@ -11,7 +11,16 @@ def login_view(request):
 
     form = AuthenticationForm()
     if request.method == 'POST':
-        form = AuthenticationForm(request, data=request.POST)
+        form_data = request.POST.copy()
+        identifier = (form_data.get('username') or '').strip()
+
+        if identifier and '@' in identifier:
+            user_model = get_user_model()
+            user = user_model.objects.filter(email__iexact=identifier).first()
+            if user:
+                form_data['username'] = user.get_username()
+
+        form = AuthenticationForm(request, data=form_data)
         if form.is_valid():
             user = form.get_user()
             login(request, user)
