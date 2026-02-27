@@ -35,9 +35,11 @@
   </aside>
 
   <section class="col-span-12 lg:col-span-6 space-y-4 md:space-y-5">
-    <article class="card post-card" style="padding: 0.8rem 0.9rem">
-      <div class="card-header" style="margin-bottom: 0.55rem">
-        <div style="
+    {% for job in jobs|slice:":2" %}
+    <a href="{% url 'jobs:job_detail' job.id %}" class="block">
+      <article class="card post-card" style="padding: 0.8rem 0.9rem">
+        <div class="card-header" style="margin-bottom: 0.55rem">
+          <div style="
             width: 34px;
             height: 34px;
             border-radius: 4px;
@@ -48,61 +50,27 @@
             border: 1px solid #ececec;
             flex-shrink: 0;
           "></div>
-        <div class="card-header-info">
-          <h4>Nombre de empleo</h4>
-          <p class="text-small">Ubicación</p>
-          <span class="text-small text-light">20 h · 🌐</span>
+          <div class="card-header-info">
+            <h4>{{ job.title }}</h4>
+            <p class="text-small">{{ job.location }}</p>
+            <span class="text-small text-light">{{ job.age }} · 🌐</span>
+          </div>
+          <button class="btn-icon" aria-label="Opciones" style="width: 28px; height: 28px">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <circle cx="5" cy="12" r="1" />
+              <circle cx="12" cy="12" r="1" />
+              <circle cx="19" cy="12" r="1" />
+            </svg>
+          </button>
         </div>
-        <button class="btn-icon" aria-label="Opciones" style="width: 28px; height: 28px">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <circle cx="5" cy="12" r="1" />
-            <circle cx="12" cy="12" r="1" />
-            <circle cx="19" cy="12" r="1" />
-          </svg>
-        </button>
-      </div>
-      <div class="card-body" style="margin-bottom: 0.4rem">
-        <p class="text-small" style="color: #2f2f2f">
-          Commodo in proin in fermentum morbi at sem facilisi orci magna in
-          sagittis, tortor ac maecenas eget etiam ullamcorper magna eu risus ipsum
-          nec nibh lacus, suspendisse.
-        </p>
-      </div>
-    </article>
-
-    <article class="card post-card" style="padding: 0.8rem 0.9rem">
-      <div class="card-header" style="margin-bottom: 0.55rem">
-        <div style="
-            width: 34px;
-            height: 34px;
-            border-radius: 4px;
-            background:
-              linear-gradient(90deg, #000 50%, transparent 50%) 0 0 / 16px 16px,
-              linear-gradient(#000 50%, transparent 50%) 0 0 / 16px 16px;
-            background-color: #fff;
-            border: 1px solid #ececec;
-            flex-shrink: 0;
-          "></div>
-        <div class="card-header-info">
-          <h4>Nombre de empleo</h4>
-          <p class="text-small">Ubicación</p>
-          <span class="text-small text-light">2 d · 🌐</span>
+        <div class="card-body" style="margin-bottom: 0.4rem">
+          <p class="text-small" style="color: #2f2f2f">
+            {{ job.summary }}
+          </p>
         </div>
-        <button class="btn-icon" aria-label="Opciones" style="width: 28px; height: 28px">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <circle cx="5" cy="12" r="1" />
-            <circle cx="12" cy="12" r="1" />
-            <circle cx="19" cy="12" r="1" />
-          </svg>
-        </button>
-      </div>
-      <div class="card-body" style="margin-bottom: 0.4rem">
-        <p class="text-small" style="color: #2f2f2f">
-          Lacus amet, laoreet viverra id faucibus nisi cras est sit pellentesque amet
-          in auctor ac sapien enim nulla tellus risus ornare.
-        </p>
-      </div>
-    </article>
+      </article>
+    </a>
+    {% endfor %}
   </section>
 
   <aside class="hidden lg:block lg:col-span-3">
