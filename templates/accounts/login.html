@@ -22,11 +22,11 @@
   <body class="auth-body">
     <!-- MOBILE: Small dark header with logo -->
     <div class="auth-mobile-header">
-      <a href="/" class="landing-logo">
+      <a href="/" class="landing-logo block relative h-7 w-28 leading-none overflow-hidden">
         <img
           src="{% static 'images/logo.png' %}"
           alt="SocialIT"
-          style="height: 28px; width: auto"
+          class="absolute inset-0 h-full w-full object-contain"
         />
       </a>
     </div>
@@ -35,17 +35,24 @@
       <!-- LEFT: Dark navy branding panel (desktop only) -->
       <div class="auth-brand-panel">
         <div class="auth-brand-content">
-          <a href="/" class="landing-logo" style="margin-bottom: 2rem">
+          
+          <a
+            href="/"
+            class="landing-logo h-16 w-full max-w-[260px] mx-auto mb-8 leading-none overflow-hidden"
+          >
+          <div class="h-220px w-220px centered">
             <img
               src="{% static 'images/logo.png' %}"
               alt="SocialIT"
-              style="height: 48px; width: auto"
+              class="h-full w-full object-contain"
             />
-          </a>
-          <h1 class="auth-brand-title">{% trans "BIENVENIDO NUEVAMENTE" %}</h1>
+            <h1 class="auth-brand-title">{% trans "BIENVENIDO NUEVAMENTE" %}</h1>
           <p class="auth-brand-subtitle">
             {% trans "Conecta, colabora y crece con la comunidad ATI." %}
           </p>
+          </div>
+          </a>
+          
         </div>
       </div>
 
