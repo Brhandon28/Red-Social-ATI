@@ -1,5 +1,25 @@
 services:
+  sqlite:
+    image: alpine:3.21
+    container_name: sqlite_data_container
+    command: sh -c "mkdir -p /data && touch /data/db.sqlite3 && tail -f /dev/null"
+    volumes:
+      - sqlite_data:/data
+
   web:
-    build: .
+    build:
+      context: .
+      dockerfile: dockerfile
+    container_name: redsocial_web
+    depends_on:
+      - sqlite
     ports:
       - "8000:8000"
+    volumes:
+      - sqlite_data:/data
+    environment:
+      - SQLITE_PATH=/data/db.sqlite3
+    command: sh -c "python manage.py migrate && python manage.py runserver 0.0.0.0:8000"
+
+volumes:
+  sqlite_data:
