@@ -24,13 +24,14 @@ def home_view(request):
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('posts/', include('apps.feed.urls')),
+    path('feed/', include('apps.feed.urls')),
+    path('posts/', include('apps.posts.urls')),
     path('', home_view, name='home'),
     path('', include('apps.accounts.urls')),
     path('perfil/', include('apps.profiles.urls')),
-    path('jobs/', include('apps.jobs.urls')),
-    path('network/', include('apps.network.urls')),
-    path('notifications/', include('apps.notifications.urls')),
+    path('empleos/', include('apps.jobs.urls')),
+    path('mi-red/', include('apps.network.urls')),
+    path('notificaciones/', include('apps.notifications.urls')),
     path('chat/', include('apps.chat.urls')),
 ]
 

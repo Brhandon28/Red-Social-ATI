@@ -1,0 +1,149 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Detalle de empleo{% endblock %}
+{% block nav_jobs %}text-white border-primary bg-white/10{% endblock %}
+{% block mobile_nav_jobs %}text-white{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/styles.css' %}" />
+{% endblock %}
+
+{% block content %}
+<div class="grid grid-cols-12 gap-4 md:gap-6">
+  <aside class="col-span-12 lg:col-span-5 xl:col-span-4">
+    <a href="{% url 'jobs:job_list' %}" class="inline-flex items-center gap-2 text-gray-800 hover:text-primary mb-4">
+      <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+        stroke-linecap="round" stroke-linejoin="round">
+        <line x1="19" y1="12" x2="5" y2="12" />
+        <polyline points="12 19 5 12 12 5" />
+      </svg>
+      <span class="text-base hidden md:inline">Regresar</span>
+      <span class="text-base md:hidden">Ir atrás</span>
+    </a>
+
+    <h2 class="text-2xl font-bold text-black mb-4 hidden md:block">Otros Empleos Similares</h2>
+
+    <div class="space-y-3 hidden md:block">
+      {% for similar in similar_jobs %}
+      <a href="{% url 'jobs:job_detail' similar.id %}" class="block card"
+        style="box-shadow: none; border: 1px solid #dcdcdc; border-radius: 0;">
+        <div class="card-header" style="margin-bottom: 0;">
+          <div style="
+              width: 44px;
+              height: 44px;
+              border-radius: 9999px;
+              border: 1.5px solid #c8c8c8;
+              display: flex;
+              align-items: center;
+              justify-content: center;
+              flex-shrink: 0;
+            ">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#b4b4b4" stroke-width="1.6">
+              <circle cx="12" cy="8" r="4" />
+              <path d="M4 20a8 8 0 0 1 16 0" />
+            </svg>
+          </div>
+          <div class="card-header-info">
+            <h4>{{ similar.company }}</h4>
+            <p class="text-small">{{ similar.location }}</p>
+          </div>
+        </div>
+      </a>
+      {% endfor %}
+    </div>
+  </aside>
+
+  <section class="col-span-12 lg:col-span-7 xl:col-span-8">
+    <article class="card post-card" style="min-height: 100%;">
+      <div class="card-header">
+        <div style="
+            width: 34px;
+            height: 34px;
+            border-radius: 4px;
+            background:
+              linear-gradient(90deg, #000 50%, transparent 50%) 0 0 / 16px 16px,
+              linear-gradient(#000 50%, transparent 50%) 0 0 / 16px 16px;
+            background-color: #fff;
+            border: 1px solid #ececec;
+            flex-shrink: 0;
+          "></div>
+        <div class="card-header-info">
+          <h4>{{ job.company }}</h4>
+          <span class="text-small text-light">{{ job.age }} · 🌐</span>
+        </div>
+        <button class="btn-icon" aria-label="Opciones" style="width: 28px; height: 28px;">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="5" cy="12" r="1" />
+            <circle cx="12" cy="12" r="1" />
+            <circle cx="19" cy="12" r="1" />
+          </svg>
+        </button>
+      </div>
+
+      <h1 class="text-2xl font-bold mb-3 text-gray-900">{{ job.title }}</h1>
+      <p class="text-gray-700 text-base mb-4">{{ job.summary }}</p>
+
+      <button class="btn btn-primary" style="border-radius: 9999px; padding-inline: 2rem; margin-bottom: 2rem;">
+        Aplicar
+      </button>
+
+      <section class="mb-8">
+        <h2 class="text-3xl md:text-2xl font-bold mb-3 text-gray-900" style="font-size: 2rem;">Acerca del empleo</h2>
+        <p class="text-gray-700 text-base" style="line-height: 1.55;">
+          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin tristique neque vitae risus ornare porta.
+          Sed elit diam, volutpat ac interdum ac, egestas sed leo. Duis quis porta sapien. Quisque ultricies
+          vehicula ex ut pulvinar. Sed sit amet ornare lacus, eget interdum massa. Nullam sed lobortis erat.
+          Nulla cursus, sem eget blandit congue, orci libero efficitur dui, quis bibendum magna eros a purus.
+          Nullam iaculis mollis elit nec lacinia. Aliquam luctus auctor efficitur. Nulla porttitor tempus quam
+          vitae semper. Duis dictum a leo sit amet pharetra. Quisque et eleifend mauris. Aenean nec interdum
+          metus. Donec in enim vestibulum ipsum vehicula dictum. Pellentesque sit amet tempus tellus.
+        </p>
+      </section>
+
+      <section class="hidden md:block">
+        <h2 class="text-3xl md:text-2xl font-bold mb-3 text-gray-900" style="font-size: 2rem;">Acerca de la empresa</h2>
+        <p class="text-gray-700 text-base" style="line-height: 1.55;">
+          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin tristique neque vitae risus ornare porta.
+          Sed elit diam, volutpat ac interdum ac, egestas sed leo. Duis quis porta sapien. Quisque ultricies
+          vehicula ex ut pulvinar. Sed sit amet ornare lacus, eget interdum massa. Nullam sed lobortis erat.
+          Nulla cursus, sem eget blandit congue, orci libero efficitur dui, quis bibendum magna eros a purus.
+          Nullam iaculis mollis elit nec lacinia. Aliquam luctus auctor efficitur. Nulla porttitor tempus quam vitae
+          semper. Duis dictum a leo sit amet pharetra. Quisque et eleifend mauris. Aenean nec interdum metus.
+          Donec in enim vestibulum ipsum vehicula dictum. Pellentesque sit amet tempus tellus.
+        </p>
+      </section>
+
+      <section class="md:hidden mt-8">
+        <h2 class="text-xl font-bold mb-3 text-gray-900">Empleos similares</h2>
+        <div class="space-y-2 border-t border-gray-300 pt-2">
+          {% for similar in similar_jobs|slice:":3" %}
+          <a href="{% url 'jobs:job_detail' similar.id %}"
+            class="flex items-center gap-3 py-2 border-b border-gray-200">
+            <div style="
+                width: 44px;
+                height: 44px;
+                border-radius: 9999px;
+                border: 1.5px solid #c8c8c8;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                flex-shrink: 0;
+              ">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#b4b4b4" stroke-width="1.6">
+                <circle cx="12" cy="8" r="4" />
+                <path d="M4 20a8 8 0 0 1 16 0" />
+              </svg>
+            </div>
+            <div>
+              <h4 class="font-semibold text-gray-800 text-base">{{ similar.company }}</h4>
+              <p class="text-gray-600">{{ similar.location }}</p>
+            </div>
+          </a>
+          {% endfor %}
+        </div>
+      </section>
+    </article>
+  </section>
+</div>
+{% endblock %}

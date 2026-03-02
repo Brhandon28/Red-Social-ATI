@@ -21,11 +21,11 @@ class HardcodedAuthMiddleware:
             '/media/',
         )
         self.protected_prefixes = (
-            '/posts/',
+            '/feed/',
             '/perfil/',
-            '/jobs/',
-            '/network/',
-            '/notifications/',
+            '/empleos/',
+            '/mi-red/',
+            '/notificaciones/',
             '/chat/',
             '/cerrar-sesion/',
         )
