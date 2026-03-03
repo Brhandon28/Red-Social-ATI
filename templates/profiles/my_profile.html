@@ -54,10 +54,9 @@
         </div>
 
         <div style="padding-top: 0.9rem;">
-          <h1 style="font-size: 1.9rem; line-height: 1.1; margin-bottom: 0.35rem;">Nombre Apellido</h1>
+          <h1 style="font-size: 1.9rem; line-height: 1.1; margin-bottom: 0.35rem;">{{ current_user_display_name }}</h1>
           <p class="text-small text-light" style="max-width: 92%; line-height: 1.5; margin-bottom: 1rem;">
-            Lacus amet, laoreet viverra id faucibus nisi cras est sit pellentesque amet in auctor ac sapien enim nulla
-            tellus risus ornare lobortis commodo in proin in fermentum morbi at sem facilisi
+            {{ current_user_role }} · @{{ current_user_username }}
           </p>
 
           <div style="margin-bottom: 1rem;">

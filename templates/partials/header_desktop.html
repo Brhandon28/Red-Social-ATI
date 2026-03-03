@@ -1,0 +1,125 @@
+{% load static %}
+{% load i18n %}
+<header class="hidden md:block fixed top-0 left-0 right-0 z-50 bg-navy shadow-lg h-16">
+  {% with current_ns=request.resolver_match.namespace current_name=request.resolver_match.url_name %}
+  <div class="max-w-7xl mx-auto h-full flex items-center justify-between px-4 gap-4">
+    <a href="{% url 'feed:index' %}" class="flex-shrink-0">
+      <img
+        src="{% static 'images/logo.png' %}"
+        alt="SocialIT"
+        class="h-[60px] w-auto object-contain"
+      />
+    </a>
+
+    <div class="flex-1 max-w-md relative">
+      <svg
+        class="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-white/60 pointer-events-none"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+      >
+        <circle cx="11" cy="11" r="8" />
+        <line x1="21" y1="21" x2="16.65" y2="16.65" />
+      </svg>
+      <input
+        type="search"
+        id="global-search"
+        class="w-full pl-10 pr-4 py-2 rounded-lg bg-white/15 border border-white/20 text-white text-sm placeholder-white/60 focus:bg-white/25 focus:border-primary focus:outline-none"
+        placeholder="{% trans 'Search...' %}"
+        aria-label="{% trans 'Búsqueda global' %}"
+      />
+    </div>
+
+    <nav class="flex items-center gap-1" aria-label="{% trans 'Navegación principal' %}">
+      <a
+        href="{% url 'feed:index' %}"
+        class="flex flex-col items-center gap-0.5 px-3 py-1 text-primary text-[0.65rem] font-medium no-underline border-b-2 border-transparent rounded-t-lg transition-all hover:text-white hover:bg-white/10 {% if current_ns == 'feed' and current_name == 'index' %}text-white border-primary bg-white/10{% endif %} {% block nav_feed %}{% endblock %}"
+        {% if current_ns == 'feed' and current_name == 'index' %}aria-current="page"{% endif %}
+      >
+        <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" />
+          <polyline points="9 22 9 12 15 12 15 22" />
+        </svg>
+        <span>{% trans "Inicio" %}</span>
+      </a>
+
+      <a
+        href="{% url 'feed:create_post' %}"
+        class="flex flex-col items-center gap-0.5 px-3 py-1 text-primary text-[0.65rem] font-medium no-underline border-b-2 border-transparent rounded-t-lg transition-all hover:text-white hover:bg-white/10 {% if current_ns == 'feed' and current_name == 'create_post' %}text-white border-primary bg-white/10{% endif %} {% block nav_create %}{% endblock %}"
+        {% if current_ns == 'feed' and current_name == 'create_post' %}aria-current="page"{% endif %}
+      >
+        <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="12" cy="12" r="10" />
+          <line x1="12" y1="8" x2="12" y2="16" />
+          <line x1="8" y1="12" x2="16" y2="12" />
+        </svg>
+        <span>{% trans "Publicar" %}</span>
+      </a>
+
+      <a
+        href="{% url 'chat:inbox' %}"
+        class="flex flex-col items-center gap-0.5 px-3 py-1 text-primary text-[0.65rem] font-medium no-underline border-b-2 border-transparent rounded-t-lg transition-all hover:text-white hover:bg-white/10 {% if current_ns == 'chat' %}text-white border-primary bg-white/10{% endif %} {% block nav_chat %}{% endblock %}"
+        {% if current_ns == 'chat' %}aria-current="page"{% endif %}
+      >
+        <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" />
+        </svg>
+        <span>{% trans "Mensajes" %}</span>
+      </a>
+
+      <a
+        href="{% url 'network:contacts' %}"
+        class="flex flex-col items-center gap-0.5 px-3 py-1 text-primary text-[0.65rem] font-medium no-underline border-b-2 border-transparent rounded-t-lg transition-all hover:text-white hover:bg-white/10 {% if current_ns == 'network' %}text-white border-primary bg-white/10{% endif %} {% block nav_contacts %}{% endblock %}"
+        {% if current_ns == 'network' %}aria-current="page"{% endif %}
+      >
+        <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" />
+          <circle cx="9" cy="7" r="4" />
+          <path d="M23 21v-2a4 4 0 0 0-3-3.87" />
+          <path d="M16 3.13a4 4 0 0 1 0 7.75" />
+        </svg>
+        <span>{% trans "Mi Red" %}</span>
+      </a>
+
+      <a
+        href="{% url 'jobs:job_list' %}"
+        class="flex flex-col items-center gap-0.5 px-3 py-1 text-primary text-[0.65rem] font-medium no-underline border-b-2 border-transparent rounded-t-lg transition-all hover:text-white hover:bg-white/10 {% if current_ns == 'jobs' %}text-white border-primary bg-white/10{% endif %} {% block nav_jobs %}{% endblock %}"
+        {% if current_ns == 'jobs' %}aria-current="page"{% endif %}
+      >
+        <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <rect x="2" y="7" width="20" height="14" rx="2" ry="2" />
+          <path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16" />
+        </svg>
+        <span>{% trans "Empleos" %}</span>
+      </a>
+
+      <a
+        href="{% url 'notifications:index' %}"
+        class="flex flex-col items-center gap-0.5 px-3 py-1 text-primary text-[0.65rem] font-medium no-underline border-b-2 border-transparent rounded-t-lg transition-all hover:text-white hover:bg-white/10 {% if current_ns == 'notifications' %}text-white border-primary bg-white/10{% endif %} {% block nav_notifications %}{% endblock %}"
+        {% if current_ns == 'notifications' %}aria-current="page"{% endif %}
+      >
+        <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9" />
+          <path d="M13.73 21a2 2 0 0 1-3.46 0" />
+        </svg>
+        <span>{% trans "Notificaciones" %}</span>
+      </a>
+
+      <a
+        href="{% url 'profiles:my_profile' %}"
+        class="flex flex-col items-center gap-0.5 px-3 py-1 text-primary text-[0.65rem] font-medium no-underline border-b-2 border-transparent rounded-t-lg transition-all hover:text-white hover:bg-white/10 {% if current_ns == 'profiles' %}text-white border-primary bg-white/10{% endif %} {% block nav_profile %}{% endblock %}"
+        {% if current_ns == 'profiles' %}aria-current="page"{% endif %}
+      >
+        <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
+          <circle cx="12" cy="7" r="4" />
+        </svg>
+        <span>{% trans "Yo" %}</span>
+      </a>
+    </nav>
+  </div>
+  {% endwith %}
+</header>
