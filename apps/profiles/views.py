@@ -1,16 +1,14 @@
 from django.contrib import messages
+from django.contrib.auth.decorators import login_required
 from django.shortcuts import redirect, render
 from django.utils.translation import gettext_lazy as _
 
 
+@login_required
 def my_profile(request):
-    current_username = (getattr(request, 'hardcoded_user', '') or '').strip()
-    if current_username:
-        display_name = current_username.capitalize()
-        username = current_username
-    else:
-        display_name = 'Usuario'
-        username = 'usuario'
+    user = request.user
+    display_name = str(user) if user.is_authenticated else 'Usuario'
+    username = user.username if user.is_authenticated else 'usuario'
 
     return render(
         request,
@@ -23,6 +21,7 @@ def my_profile(request):
     )
 
 
+@login_required
 def edit_profile(request):
     if request.method == 'POST':
         messages.success(request, _('Tu perfil fue actualizado exitosamente.'))
@@ -30,5 +29,6 @@ def edit_profile(request):
     return render(request, 'profiles/edit_profile.html')
 
 
+@login_required
 def contact_profile(request, username):
     return render(request, 'profiles/contact_profile.html', {'username': username})
