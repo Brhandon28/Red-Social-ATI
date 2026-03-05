@@ -31,7 +31,7 @@
       <div class="auth-form-panel">
         <div class="auth-form-container">
           <div class="auth-card">
-            <h2 class="auth-card-title">{% trans "Iniciar Sesion" %}</h2>
+            <h2 class="auth-card-title">{% trans "Iniciar Sesión" %}</h2>
 
             {% if form.errors %}
             <div
@@ -41,8 +41,7 @@
             >
               <span class="alert-icon" aria-hidden="true">⚠️</span>
               <p class="alert-content">
-                {% trans "Correo o contraseña incorrectos. Verifica tus datos."
-                %}
+                {% trans "Correo o contraseña incorrectos. Verifica tus datos." %}
               </p>
             </div>
             {% endif %}
@@ -54,7 +53,7 @@
                 class="form-group {% if form.username.errors %}has-error{% endif %}"
               >
                 <label for="id_username" class="form-label"
-                  >{% trans "Correo Electronico" %}</label
+                  >{% trans "Correo Electrónico" %}</label
                 >
                 <input
                   type="email"
@@ -62,7 +61,7 @@
                   name="username"
                   class="form-input"
                   required
-                  placeholder="{% trans 'lexample@correo.com' %}"
+                  placeholder="{% trans 'ejemplo@correo.com' %}"
                   autocomplete="email"
                   value="{{ form.username.value|default:'' }}"
                   {%
@@ -117,7 +116,7 @@
             </form>
 
             <a href="#" class="auth-forgot-link"
-              >{% trans "Olvido su contraseña?" %}</a
+              >{% trans "¿Olvido su contraseña?" %}</a
             >
           </div>
 
