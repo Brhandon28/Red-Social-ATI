@@ -1,76 +1,12 @@
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
-from django.shortcuts import redirect, render
+from django.db.models import BooleanField, Count, Exists, OuterRef, Value
+from django.shortcuts import get_object_or_404, redirect, render
+from django.utils.http import url_has_allowed_host_and_scheme
 from django.utils.translation import gettext_lazy as _
+from django.views.decorators.http import require_POST
 
-SAMPLE_PUBLICATIONS = [
-    {
-        'id': 1,
-        'company': 'Empresa',
-        'followers': '326 followers',
-        'age': '18 h',
-        'summary': (
-            'Lacus amet, laoreet viverra id faucibus nisi cras est sit pellentesque amet in auctor ac '
-            'sapien enim nulla tellus risus ornare lobortis commodo in proin in fermentum morbi at sem '
-            'facilisi orci magna in sagittis, tortor ac maecenas eget etiam ullamcorper magna eu risus '
-            'ipsum nec nibh lacus, suspendisse'
-        ),
-    },
-    {
-        'id': 2,
-        'company': 'Company name',
-        'followers': '326 followers',
-        'age': '20 h',
-        'summary': (
-            'Lacus amet, laoreet viverra id faucibus nisi cras est sit pellentesque amet in auctor ac '
-            'sapien enim nulla tellus risus ornare lobortis commodo in proin in fermentum morbi at sem '
-            'facilisi orci magna in sagittis, tortor ac maecenas eget etiam ullamcorper magna eu risus.'
-        ),
-    },
-    {
-        'id': 3,
-        'company': 'Company name',
-        'followers': '326 followers',
-        'age': '20 h',
-        'summary': (
-            'Lacus amet, laoreet viverra id faucibus nisi cras est sit pellentesque amet in auctor ac '
-            'sapien enim nulla tellus risus ornare lobortis commodo in proin ........'
-        ),
-    },
-    {
-        'id': 4,
-        'company': 'Company name',
-        'followers': '326 followers',
-        'age': '20 h',
-        'summary': (
-            'Lacus amet, laoreet viverra id faucibus nisi cras est sit pellentesque amet in auctor ac '
-            'sapien enim nulla tellus risus ornare lobortis commodo in proin ........'
-        ),
-    },
-]
-
-SAMPLE_COMMENTS = [
-    {
-        'id': 1,
-        'author': 'Maecenas condimentum',
-        'text': (
-            'Lacus amet, laoreet viverra id faucibus nisi cras est sit pellentesque amet in auctor ac '
-            'sapien enim nulla tellus risus ornare lobortis commodo in proin in fermentum morbi at sem '
-            'facilisi orci magna in sagittis, tortor ac maecenas eget etiam ullamcorper magna eu risus '
-            'ipsum nec nibh lacus, suspendisse'
-        ),
-    },
-    {
-        'id': 2,
-        'author': 'Maecenas condimentum',
-        'text': (
-            'Lacus amet, laoreet viverra id faucibus nisi cras est sit pellentesque amet in auctor ac '
-            'sapien enim nulla tellus risus ornare lobortis commodo in proin in fermentum morbi at sem '
-            'facilisi orci magna in sagittis, tortor ac maecenas eget etiam ullamcorper magna eu risus '
-            'ipsum nec nibh lacus, suspendisse'
-        ),
-    },
-]
+from apps.posts.models import Comment, CommentLike, Publication, PublicationLike
 
 
 def _get_current_user_profile(request):
@@ -86,38 +22,69 @@ def _get_current_user_profile(request):
     }
 
 
-def _get_session_publications(request):
-    return request.session.get('publications_created', [])
+def _is_company_user(user):
+    return getattr(user, 'tipoUsuario', None) == 'empresa'
 
 
-def _save_session_publications(request, publications):
-    request.session['publications_created'] = publications
+def _safe_next_url(request, default_url):
+    next_url = request.POST.get('next')
+    if next_url and url_has_allowed_host_and_scheme(next_url, {request.get_host()}):
+        return next_url
+    return default_url
 
 
-def _build_publications_for_ui(request):
-    return _get_session_publications(request) + SAMPLE_PUBLICATIONS
+def _publication_queryset_for_user(user):
+    publications = Publication.objects.select_related('author').annotate(
+        likes_count=Count('likes', distinct=True),
+        comments_count=Count('comments', distinct=True),
+    )
+
+    if user.is_authenticated:
+        return publications.annotate(
+            liked_by_me=Exists(
+                PublicationLike.objects.filter(publication=OuterRef('pk'), user=user)
+            )
+        )
+
+    return publications.annotate(liked_by_me=Value(False, output_field=BooleanField()))
 
 
-def _next_publication_id(publications):
-    if not publications:
-        return 1
-    return max(publication['id'] for publication in publications) + 1
+def _comment_queryset_for_user(publication, user, *, top_level_only=False, replies_only=False):
+    comments = Comment.objects.filter(publication=publication).select_related('author').annotate(
+        likes_count=Count('likes', distinct=True),
+    )
+
+    if top_level_only:
+        comments = comments.filter(parent__isnull=True)
+    if replies_only:
+        comments = comments.filter(parent__isnull=False)
+
+    if user.is_authenticated:
+        comments = comments.annotate(
+            liked_by_me=Exists(CommentLike.objects.filter(comment=OuterRef('pk'), user=user))
+        )
+    else:
+        comments = comments.annotate(liked_by_me=Value(False, output_field=BooleanField()))
+
+    return comments.order_by('created_at')
 
 
-def _get_publication(post_id, publications):
-    return next((publication for publication in publications if publication['id'] == post_id), publications[0])
+def _top_publications_for_user(user, limit=3):
+    return _publication_queryset_for_user(user).order_by('-likes_count', '-comments_count', '-created_at')[:limit]
 
 
 @login_required
 def index(request):
     user_profile = _get_current_user_profile(request)
-    publications = _build_publications_for_ui(request)
+    publications = _publication_queryset_for_user(request.user)
+    top_publications = _top_publications_for_user(request.user)
 
     return render(
         request,
         'feed/index.html',
         {
             'publications': publications,
+            'top_publications': top_publications,
             'current_user_display_name': user_profile['display_name'],
             'current_user_role': user_profile['role'],
         },
@@ -126,15 +93,19 @@ def index(request):
 
 @login_required
 def company_feed(request):
+    if not _is_company_user(request.user):
+        messages.error(request, _('Esta seccion esta disponible solo para cuentas empresa.'))
+        return redirect('feed:index')
+
     user_profile = _get_current_user_profile(request)
-    publications = _build_publications_for_ui(request)
+    publications = _publication_queryset_for_user(request.user)
 
     return render(
         request,
         'feed/company_feed.html',
         {
             'publications': publications[:2],
-            'top_publications': publications[1:4],
+            'top_publications': publications.order_by('-likes_count', '-created_at')[:3],
             'current_user_display_name': user_profile['display_name'],
             'current_user_role': user_profile['role'],
         },
@@ -143,16 +114,27 @@ def company_feed(request):
 
 @login_required
 def post_detail(request, post_id):
-    publications = _build_publications_for_ui(request)
-    publication = _get_publication(post_id, publications)
-    top_publications = [item for item in publications if item['id'] != publication['id']][:3]
+    publication = get_object_or_404(_publication_queryset_for_user(request.user), pk=post_id)
+    comments = list(_comment_queryset_for_user(publication, request.user, top_level_only=True))
+    replies = _comment_queryset_for_user(publication, request.user, replies_only=True)
+    replies_by_parent = {}
+    for reply in replies:
+        replies_by_parent.setdefault(reply.parent_id, []).append(reply)
+    for comment in comments:
+        comment.replies_for_ui = replies_by_parent.get(comment.id, [])
+
+    top_publications = (
+        _publication_queryset_for_user(request.user)
+        .exclude(pk=publication.pk)
+        .order_by('-likes_count', '-created_at')[:3]
+    )
 
     return render(
         request,
         'feed/publication_detail.html',
         {
             'publication': publication,
-            'comments': SAMPLE_COMMENTS,
+            'comments': comments,
             'top_publications': top_publications,
         },
     )
@@ -161,11 +143,13 @@ def post_detail(request, post_id):
 @login_required
 def create_post(request):
     user_profile = _get_current_user_profile(request)
+    top_publications = _top_publications_for_user(request.user)
 
     if request.method == 'POST':
         content = (request.POST.get('content') or '').strip()
+        image = request.FILES.get('image')
 
-        if not content:
+        if not content and not image:
             messages.error(request, _('Escribe el contenido de la publicación antes de publicar.'))
             return render(
                 request,
@@ -173,21 +157,11 @@ def create_post(request):
                 {
                     'current_user_display_name': user_profile['display_name'],
                     'current_user_role': user_profile['role'],
+                    'top_publications': top_publications,
                 },
             )
 
-        publications_for_ui = _build_publications_for_ui(request)
-        new_publication = {
-            'id': _next_publication_id(publications_for_ui),
-            'company': user_profile['display_name'],
-            'followers': user_profile['role'],
-            'age': 'Ahora',
-            'summary': content,
-        }
-
-        session_publications = _get_session_publications(request)
-        session_publications.insert(0, new_publication)
-        _save_session_publications(request, session_publications)
+        Publication.objects.create(author=request.user, content=content, image=image)
 
         messages.success(request, _('Tu publicación fue creada exitosamente.'))
         return redirect('feed:index')
@@ -198,5 +172,117 @@ def create_post(request):
         {
             'current_user_display_name': user_profile['display_name'],
             'current_user_role': user_profile['role'],
+            'top_publications': top_publications,
         },
     )
+
+
+@login_required
+@require_POST
+def add_comment(request, post_id):
+    publication = get_object_or_404(Publication, pk=post_id)
+    content = (request.POST.get('content') or '').strip()
+    parent_comment_id = request.POST.get('parent_comment_id')
+
+    if not content:
+        messages.error(request, _('Escribe un comentario antes de publicarlo.'))
+        return redirect('feed:publication_detail', post_id=publication.pk)
+
+    parent_comment = None
+    if parent_comment_id:
+        parent_comment = get_object_or_404(Comment, pk=parent_comment_id, publication=publication)
+
+    Comment.objects.create(
+        publication=publication,
+        parent=parent_comment,
+        author=request.user,
+        content=content,
+    )
+    messages.success(request, _('Tu comentario fue publicado.'))
+    return redirect('feed:publication_detail', post_id=publication.pk)
+
+
+@login_required
+@require_POST
+def edit_comment(request, post_id, comment_id):
+    comment = get_object_or_404(Comment, pk=comment_id, publication_id=post_id)
+
+    if comment.author_id != request.user.id:
+        messages.error(request, _('No tienes permisos para editar este comentario.'))
+        return redirect('feed:publication_detail', post_id=post_id)
+
+    content = (request.POST.get('content') or '').strip()
+    if not content:
+        messages.error(request, _('El comentario no puede quedar vacio.'))
+        return redirect(f"{_safe_next_url(request, f'/feed/publicacion/{post_id}/')}?edit_comment={comment_id}")
+
+    comment.content = content
+    comment.save(update_fields=['content', 'updated_at'])
+    messages.success(request, _('Comentario actualizado correctamente.'))
+
+    default_url = request.META.get('HTTP_REFERER') or f'/feed/publicacion/{post_id}/'
+    return redirect(_safe_next_url(request, default_url))
+
+
+@login_required
+@require_POST
+def delete_comment(request, post_id, comment_id):
+    comment = get_object_or_404(Comment, pk=comment_id, publication_id=post_id)
+
+    if comment.author_id != request.user.id:
+        messages.error(request, _('No tienes permisos para eliminar este comentario.'))
+        return redirect('feed:publication_detail', post_id=post_id)
+
+    comment.delete()
+    messages.success(request, _('Comentario eliminado.'))
+
+    default_url = request.META.get('HTTP_REFERER') or f'/feed/publicacion/{post_id}/'
+    return redirect(_safe_next_url(request, default_url))
+
+
+@login_required
+@require_POST
+def toggle_publication_like(request, post_id):
+    publication = get_object_or_404(Publication, pk=post_id)
+    like, created = PublicationLike.objects.get_or_create(
+        publication=publication,
+        user=request.user,
+    )
+
+    if not created:
+        like.delete()
+
+    default_url = request.META.get('HTTP_REFERER') or '/feed/'
+    return redirect(_safe_next_url(request, default_url))
+
+
+@login_required
+@require_POST
+def delete_publication(request, post_id):
+    publication = get_object_or_404(Publication, pk=post_id)
+
+    if publication.author_id != request.user.id:
+        messages.error(request, _('No tienes permisos para eliminar esta publicacion.'))
+        return redirect('feed:publication_detail', post_id=post_id)
+
+    publication.delete()
+    messages.success(request, _('Publicacion eliminada.'))
+
+    default_url = request.META.get('HTTP_REFERER') or '/feed/'
+    return redirect(_safe_next_url(request, default_url))
+
+
+@login_required
+@require_POST
+def toggle_comment_like(request, post_id, comment_id):
+    comment = get_object_or_404(Comment, pk=comment_id, publication_id=post_id)
+    like, created = CommentLike.objects.get_or_create(
+        comment=comment,
+        user=request.user,
+    )
+
+    if not created:
+        like.delete()
+
+    default_url = request.META.get('HTTP_REFERER') or f'/feed/publicacion/{post_id}/'
+    return redirect(_safe_next_url(request, default_url))

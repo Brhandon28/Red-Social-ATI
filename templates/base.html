@@ -46,15 +46,23 @@
         <div class="mb-4">
           {% for message in messages %}
           <div
-            class="flex items-start gap-3 p-4 rounded-lg mb-2 text-sm {% if message.tags == 'success' %}bg-green-50 text-green-800 border border-green-200{% elif message.tags == 'error' %}bg-red-50 text-red-800 border border-red-200{% else %}bg-blue-50 text-blue-800 border border-blue-200{% endif %}"
+            class="alert alert-{{ message.tags }} flex items-start gap-3 p-4 rounded-lg mb-2 text-sm transition-all duration-200 {% if message.tags == 'success' %}bg-green-50 text-green-800 border border-green-200 {% elif message.tags == 'error' %}bg-red-50 text-red-800 border border-red-200{% elif message.tags == 'warning' %}bg-yellow-50 text-yellow-800 border border-yellow-200{% else %}bg-blue-50 text-blue-800 border border-blue-200{% endif %}"
+            data-auto-dismiss="true"
+            data-timeout="6000"
             role="alert"
           >
-            <span aria-hidden="true"
-              >{% if message.tags == 'success' %}✓{% elif message.tags ==
-              'error' %}⚠️{% else %}ℹ{% endif %}</span
-            >
+            <span aria-hidden="true">
+              {% if message.tags == 'success' %}
+                ✓
+              {% elif message.tags == 'error' %}
+                ⚠️
+              {% else %}
+                ℹ
+              {% endif %}
+              </span>
             <p class="flex-1">{{ message }}</p>
             <button
+              type="button"
               class="alert-close opacity-60 hover:opacity-100 text-lg leading-none"
               aria-label="{% trans 'Cerrar alerta' %}"
             >

@@ -6,9 +6,9 @@
     >
       {% with current_ns=request.resolver_match.namespace current_name=request.resolver_match.url_name %}
       <a
-        href="{% url 'feed:index' %}"
+        href="{% if request.user.is_authenticated and request.user.tipoUsuario == 'empresa' %}{% url 'feed:company_feed' %}{% else %}{% url 'feed:index' %}{% endif %}"
         class="flex items-center justify-center p-2 text-primary hover:text-primary-light transition-colors {% if current_ns == 'feed' and current_name == 'index' %}text-white{% endif %} {% block mobile_nav_feed %}{% endblock %}"
-        {% if current_ns == 'feed' and current_name == 'index' %}aria-current="page"{% endif %}
+        {% if current_ns == 'feed' and current_name == 'index' or current_ns == 'feed' and current_name == 'company_feed' %}aria-current="page"{% endif %}
       >
         <svg
           class="w-8 h-8"
@@ -63,7 +63,7 @@
         </svg>
       </a>
       <a
-        href="{% url 'jobs:job_list' %}"
+        href="{% if request.user.is_authenticated and request.user.tipoUsuario == 'empresa' %}{% url 'jobs:company_job_list' %}{% else %}{% url 'jobs:job_list' %}{% endif %}"
         class="flex items-center justify-center p-2 text-primary hover:text-primary-light transition-colors {% if current_ns == 'jobs' %}text-white{% endif %} {% block mobile_nav_jobs %}{% endblock %}"
         {% if current_ns == 'jobs' %}aria-current="page"{% endif %}
       >

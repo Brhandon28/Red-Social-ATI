@@ -19,6 +19,12 @@ class Usuario(AbstractUser):
         max_length=150,
         blank=True,
     )
+    profileImage = models.ImageField(
+        _('foto de perfil'),
+        upload_to='profiles/',
+        blank=True,
+        null=True,
+    )
     tipoUsuario = models.CharField(
         _('tipo de usuario'),
         max_length=20,

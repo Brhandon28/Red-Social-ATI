@@ -86,10 +86,19 @@
             <div
               class="alert alert-error"
               role="alert"
+              data-auto-dismiss="true"
+              data-timeout="6000"
               style="margin-bottom: 1rem"
             >
               <span class="alert-icon" aria-hidden="true">⚠️</span>
               <p class="alert-content">{{ form.non_field_errors.0 }}</p>
+              <button
+                type="button"
+                class="alert-close opacity-60 hover:opacity-100 text-lg leading-none"
+                aria-label="{% trans 'Cerrar alerta' %}"
+              >
+                ×
+              </button>
             </div>
             {% endif %}
 
@@ -222,6 +231,7 @@
         </div>
       </div>
     </div>
+    <script src="{% static 'js/main.js' %}"></script>
 
     <script src="{% static 'js/main.js' %}"></script>
     <script>
