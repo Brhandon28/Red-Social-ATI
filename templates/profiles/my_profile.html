@@ -126,14 +126,16 @@
   </section>
 
   <aside class="hidden lg:block lg:col-span-4 space-y-4">
-    <div class="card" style="padding: 1rem;">
-      <h3 style="font-size: 1rem; margin-bottom: 1rem; display: flex; align-items: center; gap: 0.45rem;">
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-          <path d="M14.7 6.3a1 1 0 0 0-1.4 0l-7 7a1 1 0 0 0 0 1.4l3 3a1 1 0 0 0 1.4 0l7-7a1 1 0 0 0 0-1.4z" />
-          <path d="M16 4l4 4" />
-        </svg>
-        Preferencias de la cuenta
-      </h3>
+    <div class="card p-4 flex flex-col gap-2">
+      <div>
+        <h3 style="font-size: 1rem; margin-bottom: 1rem; display: flex; align-items: center; gap: 0.45rem;">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M14.7 6.3a1 1 0 0 0-1.4 0l-7 7a1 1 0 0 0 0 1.4l3 3a1 1 0 0 0 1.4 0l7-7a1 1 0 0 0 0-1.4z" />
+            <path d="M16 4l4 4" />
+          </svg>
+          Preferencias de la cuenta
+        </h3>
+      </div>
 
       <div class="flex items-center justify-between" style="font-size: 0.9rem;">
         <span style="display: flex; align-items: center; gap: 0.45rem;">
@@ -161,6 +163,18 @@
               top: 2px;
             "></span>
         </button>
+      </div>
+
+      <div>
+        <a href="{% url 'accounts:logout' %}"
+          class="btn flex items-center justify-center gap-2 w-full py-1 px-2 text-sm rounded-full bg-red-600 text-white no-underline text-center hover:bg-red-400 hover:text-red-800">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4" />
+            <polyline points="16 17 21 12 16 7" />
+            <line x1="21" y1="12" x2="9" y2="12" />
+          </svg>
+          Cerrar sesión
+        </a>
       </div>
     </div>
 
