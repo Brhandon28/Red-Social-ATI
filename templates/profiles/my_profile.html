@@ -54,16 +54,15 @@
         </div>
 
         <div style="padding-top: 0.9rem;">
-          <h1 style="font-size: 1.9rem; line-height: 1.1; margin-bottom: 0.35rem;">Nombre Apellido</h1>
+          <h1 style="font-size: 1.9rem; line-height: 1.1; margin-bottom: 0.35rem;">{{ current_user_display_name }}</h1>
           <p class="text-small text-light" style="max-width: 92%; line-height: 1.5; margin-bottom: 1rem;">
-            Lacus amet, laoreet viverra id faucibus nisi cras est sit pellentesque amet in auctor ac sapien enim nulla
-            tellus risus ornare lobortis commodo in proin in fermentum morbi at sem facilisi
+            {{ current_user_role }} · @{{ current_user_username }}
           </p>
 
           <div style="margin-bottom: 1rem;">
             <h2 style="font-size: 1.8rem; margin-bottom: 0.5rem;">Trayectoria</h2>
             <div class="space-y-2">
-              {% for _ in '123' %}
+              {% for item in work_experiences %}
               <div class="card" style="box-shadow: none; border: 1px solid #ddd; border-radius: 0; padding: 0.65rem;">
                 <div class="card-header" style="margin-bottom: 0; gap: 0.6rem;">
                   <div
@@ -74,10 +73,17 @@
                     </svg>
                   </div>
                   <div class="card-header-info">
-                    <h4 style="font-size: 0.95rem;">Faucibus molestie</h4>
-                    <p class="text-small">Tellus neque</p>
+                    <h4 style="font-size: 0.95rem;">{{ item.position }}</h4>
+                    <p class="text-small">{{ item.company }}</p>
+                    {% if item.description %}
+                    <p class="text-small text-light">{{ item.description }}</p>
+                    {% endif %}
                   </div>
                 </div>
+              </div>
+              {% empty %}
+              <div class="card" style="box-shadow: none; border: 1px solid #ddd; border-radius: 0; padding: 0.65rem;">
+                <p class="text-small text-light">Aun no agregaste trayectoria laboral.</p>
               </div>
               {% endfor %}
             </div>
@@ -86,7 +92,7 @@
           <div style="margin-bottom: 1rem;">
             <h2 style="font-size: 1.8rem; margin-bottom: 0.5rem;">Educación</h2>
             <div class="space-y-2">
-              {% for _ in '12' %}
+              {% for item in educations %}
               <div class="card" style="box-shadow: none; border: 1px solid #ddd; border-radius: 0; padding: 0.65rem;">
                 <div class="card-header" style="margin-bottom: 0; gap: 0.6rem;">
                   <div
@@ -97,29 +103,36 @@
                     </svg>
                   </div>
                   <div class="card-header-info">
-                    <h4 style="font-size: 0.95rem;">Faucibus molestie</h4>
-                    <p class="text-small">Tellus neque</p>
+                    <h4 style="font-size: 0.95rem;">{{ item.degree }}</h4>
+                    <p class="text-small">{{ item.institution }}</p>
+                    {% if item.field_of_study %}
+                    <p class="text-small text-light">{{ item.field_of_study }}</p>
+                    {% endif %}
                   </div>
                 </div>
               </div>
+              {% empty %}
+              <div class="card" style="box-shadow: none; border: 1px solid #ddd; border-radius: 0; padding: 0.65rem;">
+                <p class="text-small text-light">Aun no agregaste trayectoria educativa.</p>
+              </div>
               {% endfor %}
             </div>
-            <div class="text-right text-small text-muted" style="margin-top: 0.35rem;">Ver mas</div>
           </div>
 
           <div>
             <h2 style="font-size: 1.8rem; margin-bottom: 0.5rem;">Habilidades</h2>
             <div class="space-y-2">
+              {% for user_skill in selected_user_skills %}
               <div style="background: #e8f4fb; border: 1px solid #cce2ef; padding: 0.55rem 0.65rem;">
-                <strong style="font-size: 0.8rem; display: block;">List item</strong>
-                <span class="text-xs text-light">Supporting line text lorem ipsum dolor sit amet, consectetur.</span>
+                <strong style="font-size: 0.8rem; display: block;">{{ user_skill.skill.name }}</strong>
+                <span class="text-xs text-light">Habilidad de programacion web</span>
               </div>
-              <div style="background: #e8f4fb; border: 1px solid #cce2ef; padding: 0.55rem 0.65rem;">
-                <strong style="font-size: 0.8rem; display: block;">List item</strong>
-                <span class="text-xs text-light">Supporting line text lorem ipsum dolor sit amet, consectetur.</span>
+              {% empty %}
+              <div style="background: #f5f5f5; border: 1px solid #ddd; padding: 0.55rem 0.65rem;">
+                <span class="text-xs text-light">Aun no agregaste habilidades.</span>
               </div>
+              {% endfor %}
             </div>
-            <div class="text-right text-small text-muted" style="margin-top: 0.35rem;">Ver mas</div>
           </div>
         </div>
       </div>
@@ -127,14 +140,16 @@
   </section>
 
   <aside class="hidden lg:block lg:col-span-4 space-y-4">
-    <div class="card" style="padding: 1rem;">
-      <h3 style="font-size: 1rem; margin-bottom: 1rem; display: flex; align-items: center; gap: 0.45rem;">
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-          <path d="M14.7 6.3a1 1 0 0 0-1.4 0l-7 7a1 1 0 0 0 0 1.4l3 3a1 1 0 0 0 1.4 0l7-7a1 1 0 0 0 0-1.4z" />
-          <path d="M16 4l4 4" />
-        </svg>
-        Preferencias de la cuenta
-      </h3>
+    <div class="card p-4 flex flex-col gap-2">
+      <div>
+        <h3 style="font-size: 1rem; margin-bottom: 1rem; display: flex; align-items: center; gap: 0.45rem;">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M14.7 6.3a1 1 0 0 0-1.4 0l-7 7a1 1 0 0 0 0 1.4l3 3a1 1 0 0 0 1.4 0l7-7a1 1 0 0 0 0-1.4z" />
+            <path d="M16 4l4 4" />
+          </svg>
+          Preferencias de la cuenta
+        </h3>
+      </div>
 
       <div class="flex items-center justify-between" style="font-size: 0.9rem;">
         <span style="display: flex; align-items: center; gap: 0.45rem;">
@@ -163,12 +178,24 @@
             "></span>
         </button>
       </div>
+
+      <div>
+        <a href="{% url 'accounts:logout' %}"
+          class="btn flex items-center justify-center gap-2 w-full py-1 px-2 text-sm rounded-full bg-red-600 text-white no-underline text-center hover:bg-red-400 hover:text-red-800">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4" />
+            <polyline points="16 17 21 12 16 7" />
+            <line x1="21" y1="12" x2="9" y2="12" />
+          </svg>
+          Cerrar sesión
+        </a>
+      </div>
     </div>
 
     <div class="card" style="padding: 1rem;">
       <h3 style="font-size: 0.95rem; margin-bottom: 0.8rem;">Sugerencias basadas en tu perfil</h3>
       <div class="space-y-2" style="max-height: 390px; overflow: auto; padding-right: 2px;">
-        {% for _ in '123456' %}
+        {% for suggested in profile_suggestions %}
         <div class="card" style="box-shadow: none; border: 1px solid #ddd; border-radius: 0; padding: 0.6rem;">
           <div class="card-header" style="margin-bottom: 0; gap: 0.6rem;">
             <div
@@ -179,10 +206,30 @@
               </svg>
             </div>
             <div class="card-header-info">
-              <h4 style="font-size: 0.9rem;">Faucibus molestie</h4>
-              <p class="text-small">Tellus neque</p>
+              <a href="{% url 'network:contact_profile' suggested.username %}" style="font-size: 0.9rem; font-weight: 700;" class="hover:text-primary">{{ suggested }}</a>
+              <p class="text-small">{{ suggested.get_tipoUsuario_display }}</p>
+              {% if suggested.shared_skills_count %}
+              <p class="text-small text-light">{{ suggested.shared_skills_count }} habilidades en comun</p>
+              {% endif %}
+
+              <div style="margin-top: 0.4rem;">
+                {% if suggested.id in connected_user_ids %}
+                <button type="button" class="btn" style="border-radius: 9999px; padding: 0.2rem 0.7rem; font-size: 0.75rem; background:#d1fae5; color:#065f46;" disabled>Conectados</button>
+                {% elif suggested.id in sent_request_user_ids %}
+                <button type="button" class="btn" style="border-radius: 9999px; padding: 0.2rem 0.7rem; font-size: 0.75rem; background:#e5e7eb; color:#374151;" disabled>Solicitud enviada</button>
+                {% else %}
+                <form method="post" action="{% url 'network:send_connection_request' suggested.username %}">
+                  {% csrf_token %}
+                  <button type="submit" class="btn btn-primary" style="border-radius: 9999px; padding: 0.2rem 0.7rem; font-size: 0.75rem;">Conectar</button>
+                </form>
+                {% endif %}
+              </div>
             </div>
           </div>
+        </div>
+        {% empty %}
+        <div class="card" style="box-shadow: none; border: 1px solid #ddd; border-radius: 0; padding: 0.6rem;">
+          <p class="text-small text-light">Aun no hay perfiles sugeridos.</p>
         </div>
         {% endfor %}
       </div>

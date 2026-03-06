@@ -20,59 +20,38 @@
     <link rel="stylesheet" href="{% static 'css/auth.css' %}" />
   </head>
   <body class="auth-body">
-    <!-- MOBILE: Small dark header with logo -->
-    <div class="auth-mobile-header">
-      <a href="/" class="landing-logo block relative h-7 w-28 leading-none overflow-hidden">
-        <img
-          src="{% static 'images/logo.png' %}"
-          alt="SocialIT"
-          class="absolute inset-0 h-full w-full object-contain"
-        />
-      </a>
-    </div>
+    <!-- MOBILE: partial header  -->
+      {% include "./register.html#mobile_header" %}
 
     <div class="auth-split">
       <!-- LEFT: Dark navy branding panel (desktop only) -->
-      <div class="auth-brand-panel">
-        <div class="auth-brand-content">
-          
-          <a
-            href="/"
-            class="landing-logo h-16 w-full max-w-[260px] mx-auto mb-8 leading-none overflow-hidden"
-          >
-          <div class="h-220px w-220px centered">
-            <img
-              src="{% static 'images/logo.png' %}"
-              alt="SocialIT"
-              class="h-full w-full object-contain"
-            />
-            <h1 class="auth-brand-title">{% trans "BIENVENIDO NUEVAMENTE" %}</h1>
-          <p class="auth-brand-subtitle">
-            {% trans "Conecta, colabora y crece con la comunidad ATI." %}
-          </p>
-          </div>
-          </a>
-          
-        </div>
-      </div>
+       {% include "./register.html#acc_media_container" with title="BIENVENIDO NUEVAMENTE" description="Conecta, colabora y crece con la comunidad ATI." %}
 
       <!-- RIGHT: Login form panel -->
       <div class="auth-form-panel">
         <div class="auth-form-container">
           <div class="auth-card">
-            <h2 class="auth-card-title">{% trans "Iniciar Sesion" %}</h2>
+            <h2 class="auth-card-title">{% trans "Iniciar Sesión" %}</h2>
 
             {% if form.errors %}
             <div
               class="alert alert-error"
               role="alert"
+              data-auto-dismiss="true"
+              data-timeout="6000"
               style="margin-bottom: 1rem"
             >
               <span class="alert-icon" aria-hidden="true">⚠️</span>
               <p class="alert-content">
-                {% trans "Correo o contraseña incorrectos. Verifica tus datos."
-                %}
+                {% trans "Correo o contraseña incorrectos. Verifica tus datos." %}
               </p>
+              <button
+                type="button"
+                class="alert-close opacity-60 hover:opacity-100 text-lg leading-none"
+                aria-label="{% trans 'Cerrar alerta' %}"
+              >
+                ×
+              </button>
             </div>
             {% endif %}
 
@@ -83,7 +62,7 @@
                 class="form-group {% if form.username.errors %}has-error{% endif %}"
               >
                 <label for="id_username" class="form-label"
-                  >{% trans "Correo Electronico" %}</label
+                  >{% trans "Correo Electrónico" %}</label
                 >
                 <input
                   type="email"
@@ -91,7 +70,7 @@
                   name="username"
                   class="form-input"
                   required
-                  placeholder="{% trans 'lexample@correo.com' %}"
+                  placeholder="{% trans 'ejemplo@correo.com' %}"
                   autocomplete="email"
                   value="{{ form.username.value|default:'' }}"
                   {%
@@ -140,13 +119,13 @@
                 {% endif %}
               </div>
 
-              <button type="submit" class="btn auth-submit-btn btn-block">
+              <button type="submit" class="btn auth-submit-btn btn-block hover:bg-[#10b7cf] transition-colors">
                 {% trans "Iniciar Sesión" %}
               </button>
             </form>
 
             <a href="#" class="auth-forgot-link"
-              >{% trans "Olvido su contraseña?" %}</a
+              >{% trans "¿Olvido su contraseña?" %}</a
             >
           </div>
 
@@ -161,5 +140,6 @@
         </div>
       </div>
     </div>
+    <script src="{% static 'js/main.js' %}"></script>
   </body>
 </html>

@@ -14,7 +14,7 @@
   --font-family: "Inter", "Segoe UI", system-ui, sans-serif;
   --radius: 8px;
   --shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
-  --transition: all 0.2s ease;
+  --transition: all 0.2s ease,
 }
 
 *,

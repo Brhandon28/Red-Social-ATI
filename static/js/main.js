@@ -99,30 +99,32 @@ document.addEventListener('DOMContentLoaded', function () {
   // ============================================
   // H1: Alert auto-dismiss & manual close
   // ============================================
+  function dismissAlert(alert) {
+    if (!alert) return;
+    alert.style.opacity = '0';
+    alert.style.transform = 'translateY(-10px)';
+    setTimeout(function () {
+      if (alert.parentNode) {
+        alert.remove();
+      }
+    }, 200);
+  }
+
   document.querySelectorAll('.alert-close').forEach(function (btn) {
     btn.addEventListener('click', function () {
-      var alert = this.closest('.alert');
-      if (alert) {
-        alert.style.opacity = '0';
-        alert.style.transform = 'translateY(-10px)';
-        setTimeout(function () {
-          alert.remove();
-        }, 200);
-      }
+      var alert = this.closest('.alert') || this.closest('[role="alert"]');
+      dismissAlert(alert);
     });
   });
 
-  // Auto-dismiss success alerts after 5 seconds
-  document.querySelectorAll('.alert-success').forEach(function (alert) {
+  // Auto-dismiss alerts (defaults to 6 seconds)
+  document.querySelectorAll('.alert[data-auto-dismiss="true"], [role="alert"][data-auto-dismiss="true"]').forEach(function (alert) {
+    var timeout = Number(alert.dataset.timeout || 6000);
     setTimeout(function () {
       if (alert.parentNode) {
-        alert.style.opacity = '0';
-        alert.style.transform = 'translateY(-10px)';
-        setTimeout(function () {
-          alert.remove();
-        }, 200);
+        dismissAlert(alert);
       }
-    }, 5000);
+    }, timeout);
   });
 
   // ============================================

@@ -1,0 +1,68 @@
+{% load static %}
+{% load i18n %}
+<div
+      class="md:hidden fixed top-0 left-0 right-0 z-50 bg-navy h-14 flex items-center justify-between px-3 border-b border-white/10"
+    >
+      {% with current_ns=request.resolver_match.namespace %}
+      <a
+        href="{% url 'profiles:my_profile' %}"
+        class="w-10 h-10 rounded-full bg-white flex items-center justify-center text-navy {% if current_ns == 'profiles' %}ring-2 ring-primary{% endif %}"
+        {% if current_ns == 'profiles' %}aria-current="page"{% endif %}
+      >
+        <svg
+          width="26"
+          height="26"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+        >
+          <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
+          <circle cx="12" cy="7" r="4" />
+        </svg>
+      </a>
+      <div class="flex items-center gap-4 text-primary">
+        <a
+          href="{% url 'chat:inbox' %}"
+          class="text-primary hover:text-primary-light {% if current_ns == 'chat' %}text-white{% endif %}"
+          {% if current_ns == 'chat' %}aria-current="page"{% endif %}
+        >
+          <svg
+            width="30"
+            height="30"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          >
+            <path
+              d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"
+            />
+          </svg>
+        </a>
+        <a
+          href="{% url 'notifications:index' %}"
+          class="text-primary hover:text-primary-light {% if current_ns == 'notifications' %}text-white{% endif %}"
+          {% if current_ns == 'notifications' %}aria-current="page"{% endif %}
+        >
+          <svg
+            width="30"
+            height="30"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          >
+            <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9" />
+            <path d="M13.73 21a2 2 0 0 1-3.46 0" />
+          </svg>
+        </a>
+      </div>
+      {% endwith %}
+    </div>
