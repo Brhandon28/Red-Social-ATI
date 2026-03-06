@@ -1,7 +1,7 @@
 from django.contrib import messages
+from django.contrib.auth.decorators import login_required
 from django.shortcuts import redirect, render
 from django.utils.translation import gettext_lazy as _
-
 
 SAMPLE_PUBLICATIONS = [
     {
@@ -74,10 +74,10 @@ SAMPLE_COMMENTS = [
 
 
 def _get_current_user_profile(request):
-    current_username = (getattr(request, 'hardcoded_user', '') or '').strip()
-    if current_username:
+    user = request.user
+    if user.is_authenticated:
         return {
-            'display_name': current_username.capitalize(),
+            'display_name': str(user),
             'role': 'Cuenta personal',
         }
     return {
@@ -108,6 +108,7 @@ def _get_publication(post_id, publications):
     return next((publication for publication in publications if publication['id'] == post_id), publications[0])
 
 
+@login_required
 def index(request):
     user_profile = _get_current_user_profile(request)
     publications = _build_publications_for_ui(request)
@@ -123,6 +124,7 @@ def index(request):
     )
 
 
+@login_required
 def company_feed(request):
     user_profile = _get_current_user_profile(request)
     publications = _build_publications_for_ui(request)
@@ -139,6 +141,7 @@ def company_feed(request):
     )
 
 
+@login_required
 def post_detail(request, post_id):
     publications = _build_publications_for_ui(request)
     publication = _get_publication(post_id, publications)
@@ -155,6 +158,7 @@ def post_detail(request, post_id):
     )
 
 
+@login_required
 def create_post(request):
     user_profile = _get_current_user_profile(request)
 

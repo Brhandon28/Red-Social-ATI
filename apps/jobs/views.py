@@ -1,7 +1,6 @@
 from django.contrib import messages
 from django.shortcuts import redirect, render
 
-
 SAMPLE_JOBS = [
     {
         'id': 1,
@@ -66,10 +65,10 @@ def _next_job_id(jobs):
 
 
 def _get_current_user_profile(request):
-    current_username = (getattr(request, 'hardcoded_user', '') or '').strip()
-    if current_username:
+    user = request.user
+    if user.is_authenticated:
         return {
-            'display_name': current_username.capitalize(),
+            'display_name': str(user),
             'role': 'Cuenta personal',
         }
     return {

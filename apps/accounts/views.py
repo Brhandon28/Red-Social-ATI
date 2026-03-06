@@ -1,61 +1,42 @@
-from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
+from django.contrib.auth import authenticate, login, logout
 from django.shortcuts import redirect, render
 from django.utils.translation import gettext_lazy as _
 
-
-AUTH_COOKIE_NAME = 'hardcoded_auth'
-AUTH_USER_COOKIE_NAME = 'hardcoded_user'
-AUTH_COOKIE_MAX_AGE = 60 * 60 * 8
+from .forms import LoginForm, RegistroEmpresaForm, RegistroProfesionalForm
 
 
 def login_view(request):
-    if getattr(request, 'hardcoded_auth', False):
+    if request.user.is_authenticated:
         return redirect('feed:index')
 
-    form = AuthenticationForm()
+    form = LoginForm()
     if request.method == 'POST':
-        form = AuthenticationForm(request, data=request.POST)
-        username = (request.POST.get('username') or '').strip()
-        password = request.POST.get('password') or ''
-
-        hardcoded_user = 'admin'
-        hardcoded_password = '123456'
-
-        if username == hardcoded_user and password == hardcoded_password:
+        form = LoginForm(request, data=request.POST)
+        if form.is_valid():
+            user = form.get_user()
+            login(request, user)
             next_url = request.GET.get('next') or 'feed:index'
-            response = redirect(next_url)
-            response.set_cookie(
-                AUTH_COOKIE_NAME,
-                '1',
-                max_age=AUTH_COOKIE_MAX_AGE,
-                httponly=True,
-                samesite='Lax',
-            )
-            response.set_cookie(
-                AUTH_USER_COOKIE_NAME,
-                hardcoded_user,
-                max_age=AUTH_COOKIE_MAX_AGE,
-                httponly=True,
-                samesite='Lax',
-            )
-            return response
-
-        form.add_error(None, _('Credenciales inválidas.'))
+            return redirect(next_url)
 
     return render(request, 'accounts/login.html', {'form': form})
 
 
 def register_view(request):
-    form = UserCreationForm()
-    if request.method == 'POST':
-        form = UserCreationForm(request.POST)
-        form.add_error(None, _('Registro deshabilitado en modo hardcodeado.'))
+    account_type = request.POST.get('account_type', 'comun')
+
+    if account_type == 'empresarial':
+        form = RegistroEmpresaForm(request.POST or None)
+    else:
+        form = RegistroProfesionalForm(request.POST or None)
+
+    if request.method == 'POST' and form.is_valid():
+        user = form.save()
+        login(request, user)
+        return redirect('feed:index')
 
     return render(request, 'accounts/register.html', {'form': form})
 
 
 def logout_view(request):
-    response = redirect('accounts:login')
-    response.delete_cookie(AUTH_COOKIE_NAME)
-    response.delete_cookie(AUTH_USER_COOKIE_NAME)
-    return response
+    logout(request)
+    return redirect('accounts:login')
