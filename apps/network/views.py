@@ -6,6 +6,8 @@ from django.shortcuts import get_object_or_404, redirect, render
 from django.views.decorators.http import require_POST
 
 from .models import ConnectionRequest
+from apps.posts.models import Publication
+from apps.profiles.models import Education, UserWebSkill, WorkExperience
 
 
 @login_required
@@ -63,7 +65,35 @@ def contacts(request):
 
 @login_required
 def contact_profile(request, username):
-    return render(request, 'profiles/contact_profile.html', {'username': username})
+    User = get_user_model()
+    profile_user = get_object_or_404(User, username=username, is_active=True)
+    connected = ConnectionRequest.objects.filter(
+        (
+            Q(sender=request.user, receiver=profile_user) |
+            Q(sender=profile_user, receiver=request.user)
+        ),
+        status=ConnectionRequest.Status.ACCEPTED,
+    ).exists()
+    pending_sent = ConnectionRequest.objects.filter(
+        sender=request.user,
+        receiver=profile_user,
+        status=ConnectionRequest.Status.PENDING,
+    ).exists()
+
+    context = {
+        'profile_user': profile_user,
+        'current_user_display_name': str(profile_user),
+        'current_user_username': profile_user.username,
+        'current_user_role': profile_user.get_tipoUsuario_display() if hasattr(profile_user, 'get_tipoUsuario_display') else 'Cuenta personal',
+        'recent_publications': Publication.objects.filter(author=profile_user).select_related('author')[:5],
+        'work_experiences': WorkExperience.objects.filter(user=profile_user),
+        'educations': Education.objects.filter(user=profile_user),
+        'selected_user_skills': UserWebSkill.objects.filter(user=profile_user).select_related('skill'),
+        'is_own_profile': profile_user.pk == request.user.pk,
+        'is_connected': connected,
+        'pending_sent': pending_sent,
+    }
+    return render(request, 'profiles/contact_profile.html', context)
 
 
 @login_required

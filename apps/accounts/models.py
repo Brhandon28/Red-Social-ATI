@@ -25,6 +25,12 @@ class Usuario(AbstractUser):
         blank=True,
         null=True,
     )
+    bannerImage = models.ImageField(
+        _('banner de perfil'),
+        upload_to='profile_banners/',
+        blank=True,
+        null=True,
+    )
     tipoUsuario = models.CharField(
         _('tipo de usuario'),
         max_length=20,

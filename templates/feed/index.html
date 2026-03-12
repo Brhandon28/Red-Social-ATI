@@ -11,6 +11,9 @@
   {% partialdef profile_card inline%}
   <aside class="hidden lg:block lg:col-span-3">
     <div class="bg-white rounded-3xl border border-gray-300 shadow-sm text-center px-5 py-7">
+      {% if request.user.profileImage %}
+      <img src="{{ request.user.profileImage.url }}" alt="{{ current_user_display_name }}" class="w-24 h-24 rounded-full border border-gray-300 mx-auto mb-4 object-cover" />
+      {% else %}
       <div class="w-24 h-24 rounded-full border border-gray-300 mx-auto mb-4 flex items-center justify-center">
         <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="#101828" stroke-width="1.8"
           stroke-linecap="round" stroke-linejoin="round">
@@ -18,6 +21,7 @@
           <circle cx="12" cy="7" r="4" />
         </svg>
       </div>
+      {% endif %}
       <h3 class="text-lg font-bold text-gray-800 mb-1">{{ current_user_display_name }}</h3>
       <p class="text-sm text-gray-500">{{ current_user_role }}</p>
     </div>
