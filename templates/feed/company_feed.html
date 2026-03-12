@@ -6,20 +6,7 @@
 
 {% block content %}
 <div class="grid grid-cols-12 gap-4 md:gap-6">
-  <!-- <aside class="hidden lg:block lg:col-span-3">
-    <div class="bg-white rounded-3xl border border-gray-300 shadow-sm text-center px-5 py-7">
-      <div class="w-24 h-24 rounded-full border border-gray-300 mx-auto mb-4 flex items-center justify-center">
-        <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="#101828" stroke-width="1.8"
-          stroke-linecap="round" stroke-linejoin="round">
-          <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
-          <circle cx="12" cy="7" r="4" />
-        </svg>
-      </div>
-      <h3 class="text-lg font-bold text-gray-800 mb-1">{{ current_user_display_name }}</h3>
-      <p class="text-sm text-gray-500">{{ current_user_role }}</p>
-    </div>
-  </aside> -->
-
+  
   {% include "./index.html#profile_card" %}
 
   <section class="col-span-12 lg:col-span-6 space-y-4">

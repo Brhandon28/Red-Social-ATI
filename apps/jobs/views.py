@@ -12,7 +12,7 @@ def _get_current_user_profile(request):
 	if user.is_authenticated:
 		return {
 			'display_name': str(user),
-			'role': 'Cuenta personal',
+			'role': user.get_tipoUsuario_display() if hasattr(user, 'get_tipoUsuario_display') else 'Cuenta personal',
 		}
 	return {
 		'display_name': 'Usuario',

@@ -113,10 +113,14 @@
         class="flex flex-col items-center gap-0.5 px-3 py-1 text-primary text-[0.65rem] font-medium no-underline border-b-2 border-transparent rounded-t-lg transition-all hover:text-white hover:bg-white/10 {% if current_ns == 'profiles' %}text-white border-primary bg-white/10{% endif %} {% block nav_profile %}{% endblock %}"
         {% if current_ns == 'profiles' %}aria-current="page"{% endif %}
       >
+        {% if request.user.is_authenticated and request.user.profileImage %}
+        <img src="{{ request.user.profileImage.url }}" alt="{{ request.user }}" class="w-5 h-5 rounded-full object-cover border border-white/30" />
+        {% else %}
         <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
           <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
           <circle cx="12" cy="7" r="4" />
         </svg>
+        {% endif %}
         <span>{% trans "Yo" %}</span>
       </a>
     </nav>

@@ -9,6 +9,9 @@
         class="w-10 h-10 rounded-full bg-white flex items-center justify-center text-navy {% if current_ns == 'profiles' %}ring-2 ring-primary{% endif %}"
         {% if current_ns == 'profiles' %}aria-current="page"{% endif %}
       >
+        {% if request.user.is_authenticated and request.user.profileImage %}
+        <img src="{{ request.user.profileImage.url }}" alt="{{ request.user }}" class="w-10 h-10 rounded-full object-cover" />
+        {% else %}
         <svg
           width="26"
           height="26"
@@ -22,6 +25,7 @@
           <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
           <circle cx="12" cy="7" r="4" />
         </svg>
+        {% endif %}
       </a>
       <div class="flex items-center gap-4 text-primary">
         <a

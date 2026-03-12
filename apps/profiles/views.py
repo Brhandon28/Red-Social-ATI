@@ -8,6 +8,7 @@ from django.utils.translation import gettext_lazy as _
 
 from .models import Education, UserWebSkill, WebSkill, WorkExperience
 from apps.network.models import ConnectionRequest
+from apps.posts.models import Publication
 
 
 DEFAULT_WEB_SKILLS = [
@@ -36,12 +37,19 @@ def _ensure_default_skills():
         )
 
 
+def _role_label(user):
+    if hasattr(user, 'get_tipoUsuario_display'):
+        return user.get_tipoUsuario_display()
+    return 'Cuenta personal'
+
+
 def _profile_context(user):
     _ensure_default_skills()
 
     experiences = WorkExperience.objects.filter(user=user)
     educations = Education.objects.filter(user=user)
     selected_user_skills = UserWebSkill.objects.filter(user=user).select_related('skill')
+    recent_publications = Publication.objects.filter(author=user).select_related('author')[:5]
     selected_skill_ids = [item.skill_id for item in selected_user_skills]
 
     User = get_user_model()
@@ -83,9 +91,11 @@ def _profile_context(user):
             connected_flat_ids.append(receiver_id)
 
     return {
+        'profile_user': user,
         'current_user_display_name': str(user),
         'current_user_username': user.username,
-        'current_user_role': 'Cuenta personal',
+        'current_user_role': _role_label(user),
+        'recent_publications': recent_publications,
         'work_experiences': experiences,
         'educations': educations,
         'selected_user_skills': selected_user_skills,
@@ -113,11 +123,15 @@ def edit_profile(request):
             request.user.email = (request.POST.get('email') or '').strip()
             request.user.nombreMostrado = (request.POST.get('nombreMostrado') or '').strip()
             profile_image = request.FILES.get('profileImage')
+            banner_image = request.FILES.get('bannerImage')
 
             update_fields = ['first_name', 'last_name', 'email', 'nombreMostrado']
             if profile_image:
                 request.user.profileImage = profile_image
                 update_fields.append('profileImage')
+            if banner_image:
+                request.user.bannerImage = banner_image
+                update_fields.append('bannerImage')
 
             request.user.save(update_fields=update_fields)
             messages.success(request, _('Tu perfil fue actualizado exitosamente.'))
@@ -230,4 +244,4 @@ def edit_profile(request):
 
 @login_required
 def contact_profile(request, username):
-    return render(request, 'profiles/contact_profile.html', {'username': username})
+    return redirect('network:contact_profile', username=username)

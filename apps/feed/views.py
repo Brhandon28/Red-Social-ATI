@@ -1,12 +1,13 @@
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
-from django.db.models import BooleanField, Count, Exists, OuterRef, Value
+from django.db.models import BooleanField, Count, Exists, OuterRef, Q, Value
 from django.shortcuts import get_object_or_404, redirect, render
 from django.utils.http import url_has_allowed_host_and_scheme
 from django.utils.translation import gettext_lazy as _
 from django.views.decorators.http import require_POST
 
 from apps.posts.models import Comment, CommentLike, Publication, PublicationLike
+from apps.network.models import ConnectionRequest
 
 
 def _get_current_user_profile(request):
@@ -14,7 +15,7 @@ def _get_current_user_profile(request):
     if user.is_authenticated:
         return {
             'display_name': str(user),
-            'role': 'Cuenta personal',
+            'role': user.get_tipoUsuario_display() if hasattr(user, 'get_tipoUsuario_display') else 'Cuenta personal',
         }
     return {
         'display_name': 'Usuario',
@@ -71,6 +72,25 @@ def _comment_queryset_for_user(publication, user, *, top_level_only=False, repli
 
 def _top_publications_for_user(user, limit=3):
     return _publication_queryset_for_user(user).order_by('-likes_count', '-comments_count', '-created_at')[:limit]
+
+
+def _contacts_count_for_user(user):
+    if not user.is_authenticated:
+        return 0
+
+    accepted_pairs = ConnectionRequest.objects.filter(
+        Q(sender=user) | Q(receiver=user),
+        status=ConnectionRequest.Status.ACCEPTED,
+    ).values_list('sender_id', 'receiver_id')
+
+    connected_user_ids = set()
+    for sender_id, receiver_id in accepted_pairs:
+        if sender_id != user.id:
+            connected_user_ids.add(sender_id)
+        if receiver_id != user.id:
+            connected_user_ids.add(receiver_id)
+
+    return len(connected_user_ids)
 
 
 @login_required
@@ -144,6 +164,7 @@ def post_detail(request, post_id):
 def create_post(request):
     user_profile = _get_current_user_profile(request)
     top_publications = _top_publications_for_user(request.user)
+    current_user_contacts_count = _contacts_count_for_user(request.user)
 
     if request.method == 'POST':
         content = (request.POST.get('content') or '').strip()
@@ -157,6 +178,7 @@ def create_post(request):
                 {
                     'current_user_display_name': user_profile['display_name'],
                     'current_user_role': user_profile['role'],
+                    'current_user_contacts_count': current_user_contacts_count,
                     'top_publications': top_publications,
                 },
             )
@@ -172,6 +194,7 @@ def create_post(request):
         {
             'current_user_display_name': user_profile['display_name'],
             'current_user_role': user_profile['role'],
+            'current_user_contacts_count': current_user_contacts_count,
             'top_publications': top_publications,
         },
     )
