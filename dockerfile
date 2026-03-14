@@ -1,5 +1,7 @@
 FROM python:3.13.12
 
+RUN apt-get update && apt-get install -y gettext
+
 ENV PYTHONDONTWRITEBYTECODE=1
 ENV PYTHONUNBUFFERED=1
 
