@@ -84,9 +84,18 @@
       <h1 class="text-2xl font-bold mb-3 text-gray-900">{{ job.title }}</h1>
       <p class="text-gray-700 text-base mb-4">{{ job.summary }}</p>
 
-      <button class="btn btn-primary" style="border-radius: 9999px; padding-inline: 2rem; margin-bottom: 2rem;">
-        Aplicar
-      </button>
+      <form method="post" action="{% url 'jobs:apply_offer' job.id %}" class="mb-8">
+        {% csrf_token %}
+        <button class="btn btn-primary" type="submit" style="border-radius: 9999px; padding-inline: 2rem; margin-bottom: 0;" {% if job.applied_by_me or request.user.id == job.created_by_id %}disabled{% endif %}>
+          {% if request.user.id == job.created_by_id %}
+          Tu oferta
+          {% elif job.applied_by_me %}
+          Ya postulaste
+          {% else %}
+          Aplicar
+          {% endif %}
+        </button>
+      </form>
 
       <section class="mb-8">
         <h2 class="text-3xl md:text-2xl font-bold mb-3 text-gray-900" style="font-size: 2rem;">Acerca del empleo</h2>

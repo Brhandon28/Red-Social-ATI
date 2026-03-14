@@ -10,12 +10,12 @@
       <h2 class="text-xl font-bold text-center text-gray-700 mb-8">Resumen</h2>
       <div class="space-y-4">
         <div class="flex items-center gap-5">
-          <span class="text-[#0B4E78] text-5xl font-bold leading-none">#</span>
+          <span class="text-[#0B4E78] text-5xl font-bold leading-none">{{ contacts_count }}</span>
           <span class="text-xl font-semibold text-gray-700">Contactos</span>
         </div>
         <div class="flex items-center gap-5">
-          <span class="text-[#0B4E78] text-5xl font-bold leading-none">#</span>
-          <span class="text-xl font-semibold text-gray-700">Seguidos</span>
+          <span class="text-[#0B4E78] text-5xl font-bold leading-none">{{ pending_count }}</span>
+          <span class="text-xl font-semibold text-gray-700">Solicitudes pendientes</span>
         </div>
       </div>
     </article>
@@ -23,26 +23,74 @@
 
   <section class="col-span-12 lg:col-span-9">
     <div class="space-y-4 mb-6">
-      <div class="bg-white border border-gray-300 rounded-2xl shadow-sm px-6 py-4 flex items-center justify-between">
+      <div class="bg-white border border-gray-300 rounded-2xl shadow-sm px-6 py-4">
+        {% if pending_requests %}
+        <p class="text-lg font-semibold text-gray-700 mb-4">Solicitudes de contacto recientes</p>
+        <div class="space-y-3">
+          {% for req in pending_requests %}
+          <div class="flex items-center justify-between gap-4 border border-gray-200 rounded-xl px-4 py-3">
+            <a href="{% url 'network:contact_profile' req.sender.username %}" class="flex items-center gap-3 hover:text-primary">
+              {% if req.sender.profileImage %}
+              <img src="{{ req.sender.profileImage.url }}" alt="{{ req.sender }}" class="w-12 h-12 rounded-full border border-gray-300 object-cover" />
+              {% else %}
+              <div class="w-12 h-12 rounded-full border border-gray-300 flex items-center justify-center">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#0d0d0d" stroke-width="1.8">
+                  <circle cx="12" cy="8" r="4" />
+                  <path d="M4 20a8 8 0 0 1 16 0" />
+                </svg>
+              </div>
+              {% endif %}
+              <div>
+                <h3 class="font-semibold text-gray-900">{{ req.sender }}</h3>
+                <p class="text-sm text-gray-500">{{ req.sender.get_tipoUsuario_display }}</p>
+              </div>
+            </a>
+            <div class="flex items-center gap-2">
+              <form method="post" action="{% url 'network:accept_connection_request' req.id %}">
+                {% csrf_token %}
+                <button type="submit" class="px-3 py-1.5 rounded-full text-xs font-semibold bg-green-600 text-white hover:bg-green-500">Aceptar</button>
+              </form>
+              <form method="post" action="{% url 'network:reject_connection_request' req.id %}">
+                {% csrf_token %}
+                <button type="submit" class="px-3 py-1.5 rounded-full text-xs font-semibold bg-red-600 text-white hover:bg-red-500">Rechazar</button>
+              </form>
+            </div>
+          </div>
+          {% endfor %}
+        </div>
+        {% else %}
         <p class="text-lg font-semibold text-gray-500">No hay ninguna solicitud de contacto reciente</p>
+        {% endif %}
       </div>
+
       <div class="bg-white border border-gray-300 rounded-2xl shadow-sm px-6 py-4 flex items-center justify-between">
         <p class="text-lg font-semibold text-gray-500">Podrías conocer a las siguientes personas</p>
       </div>
     </div>
 
     <div class="grid grid-cols-3 gap-4 max-w-5xl mx-auto">
-      {% for _ in '123456' %}
-      <a href="#" class="block bg-white border border-gray-300 rounded-2xl shadow-sm px-4 py-5 text-center hover:shadow-md transition-shadow">
+      {% for suggested in suggested_profiles %}
+      <div class="bg-white border border-gray-300 rounded-2xl shadow-sm px-4 py-5 text-center hover:shadow-md transition-shadow">
+        {% if suggested.profileImage %}
+        <img src="{{ suggested.profileImage.url }}" alt="{{ suggested }}" class="w-24 h-24 rounded-full border border-gray-300 mx-auto mb-3 object-cover" />
+        {% else %}
         <div class="w-24 h-24 rounded-full border border-gray-300 mx-auto mb-3 flex items-center justify-center">
           <svg width="42" height="42" viewBox="0 0 24 24" fill="none" stroke="#0d0d0d" stroke-width="1.8">
             <circle cx="12" cy="8" r="4" />
             <path d="M4 20a8 8 0 0 1 16 0" />
           </svg>
         </div>
-        <h3 class="text-lg font-bold text-gray-900 leading-tight mb-1">Nombre Apellido</h3>
-        <p class="text-sm text-gray-500">Desarrollador Fullstack</p>
-      </a>
+        {% endif %}
+        <a href="{% url 'network:contact_profile' suggested.username %}" class="text-lg font-bold text-gray-900 leading-tight mb-1 hover:text-primary block">{{ suggested }}</a>
+        <p class="text-sm text-gray-500 mb-3">{{ suggested.get_tipoUsuario_display }}</p>
+        <form method="post" action="{% url 'network:send_connection_request' suggested.username %}">
+          {% csrf_token %}
+          <input type="hidden" name="next" value="{% url 'network:contacts' %}" />
+          <button type="submit" class="px-3 py-1.5 rounded-full text-xs font-semibold bg-[#0B4E78] text-white hover:bg-[#0d6397]">Conectar</button>
+        </form>
+      </div>
+      {% empty %}
+      <p class="text-sm text-gray-600 col-span-3">No hay sugerencias nuevas por ahora.</p>
       {% endfor %}
     </div>
   </section>
@@ -53,46 +101,74 @@
     <h2 class="text-xl font-bold text-center text-gray-700 mb-6">Resumen</h2>
     <div class="grid grid-cols-2 gap-3">
       <div class="flex items-center justify-center gap-2">
-        <span class="text-[#0B4E78] text-5xl font-bold leading-none">#</span>
+        <span class="text-[#0B4E78] text-5xl font-bold leading-none">{{ contacts_count }}</span>
         <span class="text-xl font-semibold text-gray-700">Contactos</span>
       </div>
       <div class="flex items-center justify-center gap-2">
-        <span class="text-[#0B4E78] text-5xl font-bold leading-none">#</span>
-        <span class="text-xl font-semibold text-gray-700">Seguidos</span>
+        <span class="text-[#0B4E78] text-5xl font-bold leading-none">{{ pending_count }}</span>
+        <span class="text-xl font-semibold text-gray-700">Pendientes</span>
       </div>
     </div>
   </section>
 
   <section class="px-3 py-5 space-y-4">
+    {% if pending_requests %}
+    <div class="bg-white border border-gray-300 rounded-xl shadow-sm px-4 py-3">
+      <p class="text-lg font-semibold text-gray-700 mb-3">Solicitudes recientes</p>
+      <div class="space-y-3">
+        {% for req in pending_requests|slice:":3" %}
+        <div class="border border-gray-200 rounded-lg p-3">
+          <a href="{% url 'network:contact_profile' req.sender.username %}" class="font-semibold text-gray-900 hover:text-primary">{{ req.sender }}</a>
+          <p class="text-sm text-gray-500 mb-2">{{ req.sender.get_tipoUsuario_display }}</p>
+          <div class="flex gap-2">
+            <form method="post" action="{% url 'network:accept_connection_request' req.id %}">
+              {% csrf_token %}
+              <button type="submit" class="px-3 py-1.5 rounded-full text-xs font-semibold bg-green-600 text-white">Aceptar</button>
+            </form>
+            <form method="post" action="{% url 'network:reject_connection_request' req.id %}">
+              {% csrf_token %}
+              <button type="submit" class="px-3 py-1.5 rounded-full text-xs font-semibold bg-red-600 text-white">Rechazar</button>
+            </form>
+          </div>
+        </div>
+        {% endfor %}
+      </div>
+    </div>
+    {% else %}
     <div class="bg-white border border-gray-300 rounded-full shadow-sm px-4 py-3 text-center">
       <p class="text-lg font-semibold text-gray-500">No hay ninguna solicitud de contacto reciente</p>
     </div>
+    {% endif %}
+
     <div class="bg-white border border-gray-300 rounded-full shadow-sm px-4 py-3 text-center">
       <p class="text-lg font-semibold text-gray-500">Podrías Conocer a las siguientes personas</p>
     </div>
 
     <div class="space-y-2 pt-1">
-      {% for _ in '1234' %}
-      <a href="#" class="flex items-center gap-3 bg-white border border-gray-300 rounded-lg px-3 py-2">
+      {% for suggested in suggested_profiles|slice:":4" %}
+      <div class="flex items-center gap-3 bg-white border border-gray-300 rounded-lg px-3 py-2">
+        {% if suggested.profileImage %}
+        <img src="{{ suggested.profileImage.url }}" alt="{{ suggested }}" class="w-14 h-14 rounded-full object-cover shrink-0 border border-gray-300" />
+        {% else %}
         <div class="w-14 h-14 rounded-full bg-gray-300 flex items-center justify-center shrink-0">
           <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#111827" stroke-width="1.8">
             <circle cx="12" cy="8" r="4" />
             <path d="M4 20a8 8 0 0 1 16 0" />
           </svg>
         </div>
-        <div>
-          {% if forloop.counter == 1 %}
-          <h3 class="text-lg font-bold text-gray-800 leading-tight">Donec sed</h3>
-          {% elif forloop.counter == 2 %}
-          <h3 class="text-lg font-bold text-gray-800 leading-tight">Morbi tincidunt</h3>
-          {% elif forloop.counter == 3 %}
-          <h3 class="text-lg font-bold text-gray-800 leading-tight">Donec turpis</h3>
-          {% else %}
-          <h3 class="text-lg font-bold text-gray-800 leading-tight">Nulla fermentum</h3>
-          {% endif %}
-          <p class="text-sm text-gray-600 leading-tight">Tellus neque</p>
+        {% endif %}
+        <div class="flex-1">
+          <a href="{% url 'network:contact_profile' suggested.username %}" class="text-lg font-bold text-gray-800 leading-tight hover:text-primary">{{ suggested }}</a>
+          <p class="text-sm text-gray-600 leading-tight">{{ suggested.get_tipoUsuario_display }}</p>
+          <form method="post" action="{% url 'network:send_connection_request' suggested.username %}" class="mt-2">
+            {% csrf_token %}
+            <input type="hidden" name="next" value="{% url 'network:contacts' %}" />
+            <button type="submit" class="px-3 py-1.5 rounded-full text-xs font-semibold bg-[#0B4E78] text-white">Conectar</button>
+          </form>
         </div>
-      </a>
+      </div>
+      {% empty %}
+      <p class="text-sm text-gray-600">No hay sugerencias nuevas por ahora.</p>
       {% endfor %}
     </div>
   </section>

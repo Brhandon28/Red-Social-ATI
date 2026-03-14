@@ -11,6 +11,9 @@
   {% partialdef profile_card inline%}
   <aside class="hidden lg:block lg:col-span-3">
     <div class="bg-white rounded-3xl border border-gray-300 shadow-sm text-center px-5 py-7">
+      {% if request.user.profileImage %}
+      <img src="{{ request.user.profileImage.url }}" alt="{{ current_user_display_name }}" class="w-24 h-24 rounded-full border border-gray-300 mx-auto mb-4 object-cover" />
+      {% else %}
       <div class="w-24 h-24 rounded-full border border-gray-300 mx-auto mb-4 flex items-center justify-center">
         <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="#101828" stroke-width="1.8"
           stroke-linecap="round" stroke-linejoin="round">
@@ -18,6 +21,7 @@
           <circle cx="12" cy="7" r="4" />
         </svg>
       </div>
+      {% endif %}
       <h3 class="text-lg font-bold text-gray-800 mb-1">{{ current_user_display_name }}</h3>
       <p class="text-sm text-gray-500">{{ current_user_role }}</p>
     </div>
@@ -38,14 +42,17 @@
     </div>
 
     {% for publication in publications|slice:":2" %}
-    <a href="{% url 'feed:publication_detail' publication.id %}"
-      class="block {% if not forloop.first %}hidden md:block{% endif %}">
+    <div class="block {% if not forloop.first %}hidden md:block{% endif %}">
       <article class="bg-white rounded-xl border border-gray-300 shadow-sm overflow-hidden">
         <div class="p-3 md:p-4">
           <div class="flex items-start gap-2 md:gap-3 mb-3">
+            {% if publication.author.profileImage %}
+            <img src="{{ publication.author.profileImage.url }}" alt="{{ publication.company }}" class="w-12 h-12 rounded-full object-cover border border-gray-200 shrink-0" />
+            {% else %}
             <div class="w-12 h-12 rounded bg-white border border-gray-200 shrink-0"
               style="background: linear-gradient(90deg, #000 50%, transparent 50%) 0 0 / 16px 16px, linear-gradient(#000 50%, transparent 50%) 0 0 / 16px 16px;">
             </div>
+            {% endif %}
             <div class="flex-1 min-w-0">
               <h4 class="text-[1.6rem] md:text-sm font-bold text-gray-800 leading-tight">{{ publication.company }}</h4>
               <p class="text-[1.3rem] md:text-xs text-gray-500 leading-tight">{{ publication.followers }}</p>
@@ -61,12 +68,15 @@
           </div>
 
           <p class="text-[1.6rem] md:text-sm text-gray-800 leading-relaxed mb-2 md:mb-1">{{ publication.summary }}</p>
+          {% if publication.image %}
+          <img src="{{ publication.image.url }}" alt="Imagen de la publicacion" class="w-full rounded-lg border border-gray-200 object-cover max-h-96 mb-2" />
+          {% endif %}
           <div class="hidden md:flex justify-between items-center text-xs">
-            <span class="text-gray-500">...see more</span>
+            <a href="{% url 'feed:publication_detail' publication.id %}" class="text-gray-500 hover:text-primary">...see more</a>
           </div>
         </div>
 
-        {% if forloop.first %}
+        {% if forloop.first and not publication.image %}
         <div
           class="md:hidden border-t border-gray-300 border-b border-gray-300 bg-gray-100 aspect-[16/9] flex items-center justify-center">
           <svg width="42" height="42" viewBox="0 0 24 24" fill="none" stroke="#bdbdbd" stroke-width="1.5">
@@ -78,38 +88,53 @@
         {% endif %}
 
         <div class="px-3 md:px-4 py-2 border-t border-gray-300 flex gap-5 text-gray-600 text-[1.4rem] md:text-sm">
-          <button class="inline-flex items-center gap-1.5" type="button">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-              <path
-                d="M14 9V5a3 3 0 0 0-3-3l-4 9v11h11.28a2 2 0 0 0 2-1.7l1.38-9a2 2 0 0 0-2-2.3zM7 22H4a2 2 0 0 1-2-2v-7a2 2 0 0 1 2-2h3" />
-            </svg>
-            Like
-          </button>
-          <button class="inline-flex items-center gap-1.5" type="button">
+          <form method="post" action="{% url 'feed:toggle_publication_like' publication.id %}" class="inline">
+            {% csrf_token %}
+            <input type="hidden" name="next" value="{{ request.get_full_path }}" />
+            <button class="inline-flex items-center gap-1.5 {% if publication.liked_by_me %}text-primary font-semibold{% endif %}" type="submit">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path
+                  d="M14 9V5a3 3 0 0 0-3-3l-4 9v11h11.28a2 2 0 0 0 2-1.7l1.38-9a2 2 0 0 0-2-2.3zM7 22H4a2 2 0 0 1-2-2v-7a2 2 0 0 1 2-2h3" />
+              </svg>
+              Like ({{ publication.likes_count }})
+            </button>
+          </form>
+          <a class="inline-flex items-center gap-1.5" href="{% url 'feed:publication_detail' publication.id %}">
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
               <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" />
             </svg>
-            Comment
-          </button>
+            Comment ({{ publication.comments_count }})
+          </a>
+          {% if request.user.id == publication.author_id %}
+          <form method="post" action="{% url 'feed:delete_publication' publication.id %}" class="inline ml-auto" onsubmit="return confirm('¿Eliminar esta publicacion?');">
+            {% csrf_token %}
+            <input type="hidden" name="next" value="{{ request.get_full_path }}" />
+            <button class="inline-flex items-center gap-1.5 text-red-600 hover:text-red-700" type="submit">Eliminar</button>
+          </form>
+          {% endif %}
         </div>
       </article>
-    </a>
+    </div>
     {% endfor %}
   </section>
 
   <aside class="hidden lg:block lg:col-span-3">
     <h3 class="text-base font-bold text-black mb-3 px-2">Top Publicaciones</h3>
     <div class="space-y-4">
-      {% for _ in '123' %}
+      {% for top in top_publications %}
       <article class="bg-white rounded-xl border border-gray-300 shadow-sm p-3">
         <div class="flex items-start gap-2 mb-2">
+          {% if top.author.profileImage %}
+          <img src="{{ top.author.profileImage.url }}" alt="{{ top.company }}" class="w-9 h-9 rounded-full object-cover border border-gray-200 shrink-0" />
+          {% else %}
           <div class="w-9 h-9 rounded bg-white border border-gray-200 shrink-0"
             style="background: linear-gradient(90deg, #000 50%, transparent 50%) 0 0 / 14px 14px, linear-gradient(#000 50%, transparent 50%) 0 0 / 14px 14px;">
           </div>
+          {% endif %}
           <div class="flex-1 min-w-0">
-            <h4 class="text-xs font-semibold text-gray-800 leading-tight">Company name</h4>
-            <p class="text-[11px] text-gray-500 leading-tight">326 followers</p>
-            <span class="text-[11px] text-gray-500">20 h • 🌐</span>
+            <h4 class="text-xs font-semibold text-gray-800 leading-tight">{{ top.company }}</h4>
+            <p class="text-[11px] text-gray-500 leading-tight">{{ top.followers }}</p>
+            <span class="text-[11px] text-gray-500">{{ top.age }} • 🌐</span>
           </div>
           <button class="text-gray-500">
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -119,10 +144,13 @@
             </svg>
           </button>
         </div>
-        <p class="text-[11px] text-gray-600 leading-relaxed">Lacus amet, laoreet viverra id faucibus nisi cras est sit
-          pellentesque amet in auctor ac sapien enim nulla tellus risus ornare lobortis commodo in proin ..... </p>
-        <div class="text-right text-xs text-gray-500 mt-1">...see more</div>
+        <p class="text-[11px] text-gray-600 leading-relaxed">{{ top.summary|truncatechars:140 }}</p>
+        <div class="text-right text-xs text-gray-500 mt-1">
+          <a href="{% url 'feed:publication_detail' top.id %}" class="hover:text-primary">...see more</a>
+        </div>
       </article>
+      {% empty %}
+      <p class="text-sm text-gray-600">Aun no hay publicaciones suficientes para mostrar el top.</p>
       {% endfor %}
     </div>
   </aside>

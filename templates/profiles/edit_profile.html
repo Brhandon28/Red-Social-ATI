@@ -18,32 +18,37 @@
           background: linear-gradient(160deg, #e8e8e8 0%, #dcdcdc 100%);
           border-bottom: 1px solid #d1d1d1;
           position: relative;
+          overflow: hidden;
         ">
-        <svg width="100%" height="100%" viewBox="0 0 100 30" preserveAspectRatio="none"
-          style="position: absolute; inset: 0; opacity: 0.5;">
-          <path d="M0,22 L20,8 L40,20 L60,10 L80,18 L100,8" fill="none" stroke="#c8c8c8" stroke-width="0.6" />
-        </svg>
+        {% if request.user.bannerImage %}
+        <img src="{{ request.user.bannerImage.url }}" alt="Banner de {{ request.user }}" style="width: 100%; height: 100%; object-fit: cover; display: block;" />
+        {% endif %}
       </div>
 
       <div style="padding: 0.9rem 0.95rem 1.2rem; position: relative;">
+        {% if request.user.profileImage %}
+        <img src="{{ request.user.profileImage.url }}" alt="{{ request.user }}" style="
+            width: 76px;
+            height: 76px;
+            border-radius: 9999px;
+            border: 1.8px solid #d2d2d2;
+            object-fit: cover;
+            position: absolute;
+            top: -38px;
+            left: 0.95rem;
+          " />
+        {% else %}
         <div style="
             width: 76px;
             height: 76px;
             border-radius: 9999px;
             border: 1.8px solid #d2d2d2;
             background: #f6f6f6;
-            display: flex;
-            align-items: center;
-            justify-content: center;
             position: absolute;
             top: -38px;
             left: 0.95rem;
-          ">
-          <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#0d0d0d" stroke-width="1.8">
-            <circle cx="12" cy="8" r="4" />
-            <path d="M4 20a8 8 0 0 1 16 0" />
-          </svg>
-        </div>
+          "></div>
+        {% endif %}
 
         <div class="flex items-start justify-end gap-2">
           <a href="{% url 'profiles:my_profile' %}" class="btn btn-primary"
@@ -59,16 +64,19 @@
         <div style="padding-top: 0.9rem;">
           <h1 style="font-size: 1.9rem; line-height: 1.1; margin-bottom: 1.2rem;">{% trans "Editar Perfil" %}</h1>
 
-          {% if messages %}
-          {% for message in messages %}
-          <div class="alert alert-{{ message.tags }}" role="alert" style="margin-bottom: 1rem;">
-            <p class="alert-content">{{ message }}</p>
-          </div>
-          {% endfor %}
-          {% endif %}
-
-          <form method="post" action="{% url 'profiles:edit_profile' %}">
+          <form method="post" action="{% url 'profiles:edit_profile' %}" enctype="multipart/form-data">
             {% csrf_token %}
+            <input type="hidden" name="form_type" value="basic" />
+
+            <div class="form-group" style="margin-bottom: 1rem;">
+              <label for="id_profileImage" class="form-label" style="font-size: 0.85rem; font-weight: 600;">{% trans "Foto de perfil" %}</label>
+              <input type="file" id="id_profileImage" name="profileImage" accept="image/*" class="form-input" />
+            </div>
+
+            <div class="form-group" style="margin-bottom: 1rem;">
+              <label for="id_bannerImage" class="form-label" style="font-size: 0.85rem; font-weight: 600;">{% trans "Banner del perfil" %}</label>
+              <input type="file" id="id_bannerImage" name="bannerImage" accept="image/*" class="form-input" />
+            </div>
 
             <div class="form-group" style="margin-bottom: 1rem;">
               <label for="id_first_name" class="form-label" style="font-size: 0.85rem; font-weight: 600;">{% trans "Nombre" %}</label>
@@ -94,11 +102,128 @@
                 value="{{ request.user.nombreMostrado }}" placeholder="{% trans 'Nombre que verán otros usuarios' %}" />
             </div>
 
-            <button type="submit" class="btn btn-primary hover:bg-[#10b7cf] transition-colors"
-              style="border-radius: 9999px; padding: 0.5rem 1.5rem; font-size: 0.85rem;">
-              {% trans "Guardar cambios" %}
-            </button>
+            <div style="display: flex; align-items: center; justify-content: space-between; gap: 0.75rem; margin-top: 1.25rem; padding: 0.9rem 1rem; border: 1px solid #dbe3ea; background: #f8fbfd; border-radius: 1rem; flex-wrap: wrap;">
+              <div>
+                <p style="font-size: 0.95rem; font-weight: 700; color: #0f172a; margin: 0;">{% trans "Guardar cambios del perfil" %}</p>
+                <p style="font-size: 0.8rem; color: #64748b; margin: 0.2rem 0 0 0;">{% trans "Aplica la foto, banner y datos básicos de tu cuenta." %}</p>
+              </div>
+              <button type="submit" class="btn btn-primary hover:bg-[#10b7cf] transition-colors"
+                style="border-radius: 9999px; padding: 0.65rem 1.5rem; font-size: 0.85rem; min-width: 200px;">
+                {% trans "Guardar cambios" %}
+              </button>
+            </div>
           </form>
+
+          <div style="margin-top: 1.2rem;">
+            <h2 style="font-size: 1.6rem; margin-bottom: 0.5rem;">Trayectoria</h2>
+            <form method="post" action="{% url 'profiles:edit_profile' %}" class="space-y-2" style="margin-bottom: 0.7rem;">
+              {% csrf_token %}
+              <input type="hidden" name="form_type" value="work_add" />
+              <input type="text" name="position" class="form-input" placeholder="Cargo" required />
+              <input type="text" name="company" class="form-input" placeholder="Empresa" required />
+              <textarea name="description" rows="2" class="form-input" placeholder="Descripcion (opcional)"></textarea>
+              <button type="submit" class="btn btn-primary" style="border-radius: 9999px; padding: 0.35rem 1rem; font-size: 0.8rem;">Agregar trayectoria</button>
+            </form>
+
+            <div class="space-y-2">
+              {% for item in work_experiences %}
+              <div class="card" style="box-shadow: none; border: 1px solid #ddd; border-radius: 0; padding: 0.65rem;">
+                <div class="flex items-start justify-between gap-2">
+                  <div>
+                    <h4 style="font-size: 0.95rem;">{{ item.position }}</h4>
+                    <p class="text-small">{{ item.company }}</p>
+                    {% if item.description %}
+                    <p class="text-small text-light">{{ item.description }}</p>
+                    {% endif %}
+                  </div>
+                  <form method="post" action="{% url 'profiles:edit_profile' %}">
+                    {% csrf_token %}
+                    <input type="hidden" name="form_type" value="work_delete" />
+                    <input type="hidden" name="item_id" value="{{ item.id }}" />
+                    <button type="submit" class="btn" style="background:#ef4444; color:#fff; border-radius:9999px; padding:0.2rem 0.7rem; font-size:0.75rem;">Eliminar</button>
+                  </form>
+                </div>
+              </div>
+              {% empty %}
+              <p class="text-small text-light">Sin trayectoria laboral cargada.</p>
+              {% endfor %}
+            </div>
+          </div>
+
+          <div style="margin-top: 1.2rem;">
+            <h2 style="font-size: 1.6rem; margin-bottom: 0.5rem;">Educación</h2>
+            <form method="post" action="{% url 'profiles:edit_profile' %}" class="space-y-2" style="margin-bottom: 0.7rem;">
+              {% csrf_token %}
+              <input type="hidden" name="form_type" value="education_add" />
+              <input type="text" name="degree" class="form-input" placeholder="Titulo" required />
+              <input type="text" name="institution" class="form-input" placeholder="Institucion" required />
+              <input type="text" name="field_of_study" class="form-input" placeholder="Campo de estudio (opcional)" />
+              <button type="submit" class="btn btn-primary" style="border-radius: 9999px; padding: 0.35rem 1rem; font-size: 0.8rem;">Agregar educacion</button>
+            </form>
+
+            <div class="space-y-2">
+              {% for item in educations %}
+              <div class="card" style="box-shadow: none; border: 1px solid #ddd; border-radius: 0; padding: 0.65rem;">
+                <div class="flex items-start justify-between gap-2">
+                  <div>
+                    <h4 style="font-size: 0.95rem;">{{ item.degree }}</h4>
+                    <p class="text-small">{{ item.institution }}</p>
+                    {% if item.field_of_study %}
+                    <p class="text-small text-light">{{ item.field_of_study }}</p>
+                    {% endif %}
+                  </div>
+                  <form method="post" action="{% url 'profiles:edit_profile' %}">
+                    {% csrf_token %}
+                    <input type="hidden" name="form_type" value="education_delete" />
+                    <input type="hidden" name="item_id" value="{{ item.id }}" />
+                    <button type="submit" class="btn" style="background:#ef4444; color:#fff; border-radius:9999px; padding:0.2rem 0.7rem; font-size:0.75rem;">Eliminar</button>
+                  </form>
+                </div>
+              </div>
+              {% empty %}
+              <p class="text-small text-light">Sin trayectoria educativa cargada.</p>
+              {% endfor %}
+            </div>
+          </div>
+
+          <div style="margin-top: 1.2rem;">
+            <h2 style="font-size: 1.6rem; margin-bottom: 0.5rem;">Habilidades</h2>
+
+            <form method="post" action="{% url 'profiles:edit_profile' %}" class="space-y-2" style="margin-bottom: 0.7rem;">
+              {% csrf_token %}
+              <input type="hidden" name="form_type" value="skill_add_existing" />
+              <select name="skill_id" class="form-input" required>
+                <option value="">Selecciona una habilidad del pool</option>
+                {% for skill in available_skills %}
+                <option value="{{ skill.id }}">{{ skill.name }}</option>
+                {% endfor %}
+              </select>
+              <button type="submit" class="btn btn-primary" style="border-radius: 9999px; padding: 0.35rem 1rem; font-size: 0.8rem;">Agregar habilidad existente</button>
+            </form>
+
+            <form method="post" action="{% url 'profiles:edit_profile' %}" class="space-y-2" style="margin-bottom: 0.7rem;">
+              {% csrf_token %}
+              <input type="hidden" name="form_type" value="skill_add_new" />
+              <input type="text" name="new_skill" class="form-input" placeholder="Nueva habilidad web (ej. Svelte)" required />
+              <button type="submit" class="btn btn-primary" style="border-radius: 9999px; padding: 0.35rem 1rem; font-size: 0.8rem;">Crear y agregar habilidad</button>
+            </form>
+
+            <div class="space-y-2">
+              {% for item in selected_user_skills %}
+              <div style="background: #e8f4fb; border: 1px solid #cce2ef; padding: 0.55rem 0.65rem; display:flex; align-items:center; justify-content:space-between; gap:0.5rem;">
+                <strong style="font-size: 0.8rem; display: block;">{{ item.skill.name }}</strong>
+                <form method="post" action="{% url 'profiles:edit_profile' %}">
+                  {% csrf_token %}
+                  <input type="hidden" name="form_type" value="skill_delete" />
+                  <input type="hidden" name="item_id" value="{{ item.id }}" />
+                  <button type="submit" class="btn" style="background:#ef4444; color:#fff; border-radius:9999px; padding:0.2rem 0.7rem; font-size:0.75rem;">Quitar</button>
+                </form>
+              </div>
+              {% empty %}
+              <p class="text-small text-light">Aun no agregaste habilidades.</p>
+              {% endfor %}
+            </div>
+          </div>
         </div>
       </div>
     </div>
