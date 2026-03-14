@@ -18,24 +18,39 @@ from django.contrib import admin
 from django.conf import settings
 from django.conf.urls.static import static
 from django.shortcuts import render
+from django.conf.urls.i18n import i18n_patterns
 from django.urls import include, path
+# Importamos gettext_lazy para permitir la traducción de los textos de la propia URL
+from django.utils.translation import gettext_lazy as _
+
 
 
 def home_view(request):
     return render(request, 'home.html')
 
+# URLs NO traducidas
+# Para rutas que no necesitan el prefijo de idioma (como APIs, webhooks o archivos estáticos).
 urlpatterns = [
+    # Ejemplo: path('api/', include('apps.api.urls')),
+]
+
+# URLs traducidas (añaden el prefijo /es/, /en/, etc.)
+# Agregamos todas las vistas de la aplicación aquí para que Django maneje el idioma correctamente.
+urlpatterns += i18n_patterns(
     path('admin/', admin.site.urls),
     path('feed/', include('apps.feed.urls')),
     path('posts/', include('apps.posts.urls')),
     path('', home_view, name='home'),
     path('', include('apps.accounts.urls')),
-    path('perfil/', include('apps.profiles.urls')),
-    path('empleos/', include('apps.jobs.urls')),
-    path('mi-red/', include('apps.network.urls')),
-    path('notificaciones/', include('apps.notifications.urls')),
-    path('chat/', include('apps.chat.urls')),
-]
+    
+    # Usando _() permitimos que la ruta cambie según el idioma 
+    # (ej. /es/empleos/ vs /en/jobs/)
+    path(_('perfil/'), include('apps.profiles.urls')),
+    path(_('empleos/'), include('apps.jobs.urls')),
+    path(_('mi-red/'), include('apps.network.urls')),
+    path(_('notificaciones/'), include('apps.notifications.urls')),
+    path(_('chat/'), include('apps.chat.urls')),
+)
 
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

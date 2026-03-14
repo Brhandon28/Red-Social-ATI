@@ -130,6 +130,7 @@ Si prefieres trabajar sin Docker, puedes levantar el proyecto directamente con P
 
 - [Python 3.13+](https://www.python.org/downloads/)
 - pip (incluido con Python)
+- gettext (via apt-get install gettext en linux, disponible en github.com/mlocati/gettext-iconv-windows para Windows)
 
 #### Pasos
 
@@ -162,6 +163,25 @@ Si prefieres trabajar sin Docker, puedes levantar el proyecto directamente con P
    python manage.py makemigrations accounts
    python manage.py migrate
    ```
+
+5. **Aplicar internacionalización:**
+
+Escribir las traducciones (El archivo .po):
+
+   ```bash
+   python manage.py makemessages -l en
+   python manage.py makemessages -l es
+   ```
+
+   Esto creará automáticamente un archivo de texto en esta ruta: /locale/[CodigoDeIdioma]/LC_MESSAGES/django.po
+
+   Compilar las traducciones (compilemessages):
+
+   ```bash
+   python manage.py compilemessages
+   ```
+
+   Este comando escaneará todas las carpetas en locale, tomará los archivos .po actualizados y generará o sobrescribirá los archivos .mo correspondientes junto a ellos
 
 5. **Crear un superusuario (Administrador):**
 
