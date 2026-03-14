@@ -19,7 +19,7 @@ services:
       - sqlite_data:/data
     environment:
       - SQLITE_PATH=/data/db.sqlite3
-    command: sh -c "python manage.py migrate && python manage.py runserver 0.0.0.0:8000"
+    command: sh /app/entrypoint.dev.sh
 
 volumes:
   sqlite_data:
