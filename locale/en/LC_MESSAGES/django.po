@@ -1,241 +1,240 @@
-# SOME DESCRIPTIVE TITLE.
-# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
-# This file is distributed under the same license as the PACKAGE package.
-# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+# Translation for My Django Project.
+# Copyright (C) 2026
+# This file is distributed under the same license as the project.
 #
-#, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version: PACKAGE VERSION\n"
+"Project-Id-Version: 1.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2026-03-13 23:37-0400\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
-"Language-Team: LANGUAGE <LL@li.org>\n"
-"Language: \n"
+"PO-Revision-Date: 2026-03-18 00:20-0400\n"
+"Last-Translator: Tu Nombre <tu@email.com>\n"
+"Language-Team: English\n"
+"Language: en\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
 #: .\templates\404.html:6
 msgid "Página no encontrada"
-msgstr ""
+msgstr "Page not found"
 
 #: .\templates\404.html:12
 msgid "Volver al inicio"
-msgstr ""
+msgstr "Return to home"
 
 #: .\templates\accounts\login.html:11 .\templates\home.html:44
 #: .\templates\home.html:63
 msgid "Iniciar sesión"
-msgstr ""
+msgstr "Sign in"
 
 #: .\templates\accounts\login.html:34 .\templates\accounts\login.html:114
 msgid "Iniciar Sesión"
-msgstr ""
+msgstr "Sign In"
 
 #: .\templates\accounts\login.html:44
 msgid "Correo o contraseña incorrectos. Verifica tus datos."
-msgstr ""
+msgstr "Incorrect email or password. Please check your credentials."
 
 #: .\templates\accounts\login.html:56
 msgid "Correo Electrónico"
-msgstr ""
+msgstr "Email Address"
 
 #: .\templates\accounts\login.html:64 .\templates\accounts\register.html:166
 #: .\templates\profiles\edit_profile.html:88
 msgid "ejemplo@correo.com"
-msgstr ""
+msgstr "example@email.com"
 
 #: .\templates\accounts\login.html:87 .\templates\accounts\register.html:174
 msgid "Contraseña"
-msgstr ""
+msgstr "Password"
 
 #: .\templates\accounts\login.html:95
 msgid "Tu contraseña"
-msgstr ""
+msgstr "Your password"
 
 #: .\templates\accounts\login.html:119
 msgid "¿Olvido su contraseña?"
-msgstr ""
+msgstr "Forgot your password?"
 
 #: .\templates\accounts\login.html:125
 msgid "¿No tienes una cuenta?"
-msgstr ""
+msgstr "Don't have an account?"
 
 #: .\templates\accounts\login.html:127 .\templates\home.html:68
 msgid "Únete aquí"
-msgstr ""
+msgstr "Join here"
 
 #: .\templates\accounts\register.html:7 .\templates\accounts\register.html:83
-#: .\templates\accounts\register.html:209
+#: .\templates\accounts\register.html:218
 msgid "Crear cuenta"
-msgstr ""
+msgstr "Create account"
 
 #: .\templates\accounts\register.html:109
 msgid "Profesional"
-msgstr ""
+msgstr "Professional"
 
 #: .\templates\accounts\register.html:116
 msgid "Empresa"
-msgstr ""
+msgstr "Company"
 
 #: .\templates\accounts\register.html:124
 #: .\templates\profiles\edit_profile.html:74
 msgid "Nombre"
-msgstr ""
+msgstr "First Name"
 
-#: .\templates\accounts\register.html:133
+#: .\templates\accounts\register.html:142
 #: .\templates\profiles\edit_profile.html:76
 msgid "Tu nombre"
-msgstr ""
+msgstr "Your first name"
 
 #: .\templates\accounts\register.html:141
 #: .\templates\profiles\edit_profile.html:80
 msgid "Apellido"
-msgstr ""
+msgstr "Last Name"
 
 #: .\templates\accounts\register.html:150
 #: .\templates\profiles\edit_profile.html:82
 msgid "Tu apellido"
-msgstr ""
+msgstr "Your last name"
 
 #: .\templates\accounts\register.html:158
 msgid "Correo Electronico"
-msgstr ""
+msgstr "Email Address"
 
 #: .\templates\accounts\register.html:183
 msgid "Mínimo 8 caracteres"
-msgstr ""
+msgstr "At least 8 characters"
 
 #: .\templates\accounts\register.html:194
 msgid "Confirmar contraseña"
-msgstr ""
+msgstr "Confirm password"
 
 #: .\templates\accounts\register.html:203
 msgid "Repite tu contraseña"
-msgstr ""
+msgstr "Repeat your password"
 
 #: .\templates\accounts\register.html:216
 msgid "¿Ya tienes cuenta?"
-msgstr ""
+msgstr "Already have an account?"
 
 #: .\templates\accounts\register.html:218
 msgid "Inicia sesión"
-msgstr ""
+msgstr "Sign in"
 
 #: .\templates\base.html:59
 msgid "Cerrar alerta"
-msgstr ""
+msgstr "Close alert"
 
 #: .\templates\home.html:17
 msgid "Tu comunidad profesional de tecnología"
-msgstr ""
+msgstr "Your professional technology community"
 
 #: .\templates\home.html:49
 msgid "Únete Ahora"
-msgstr ""
+msgstr "Join Now"
 
 #: .\templates\home.html:59
 msgid "¡Te damos la bienvenida a tu comunidad profesional de ATI!"
-msgstr ""
+msgstr "Welcome to your ATI professional community!"
 
 #: .\templates\home.html:67
 msgid "¿Primera vez en Social?"
-msgstr ""
+msgstr "New to Social?"
 
 #: .\templates\partials\footer.html:11
 msgid "Acerca de nosotros"
-msgstr ""
+msgstr "About Us"
 
 #: .\templates\partials\footer.html:21
 msgid "Contáctanos"
-msgstr ""
+msgstr "Contact Us"
 
 #: .\templates\partials\footer.html:69
 msgid "Seleccionar Idioma"
-msgstr ""
+msgstr "Select language"
 
 #: .\templates\partials\header_desktop.html:31
 msgid "Search..."
-msgstr ""
+msgstr "Search..."
 
 #: .\templates\partials\header_desktop.html:32
 msgid "Búsqueda global"
-msgstr ""
+msgstr "Global Search"
 
 #: .\templates\partials\header_desktop.html:36
 msgid "Navegación principal"
-msgstr ""
+msgstr "Main Navigation"
 
 #: .\templates\partials\header_desktop.html:46
 msgid "Inicio"
-msgstr ""
+msgstr "Home"
 
 #: .\templates\partials\header_desktop.html:59
 msgid "Publicar"
-msgstr ""
+msgstr "Post"
 
 #: .\templates\partials\header_desktop.html:70
 msgid "Mensajes"
-msgstr ""
+msgstr "Messages"
 
 #: .\templates\partials\header_desktop.html:84
 msgid "Mi Red"
-msgstr ""
+msgstr "My net"
 
 #: .\templates\partials\header_desktop.html:96
 msgid "Empleos"
-msgstr ""
+msgstr "Jobs"
 
 #: .\templates\partials\header_desktop.html:108
 msgid "Notificaciones"
-msgstr ""
+msgstr "Notifications"
 
 #: .\templates\partials\header_desktop.html:120
 msgid "Yo"
-msgstr ""
+msgstr "Me"
 
 #: .\templates\partials\nav_mobile.html:5
 msgid "Navegación rápida"
-msgstr ""
+msgstr "Quick Navigation"
 
 #: .\templates\profiles\edit_profile.html:5
 msgid "Editar perfil"
-msgstr ""
+msgstr "Edit Profile"
 
 #: .\templates\profiles\edit_profile.html:51
 msgid "Volver al perfil"
-msgstr ""
+msgstr "Back to Profile"
 
 #: .\templates\profiles\edit_profile.html:55
 msgid "Cerrar sesión"
-msgstr ""
+msgstr "Sign out"
 
 #: .\templates\profiles\edit_profile.html:60
 msgid "Editar Perfil"
-msgstr ""
+msgstr "Edit Profile"
 
 #: .\templates\profiles\edit_profile.html:86
 msgid "Correo electrónico"
-msgstr ""
+msgstr "Email address"
 
 #: .\templates\profiles\edit_profile.html:92
 msgid "Nombre mostrado"
-msgstr ""
+msgstr "Display name"
 
 #: .\templates\profiles\edit_profile.html:94
 msgid "Nombre que verán otros usuarios"
-msgstr ""
+msgstr "Display name for other users"
 
 #: .\templates\profiles\edit_profile.html:99
 msgid "Guardar cambios"
-msgstr ""
+msgstr "Save changes"
 
 #: .\templates\profiles\edit_profile.html:114
 msgid "Preferencias de la cuenta"
-msgstr ""
+msgstr "Account preferences"
 
 #: .\templates\profiles\edit_profile.html:122
 msgid "Modo Oscuro"
-msgstr ""
+msgstr "Dark Mode"
