@@ -255,6 +255,25 @@ Por favor revisa nuestras normas de contribución:
 - [📘 Guía de Estilo y Buenas Prácticas](docs/STYLEGUIDE.md)
 - [🐙 Política de Git y Flujo de Trabajo](docs/GITFLOW.md)
 
+### Documentación de INCEPTION
+
+- Diagrama de Casos de Uso
+![Diagrama de casos de uso](docs/diagramas/SOCIALIT-UC.png)
+- Modelo del Dominio 
+![Modelo del Dominio](docs/diagramas/ModelodeDominio-ATI.png)
+
+### Documentación de DESIGN
+
+- Mapa de Navegación
+![Mapa de Navegacion](docs/diagramas/MapadeNavegaciónATI.png)
+-Wireframes
+[Wireframes](https://www.figma.com/design/zrbZkbwCQmTyiEJQ305gL8/ProyectoATI-Wireframes?node-id=0-1&t=nNzkk0RYOAAJWtiG-1)
+
+-Diagrama de Despliegue
+![Diagrama de Despliegue](docs/diagramas/Despliegue.png)
+-Diagrama de Clases de Analisis
+![Clases de Análisis](docs/diagramas/UC-Clasesdeanalisis.png)
+
 ## 📄 Licencia
 
 Este proyecto se distribuye bajo la licencia **GNU General Public License v3.0 (GPLv3)**.
