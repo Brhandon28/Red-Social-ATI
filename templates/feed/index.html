@@ -50,9 +50,18 @@
             {% if publication.author.profileImage %}
             <img src="{{ publication.author.profileImage.url }}" alt="{{ publication.company }}" class="w-12 h-12 rounded-full object-cover border border-gray-200 shrink-0" />
             {% else %}
+            {% if publication.author.tipoUsuario == 'empresa' %}
             <div class="w-12 h-12 rounded bg-white border border-gray-200 shrink-0"
               style="background: linear-gradient(90deg, #000 50%, transparent 50%) 0 0 / 16px 16px, linear-gradient(#000 50%, transparent 50%) 0 0 / 16px 16px;">
             </div>
+            {% else %}
+            <div class="w-12 h-12 rounded-full bg-gray-100 border border-gray-200 shrink-0 flex items-center justify-center">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#9ca3af" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="12" cy="8" r="4" />
+                <path d="M4 20a8 8 0 0 1 16 0" />
+              </svg>
+            </div>
+            {% endif %}
             {% endif %}
             <div class="flex-1 min-w-0">
               <h4 class="text-[1.6rem] md:text-sm font-bold text-gray-800 leading-tight">{{ publication.company }}</h4>
@@ -126,9 +135,18 @@
           {% if top.author.profileImage %}
           <img src="{{ top.author.profileImage.url }}" alt="{{ top.company }}" class="w-9 h-9 rounded-full object-cover border border-gray-200 shrink-0" />
           {% else %}
+          {% if top.author.tipoUsuario == 'empresa' %}
           <div class="w-9 h-9 rounded bg-white border border-gray-200 shrink-0"
             style="background: linear-gradient(90deg, #000 50%, transparent 50%) 0 0 / 14px 14px, linear-gradient(#000 50%, transparent 50%) 0 0 / 14px 14px;">
           </div>
+          {% else %}
+          <div class="w-9 h-9 rounded-full bg-gray-100 border border-gray-200 shrink-0 flex items-center justify-center">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#9ca3af" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="12" cy="8" r="4" />
+              <path d="M4 20a8 8 0 0 1 16 0" />
+            </svg>
+          </div>
+          {% endif %}
           {% endif %}
           <div class="flex-1 min-w-0">
             <h4 class="text-xs font-semibold text-gray-800 leading-tight">{{ top.company }}</h4>

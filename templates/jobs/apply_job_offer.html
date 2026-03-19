@@ -100,27 +100,17 @@
 
       <section class="mb-8">
         <h2 class="text-3xl md:text-2xl font-bold mb-3 text-gray-900" style="font-size: 2rem;">{% trans 'Acerca del empleo' %}</h2>
-        <p class="text-gray-700 text-base" style="line-height: 1.55;">
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin tristique neque vitae risus ornare porta.
-          Sed elit diam, volutpat ac interdum ac, egestas sed leo. Duis quis porta sapien. Quisque ultricies
-          vehicula ex ut pulvinar. Sed sit amet ornare lacus, eget interdum massa. Nullam sed lobortis erat.
-          Nulla cursus, sem eget blandit congue, orci libero efficitur dui, quis bibendum magna eros a purus.
-          Nullam iaculis mollis elit nec lacinia. Aliquam luctus auctor efficitur. Nulla porttitor tempus quam
-          vitae semper. Duis dictum a leo sit amet pharetra. Quisque et eleifend mauris. Aenean nec interdum
-          metus. Donec in enim vestibulum ipsum vehicula dictum. Pellentesque sit amet tempus tellus.
-        </p>
+        <p class="text-gray-700 text-base" style="line-height: 1.55;">{{ job.summary }}</p>
       </section>
 
       <section class="hidden md:block">
         <h2 class="text-3xl md:text-2xl font-bold mb-3 text-gray-900" style="font-size: 2rem;">{% trans 'Acerca de la empresa' %}</h2>
         <p class="text-gray-700 text-base" style="line-height: 1.55;">
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin tristique neque vitae risus ornare porta.
-          Sed elit diam, volutpat ac interdum ac, egestas sed leo. Duis quis porta sapien. Quisque ultricies
-          vehicula ex ut pulvinar. Sed sit amet ornare lacus, eget interdum massa. Nullam sed lobortis erat.
-          Nulla cursus, sem eget blandit congue, orci libero efficitur dui, quis bibendum magna eros a purus.
-          Nullam iaculis mollis elit nec lacinia. Aliquam luctus auctor efficitur. Nulla porttitor tempus quam vitae
-          semper. Duis dictum a leo sit amet pharetra. Quisque et eleifend mauris. Aenean nec interdum metus.
-          Donec in enim vestibulum ipsum vehicula dictum. Pellentesque sit amet tempus tellus.
+          {% if job.created_by.empresa and job.created_by.empresa.infoEmpresa %}
+            {{ job.created_by.empresa.infoEmpresa }}
+          {% else %}
+            {{ job.company }} ofrece esta vacante para fortalecer su equipo y continuar su crecimiento en el mercado.
+          {% endif %}
         </p>
       </section>
 
