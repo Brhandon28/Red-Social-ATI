@@ -72,7 +72,8 @@
       {% endpartialdef %}
 
 
-      {% with title="ÚNETE A LA COMUNIDAD" description="Conecta, colabora y crece con la comunidad ATI." %}
+      {% trans "ÚNETE A LA COMUNIDAD" as reg_title %}{% trans "Conecta, colabora y crece con la comunidad ATI." as reg_desc %}
+      {% with title=reg_title description=reg_desc %}
         {% partial acc_media_container %}
       {% endwith %}
 

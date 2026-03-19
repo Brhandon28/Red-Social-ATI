@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 1.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-03-18 13:59+0000\n"
+"POT-Creation-Date: 2026-03-19 02:43+0000\n"
 "PO-Revision-Date: 2026-03-18 00:20-0400\n"
 "Last-Translator: Tu Nombre <tu@email.com>\n"
 "Language-Team: English\n"
@@ -76,37 +76,34 @@ msgstr "Your last name"
 
 #: apps/accounts/forms.py:78 templates/accounts/register.html:268
 msgid "Nombre de la Empresa"
-msgstr ""
+msgstr "Company Name"
 
 #: apps/accounts/forms.py:82 templates/accounts/register.html:273
 msgid "Nombre de la empresa"
-msgstr ""
+msgstr "Company name"
 
 #: apps/accounts/forms.py:86 templates/accounts/register.html:269
 msgid "RIF / NIT"
-msgstr ""
+msgstr "Tax ID / VAT"
 
 #: apps/accounts/forms.py:90 templates/accounts/register.html:274
 msgid "J-12345678-9"
-msgstr ""
+msgstr "J-12345678-9"
 
 #: apps/accounts/forms.py:94 templates/accounts/register.html:270
-#, fuzzy
-#| msgid "Correo Electronico"
 msgid "Correo Corporativo"
-msgstr "Email Address"
+msgstr "Corporate Email"
 
 #: apps/accounts/forms.py:97 templates/accounts/register.html:275
-#, fuzzy
-#| msgid "ejemplo@correo.com"
 msgid "empresa@correo.com"
-msgstr "example@email.com"
+msgstr "company@email.com"
 
 #: apps/accounts/models.py:8 templates/accounts/register.html:118
 msgid "Profesional"
 msgstr "Professional"
 
 #: apps/accounts/models.py:9 templates/accounts/register.html:125
+#: templates/profiles/edit_profile.html:123
 msgid "Empresa"
 msgstr "Company"
 
@@ -363,6 +360,10 @@ msgstr ""
 msgid "Página no encontrada"
 msgstr "Page not found"
 
+#: templates/404.html:9
+msgid "La página que buscas no existe o fue movida. Verifica la dirección o regresa al inicio."
+msgstr "The page you're looking for doesn't exist or has been moved. Check the URL or return to home."
+
 #: templates/404.html:12
 msgid "Volver al inicio"
 msgstr "Return to home"
@@ -385,7 +386,27 @@ msgstr "Incorrect email or password. Please check your credentials."
 msgid "Cerrar alerta"
 msgstr "Close alert"
 
-#: templates/accounts/login.html:128
+#: templates/accounts/login.html:28
+msgid "BIENVENIDO NUEVAMENTE"
+msgstr "WELCOME BACK"
+
+#: templates/accounts/login.html:28 templates/accounts/register.html:75
+msgid "Conecta, colabora y crece con la comunidad ATI."
+msgstr "Connect, collaborate and grow with the ATI community."
+
+#: templates/accounts/register.html:75
+msgid "ÚNETE A LA COMUNIDAD"
+msgstr "JOIN THE COMMUNITY"
+
+#: templates/accounts/login.html:122
+msgid "Mostrar contraseña"
+msgstr "Show password"
+
+#: templates/accounts/login.html:176
+msgid "Ocultar contraseña"
+msgstr "Hide password"
+
+#: templates/accounts/login.html:146
 msgid "¿Olvido su contraseña?"
 msgstr "Forgot your password?"
 
@@ -428,14 +449,153 @@ msgid "Inicia sesión"
 msgstr "Sign in"
 
 #: templates/accounts/register.html:271
-#, fuzzy
-#| msgid "Contraseña"
 msgid "Contraseña de Empresa"
-msgstr "Password"
+msgstr "Company Password"
 
 #: templates/accounts/register.html:278
 msgid "Registrar empresa"
-msgstr ""
+msgstr "Register company"
+
+#: templates/feed/company_feed.html:4
+msgid "Feed Empresa"
+msgstr "Company Feed"
+
+#: templates/feed/company_feed.html:15 templates/feed/index.html:35
+#: templates/posts/create_post.html:16
+msgid "Crear una publicación"
+msgstr "Create a post"
+
+#: templates/feed/company_feed.html:16
+msgid "Crear publicación"
+msgstr "Create post"
+
+#: templates/feed/company_feed.html:53 templates/feed/index.html:73
+#: templates/feed/publication_detail.html:55
+msgid "Imagen de la publicacion"
+msgstr "Post image"
+
+#: templates/feed/company_feed.html:56 templates/feed/index.html:76
+msgid "...see more"
+msgstr "...see more"
+
+#: templates/feed/company_feed.html:59
+msgid "See translation"
+msgstr "See translation"
+
+#: templates/feed/company_feed.html:70 templates/feed/index.html:100
+#: templates/feed/publication_detail.html:68
+#: templates/feed/publication_detail.html:158
+#: templates/feed/publication_detail.html:200
+msgid "Like"
+msgstr "Like"
+
+#: templates/feed/company_feed.html:77 templates/feed/index.html:107
+msgid "Comment"
+msgstr "Comment"
+
+#: templates/feed/company_feed.html:80 templates/feed/index.html:110
+msgid "¿Eliminar esta publicacion?"
+msgstr "Delete this post?"
+
+#: templates/feed/company_feed.html:83 templates/feed/index.html:113
+#: templates/feed/publication_detail.html:167
+#: templates/feed/publication_detail.html:208
+#: templates/profiles/edit_profile.html:143
+#: templates/profiles/edit_profile.html:179
+msgid "Eliminar"
+msgstr "Delete"
+
+#: templates/feed/company_feed.html:93 templates/feed/index.html:123
+#: templates/feed/publication_detail.html:224
+#: templates/posts/create_post.html:92
+msgid "Top Publicaciones"
+msgstr "Top Posts"
+
+#: templates/feed/company_feed.html:110 templates/feed/index.html:62
+#: templates/feed/publication_detail.html:44
+#: templates/jobs/apply_job_offer.html:76 templates/jobs/job_list.html:50
+#: templates/posts/create_post.html:109
+msgid "Opciones"
+msgstr "Options"
+
+#: templates/feed/index.html:4
+msgid "Feed"
+msgstr "Feed"
+
+#: templates/feed/index.html:154 templates/posts/create_post.html:123
+msgid "Aun no hay publicaciones suficientes para mostrar el top."
+msgstr "There are not enough publications yet to show the top."
+
+#: templates/feed/publication_detail.html:4
+msgid "Detalle de Publicación"
+msgstr "Post Detail"
+
+#: templates/feed/publication_detail.html:16
+#: templates/jobs/apply_job_offer.html:22
+#: templates/jobs/create_job_offer.html:22
+msgid "Regresar"
+msgstr "Go back"
+
+#: templates/feed/publication_detail.html:68
+#: templates/feed/publication_detail.html:158
+msgid "Ya no me gusta"
+msgstr "Unlike"
+
+#: templates/feed/publication_detail.html:75
+msgid "Comentarios"
+msgstr "Comments"
+
+#: templates/feed/publication_detail.html:78
+msgid "¿Eliminar esta publicacion? Esta accion no se puede deshacer."
+msgstr "Delete this post? This action cannot be undone."
+
+#: templates/feed/publication_detail.html:82
+msgid "Eliminar publicacion"
+msgstr "Delete post"
+
+#: templates/feed/publication_detail.html:100
+msgid "Escribe tu respuesta..."
+msgstr "Write your response..."
+
+#: templates/feed/publication_detail.html:101
+msgid "Adjuntar imagen"
+msgstr "Attach image"
+
+#: templates/feed/publication_detail.html:109
+#: templates/partials/header_desktop.html:59
+#: templates/posts/create_post.html:85
+msgid "Publicar"
+msgstr "Post"
+
+#: templates/feed/publication_detail.html:141
+msgid "Guardar"
+msgstr "Save"
+
+#: templates/feed/publication_detail.html:142
+#: templates/posts/create_post.html:17
+msgid "Cancelar"
+msgstr "Cancel"
+
+#: templates/feed/publication_detail.html:163
+#: templates/feed/publication_detail.html:204
+msgid "Editar"
+msgstr "Edit"
+
+#: templates/feed/publication_detail.html:164
+msgid "¿Eliminar este comentario?"
+msgstr "Delete this comment?"
+
+#: templates/feed/publication_detail.html:175
+msgid "Responder a este comentario..."
+msgstr "Reply to this comment..."
+
+#: templates/feed/publication_detail.html:176
+msgid "Responder"
+msgstr "Reply"
+
+#: templates/feed/publication_detail.html:205
+msgid "¿Eliminar esta respuesta?"
+msgstr "Delete this reply?"
 
 #: templates/home.html:17
 msgid "Tu comunidad profesional de tecnología"
@@ -455,53 +615,228 @@ msgstr "New to Social?"
 
 #: templates/home.html:75
 msgid "Destacados de SocialIT"
-msgstr ""
+msgstr "SocialIT Highlights"
 
 #: templates/home.html:82
 msgid "Panel profesional con publicaciones y conexiones tecnológicas"
-msgstr ""
+msgstr "Professional panel with posts and technology connections"
 
 #: templates/home.html:88
 msgid "Descubre oportunidades y proyectos dentro de la comunidad"
-msgstr ""
+msgstr "Discover opportunities and projects within the community"
 
 #: templates/home.html:94
 msgid "Construye tu perfil y amplía tu red profesional"
-msgstr ""
+msgstr "Build your profile and expand your professional network"
 
 #: templates/home.html:100
 msgid "SocialIT en acción"
-msgstr ""
+msgstr "SocialIT in action"
 
 #: templates/home.html:101
 msgid "Conecta, publica y encuentra oportunidades dentro de ATI."
-msgstr ""
+msgstr "Connect, post and find opportunities within ATI."
 
 #: templates/home.html:109
 msgid "Imagen anterior"
-msgstr ""
+msgstr "Previous image"
 
 #: templates/home.html:114
-#, fuzzy
-#| msgid "Seleccionar Idioma"
 msgid "Seleccionar imagen destacada"
-msgstr "Select language"
+msgstr "Select featured image"
 
 #: templates/home.html:120
 msgid "Ver imagen 1"
-msgstr ""
+msgstr "View image 1"
 
 #: templates/home.html:128
 msgid "Ver imagen 2"
-msgstr ""
+msgstr "View image 2"
 
 #: templates/home.html:136
 msgid "Ver imagen 3"
-msgstr ""
+msgstr "View image 3"
 
 #: templates/home.html:145
 msgid "Siguiente imagen"
-msgstr ""
+msgstr "Next image"
+
+#: templates/jobs/apply_job_offer.html:5
+msgid "Detalle de empleo"
+msgstr "Job Detail"
+
+#: templates/jobs/apply_job_offer.html:23
+#: templates/jobs/create_job_offer.html:23
+msgid "Ir atrás"
+msgstr "Go back"
+
+#: templates/jobs/apply_job_offer.html:26
+msgid "Otros Empleos Similares"
+msgstr "Other Similar Jobs"
+
+#: templates/jobs/apply_job_offer.html:92
+msgid "Tu oferta"
+msgstr "Your offer"
+
+#: templates/jobs/apply_job_offer.html:94
+msgid "Ya postulaste"
+msgstr "Already applied"
+
+#: templates/jobs/apply_job_offer.html:96
+msgid "Aplicar"
+msgstr "Apply"
+
+#: templates/jobs/apply_job_offer.html:102
+msgid "Acerca del empleo"
+msgstr "About the job"
+
+#: templates/jobs/apply_job_offer.html:115
+msgid "Acerca de la empresa"
+msgstr "About the company"
+
+#: templates/jobs/apply_job_offer.html:128
+msgid "Empleos similares"
+msgstr "Similar jobs"
+
+#: templates/jobs/company_job_list.html:5
+msgid "Empleos Empresa"
+msgstr "Company Jobs"
+
+#: templates/jobs/company_job_list.html:34
+#: templates/jobs/create_job_offer.html:75
+msgid "Crear Oferta"
+msgstr "Create Offer"
+
+#: templates/jobs/company_job_list.html:35
+msgid "Crear oferta"
+msgstr "Create offer"
+
+#: templates/jobs/company_job_list.html:44
+msgid "Tus ofertas"
+msgstr "Your offers"
+
+#: templates/jobs/company_job_list.html:63
+msgid "Ver oferta"
+msgstr "View offer"
+
+#: templates/jobs/company_job_list.html:70
+msgid "¿Eliminar esta oferta?"
+msgstr "Delete this offer?"
+
+#: templates/jobs/company_job_list.html:72
+msgid "Eliminar oferta"
+msgstr "Delete offer"
+
+#: templates/jobs/company_job_list.html:89
+msgid "Aún no tienes ofertas creadas."
+msgstr "You don't have any offers yet."
+
+#: templates/jobs/company_job_list.html:95 templates/jobs/job_list.html:81
+msgid "Podría interesarte"
+msgstr "You might be interested"
+
+#: templates/jobs/company_job_list.html:113
+msgid "Sin sugerencias por ahora."
+msgstr "No suggestions for now."
+
+#: templates/jobs/create_job_offer.html:5
+#: templates/jobs/create_job_offer.html:26
+msgid "Crear Oferta de Empleo"
+msgstr "Create Job Offer"
+
+#: templates/jobs/create_job_offer.html:33
+msgid "Nombre del Empleo"
+msgstr "Job Name"
+
+#: templates/jobs/create_job_offer.html:40
+msgid "Cargo del Empleo"
+msgstr "Job Title"
+
+#: templates/jobs/create_job_offer.html:47
+msgid "Descripción"
+msgstr "Description"
+
+#: templates/jobs/create_job_offer.html:53
+msgid "Ubicación"
+msgstr "Location"
+
+#: templates/jobs/create_job_offer.html:60
+msgid "Rango de salario (Opcional)"
+msgstr "Salary range (Optional)"
+
+#: templates/jobs/job_list.html:5 templates/partials/header_desktop.html:96
+msgid "Empleos"
+msgstr "Jobs"
+
+#: templates/jobs/job_list.html:33
+msgid "Recomendaciones para ti"
+msgstr "Recommendations for you"
+
+#: templates/jobs/job_list.html:62
+msgid "No hay recomendaciones disponibles por ahora."
+msgstr "No recommendations available for now."
+
+#: templates/jobs/job_list.html:67
+msgid "Búsquedas recientes"
+msgstr "Recent searches"
+
+#: templates/jobs/job_list.html:99
+msgid "No hay sugerencias por ahora."
+msgstr "No new suggestions for now."
+
+#: templates/network/contacts.html:4 templates/partials/header_desktop.html:84
+msgid "Mi Red"
+msgstr "My net"
+
+#: templates/network/contacts.html:11 templates/network/contacts.html:102
+msgid "Resumen"
+msgstr "Summary"
+
+#: templates/network/contacts.html:15 templates/network/contacts.html:106
+msgid "Contactos"
+msgstr "Contacts"
+
+#: templates/network/contacts.html:19
+msgid "Solicitudes pendientes"
+msgstr "Pending requests"
+
+#: templates/network/contacts.html:29
+msgid "Solicitudes de contacto recientes"
+msgstr "Recent contact requests"
+
+#: templates/network/contacts.html:52 templates/network/contacts.html:127
+msgid "Aceptar"
+msgstr "Accept"
+
+#: templates/network/contacts.html:56 templates/network/contacts.html:131
+msgid "Rechazar"
+msgstr "Reject"
+
+#: templates/network/contacts.html:63 templates/network/contacts.html:140
+msgid "No hay ninguna solicitud de contacto reciente"
+msgstr "There are no recent contact requests"
+
+#: templates/network/contacts.html:68 templates/network/contacts.html:145
+msgid "Podrías conocer a las siguientes personas"
+msgstr "You might know these people"
+
+#: templates/network/contacts.html:90 templates/network/contacts.html:167
+#: templates/profiles/contact_profile.html:41
+#: templates/profiles/my_profile.html:191
+msgid "Conectar"
+msgstr "Connect"
+
+#: templates/network/contacts.html:94 templates/network/contacts.html:172
+msgid "No hay sugerencias nuevas por ahora."
+msgstr "No new suggestions for now."
+
+#: templates/network/contacts.html:110
+msgid "Pendientes"
+msgstr "Pending"
+
+#: templates/network/contacts.html:118
+msgid "Solicitudes recientes"
+msgstr "Recent requests"
 
 #: templates/partials/footer.html:11
 msgid "Acerca de nosotros"
@@ -531,21 +866,9 @@ msgstr "Main Navigation"
 msgid "Inicio"
 msgstr "Home"
 
-#: templates/partials/header_desktop.html:59
-msgid "Publicar"
-msgstr "Post"
-
 #: templates/partials/header_desktop.html:70
 msgid "Mensajes"
 msgstr "Messages"
-
-#: templates/partials/header_desktop.html:84
-msgid "Mi Red"
-msgstr "My net"
-
-#: templates/partials/header_desktop.html:96
-msgid "Empleos"
-msgstr "Jobs"
 
 #: templates/partials/header_desktop.html:108
 msgid "Notificaciones"
@@ -559,6 +882,120 @@ msgstr "Me"
 msgid "Navegación rápida"
 msgstr "Quick Navigation"
 
+#: templates/posts/create_post.html:4
+msgid "Crear Publicación"
+msgstr "Create Post"
+
+#: templates/posts/create_post.html:34
+msgid "seguidores"
+msgstr "followers"
+
+#: templates/posts/create_post.html:35
+msgid "Ahora"
+msgstr "Now"
+
+#: templates/posts/create_post.html:38
+#, fuzzy
+#| msgid "Publicar"
+msgid "Público"
+msgstr "Post"
+
+#: templates/posts/create_post.html:39
+msgid "Seguidores"
+msgstr "Followers"
+
+#: templates/posts/create_post.html:40
+msgid "Solo yo"
+msgstr "Only me"
+
+#: templates/posts/create_post.html:44
+msgid "Contenido de la publicación"
+msgstr "Post content"
+
+#: templates/posts/create_post.html:49
+msgid "¿Qué quieres compartir hoy?"
+msgstr "What do you want to share today?"
+
+#: templates/posts/create_post.html:59
+msgid "Añade una imagen o recurso multimedia"
+msgstr "Add an image or multimedia resource"
+
+#: templates/posts/create_post.html:71
+msgid "Imagen"
+msgstr "Image"
+
+#: templates/profiles/contact_profile.html:5
+#: templates/profiles/contact_profile.html:166
+msgid "Perfil"
+msgstr "Profile"
+
+#: templates/profiles/contact_profile.html:32
+#: templates/profiles/edit_profile.html:65
+#: templates/profiles/my_profile.html:32 templates/profiles/my_profile.html:33
+msgid "Editar Perfil"
+msgstr "Edit Profile"
+
+#: templates/profiles/contact_profile.html:34
+#: templates/profiles/my_profile.html:185
+msgid "Conectados"
+msgstr "Connected"
+
+#: templates/profiles/contact_profile.html:36
+#: templates/profiles/my_profile.html:187
+msgid "Solicitud enviada"
+msgstr "Request sent"
+
+#: templates/profiles/contact_profile.html:53
+msgid "Publicaciones"
+msgstr "Posts"
+
+#: templates/profiles/contact_profile.html:80
+msgid "Este perfil aun no tiene publicaciones."
+msgstr "This profile has no posts yet."
+
+#: templates/profiles/contact_profile.html:87
+#: templates/profiles/edit_profile.html:118
+#: templates/profiles/my_profile.html:44
+msgid "Trayectoria"
+msgstr "Work Experience"
+
+#: templates/profiles/contact_profile.html:109
+msgid "Aun no hay trayectoria laboral registrada."
+msgstr "No work experience registered yet."
+
+#: templates/profiles/contact_profile.html:116
+#: templates/profiles/edit_profile.html:154
+#: templates/profiles/my_profile.html:73
+msgid "Educación"
+msgstr "Education"
+
+#: templates/profiles/contact_profile.html:138
+msgid "Aun no hay trayectoria educativa registrada."
+msgstr "No education registered yet."
+
+#: templates/profiles/contact_profile.html:145
+#: templates/profiles/edit_profile.html:190
+#: templates/profiles/my_profile.html:102
+msgid "Habilidades"
+msgstr "Skills"
+
+#: templates/profiles/contact_profile.html:150
+#: templates/profiles/my_profile.html:107
+msgid "Habilidad de programacion web"
+msgstr "Web programming skill"
+
+#: templates/profiles/contact_profile.html:154
+msgid "Aun no hay habilidades registradas."
+msgstr "No skills registered yet."
+
+#: templates/profiles/contact_profile.html:167
+msgid "Este perfil corresponde a una cuenta"
+msgstr "This profile belongs to a"
+
+#: templates/profiles/contact_profile.html:172
+msgid "Conectar con este perfil"
+msgstr "Connect with this profile"
+
 #: templates/profiles/edit_profile.html:5
 msgid "Editar perfil"
 msgstr "Edit Profile"
@@ -568,24 +1005,17 @@ msgid "Volver al perfil"
 msgstr "Back to Profile"
 
 #: templates/profiles/edit_profile.html:60
+#: templates/profiles/my_profile.html:155
 msgid "Cerrar sesión"
 msgstr "Sign out"
 
-#: templates/profiles/edit_profile.html:65
-msgid "Editar Perfil"
-msgstr "Edit Profile"
-
 #: templates/profiles/edit_profile.html:72
-#, fuzzy
-#| msgid "Volver al perfil"
 msgid "Foto de perfil"
-msgstr "Back to Profile"
+msgstr "Profile photo"
 
 #: templates/profiles/edit_profile.html:77
-#, fuzzy
-#| msgid "Volver al perfil"
 msgid "Banner del perfil"
-msgstr "Back to Profile"
+msgstr "Profile banner"
 
 #: templates/profiles/edit_profile.html:94
 msgid "Correo electrónico"
@@ -600,26 +1030,116 @@ msgid "Nombre que verán otros usuarios"
 msgstr "Display name for other users"
 
 #: templates/profiles/edit_profile.html:107
-#, fuzzy
-#| msgid "Guardar cambios"
 msgid "Guardar cambios del perfil"
-msgstr "Save changes"
+msgstr "Save profile changes"
 
 #: templates/profiles/edit_profile.html:108
 msgid "Aplica la foto, banner y datos básicos de tu cuenta."
-msgstr ""
+msgstr "Apply photo, banner and basic account data."
 
 #: templates/profiles/edit_profile.html:112
 msgid "Guardar cambios"
 msgstr "Save changes"
 
+#: templates/profiles/edit_profile.html:122
+msgid "Cargo"
+msgstr "Position"
+
+#: templates/profiles/edit_profile.html:124
+msgid "Descripcion (opcional)"
+msgstr "Description (optional)"
+
+#: templates/profiles/edit_profile.html:125
+msgid "Agregar trayectoria"
+msgstr "Add work experience"
+
+#: templates/profiles/edit_profile.html:148
+msgid "Sin trayectoria laboral cargada."
+msgstr "No work experience added."
+
+#: templates/profiles/edit_profile.html:158
+msgid "Titulo"
+msgstr "Degree"
+
+#: templates/profiles/edit_profile.html:159
+msgid "Institucion"
+msgstr "Institution"
+
+#: templates/profiles/edit_profile.html:160
+msgid "Campo de estudio (opcional)"
+msgstr "Field of study (optional)"
+
+#: templates/profiles/edit_profile.html:161
+msgid "Agregar educacion"
+msgstr "Add education"
+
+#: templates/profiles/edit_profile.html:184
+msgid "Sin trayectoria educativa cargada."
+msgstr "No education added."
+
+#: templates/profiles/edit_profile.html:196
+msgid "Selecciona una habilidad del pool"
+msgstr "Select a skill from the pool"
+
+#: templates/profiles/edit_profile.html:201
+msgid "Agregar habilidad existente"
+msgstr "Add existing skill"
+
+#: templates/profiles/edit_profile.html:207
+msgid "Nueva habilidad web (ej. Svelte)"
+msgstr "New web skill (e.g. Svelte)"
+
+#: templates/profiles/edit_profile.html:208
+msgid "Crear y agregar habilidad"
+msgstr "Create and add skill"
+
+#: templates/profiles/edit_profile.html:219
+msgid "Quitar"
+msgstr "Remove"
+
+#: templates/profiles/edit_profile.html:223
+#: templates/profiles/my_profile.html:111
+msgid "Aun no agregaste habilidades."
+msgstr "You haven't added any skills yet."
+
 #: templates/profiles/edit_profile.html:239
+#: templates/profiles/my_profile.html:129
 msgid "Preferencias de la cuenta"
 msgstr "Account preferences"
 
 #: templates/profiles/edit_profile.html:247
+#: templates/profiles/my_profile.html:141
 msgid "Modo Oscuro"
 msgstr "Dark Mode"
+
+#: templates/profiles/my_profile.html:5
+msgid "Mi perfil"
+msgstr "My Profile"
+
+#: templates/profiles/my_profile.html:66
+msgid "Aun no agregaste trayectoria laboral."
+msgstr "You haven't added any work experience yet."
+
+#: templates/profiles/my_profile.html:95
+msgid "Aun no agregaste trayectoria educativa."
+msgstr "You haven't added any education yet."
+
+#: templates/profiles/my_profile.html:132
+msgid ""
+"Gestiona opciones generales de tu cuenta y accesos rápidos desde este panel."
+msgstr "Manage general account options and quick access from this panel."
+
+#: templates/profiles/my_profile.html:161
+msgid "Sugerencias basadas en tu perfil"
+msgstr "Suggestions based on your profile"
+
+#: templates/profiles/my_profile.html:180
+msgid "habilidades en comun"
+msgstr "skills in common"
+
+#: templates/profiles/my_profile.html:200
+msgid "Aun no hay perfiles sugeridos."
+msgstr "No suggested profiles yet."
 
 #: venv/lib/python3.13/site-packages/django/contrib/messages/apps.py:16
 msgid "Messages"

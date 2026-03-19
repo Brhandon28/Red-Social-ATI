@@ -6,7 +6,7 @@ from .models import Usuario, Profesional, Empresa
 
 
 class LoginForm(AuthenticationForm):
-    username = forms.CharField(
+    username = forms.EmailField(
         label=_('Correo Electrónico'),
         widget=forms.EmailInput(attrs={
             'class': 'form-input',
@@ -22,6 +22,21 @@ class LoginForm(AuthenticationForm):
             'autocomplete': 'current-password',
         }),
     )
+
+    def clean(self):
+        email = self.cleaned_data.get('username')
+        password = self.cleaned_data.get('password')
+
+        if email and password:
+            # Buscar usuario por email
+            from .models import Usuario
+            try:
+                user = Usuario.objects.get(email=email)
+                self.cleaned_data['username'] = user.username
+            except Usuario.DoesNotExist:
+                pass
+
+        return super().clean()
 
 
 class RegistroProfesionalForm(UserCreationForm):

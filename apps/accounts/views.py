@@ -1,6 +1,5 @@
-from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth import login, logout
 from django.shortcuts import redirect, render
-from django.utils.translation import gettext_lazy as _
 
 from .forms import LoginForm, RegistroEmpresaForm, RegistroProfesionalForm
 

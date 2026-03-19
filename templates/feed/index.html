@@ -1,6 +1,7 @@
 {% extends "base.html" %}
+{% load i18n %}
 
-{% block title %}Feed{% endblock %}
+{% block title %}{% trans 'Feed' %}{% endblock %}
 {% block nav_feed %}text-white border-primary bg-white/10{% endblock %}
 {% block mobile_nav_feed %}text-white{% endblock %}
 
@@ -31,7 +32,7 @@
   <section class="col-span-12 lg:col-span-6 space-y-4">
     <div
       class="hidden md:flex bg-white rounded-2xl border border-gray-300 shadow-sm px-6 py-5 items-center justify-between">
-      <span class="text-gray-500 text-[1.2rem]">Crear una publicación</span>
+      <span class="text-gray-500 text-[1.2rem]">{% trans 'Crear una publicación' %}</span>
       <a href="{% url 'feed:create_post' %}" class="text-gray-700 hover:text-primary">
         <svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
           <circle cx="12" cy="12" r="10" />
@@ -41,8 +42,8 @@
       </a>
     </div>
 
-    {% for publication in publications|slice:":2" %}
-    <div class="block {% if not forloop.first %}hidden md:block{% endif %}">
+    {% for publication in publications %}
+    <div class="block">
       <article class="bg-white rounded-xl border border-gray-300 shadow-sm overflow-hidden">
         <div class="p-3 md:p-4">
           <div class="flex items-start gap-2 md:gap-3 mb-3">
@@ -58,7 +59,7 @@
               <p class="text-[1.3rem] md:text-xs text-gray-500 leading-tight">{{ publication.followers }}</p>
               <span class="text-[1.2rem] md:text-xs text-gray-500">{{ publication.age }} • 🌐</span>
             </div>
-            <button class="text-gray-500" aria-label="Opciones">
+            <button class="text-gray-500" aria-label="{% trans 'Opciones' %}">
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                 <circle cx="5" cy="12" r="1" />
                 <circle cx="12" cy="12" r="1" />
@@ -69,10 +70,10 @@
 
           <p class="text-[1.6rem] md:text-sm text-gray-800 leading-relaxed mb-2 md:mb-1">{{ publication.summary }}</p>
           {% if publication.image %}
-          <img src="{{ publication.image.url }}" alt="Imagen de la publicacion" class="w-full rounded-lg border border-gray-200 object-cover max-h-96 mb-2" />
+          <img src="{{ publication.image.url }}" alt="{% trans 'Imagen de la publicacion' %}" class="w-full rounded-lg border border-gray-200 object-cover max-h-96 mb-2" />
           {% endif %}
           <div class="hidden md:flex justify-between items-center text-xs">
-            <a href="{% url 'feed:publication_detail' publication.id %}" class="text-gray-500 hover:text-primary">...see more</a>
+            <a href="{% url 'feed:publication_detail' publication.id %}" class="text-gray-500 hover:text-primary">{% trans '...see more' %}</a>
           </div>
         </div>
 
@@ -96,20 +97,20 @@
                 <path
                   d="M14 9V5a3 3 0 0 0-3-3l-4 9v11h11.28a2 2 0 0 0 2-1.7l1.38-9a2 2 0 0 0-2-2.3zM7 22H4a2 2 0 0 1-2-2v-7a2 2 0 0 1 2-2h3" />
               </svg>
-              Like ({{ publication.likes_count }})
+              {% trans 'Like' %} ({{ publication.likes_count }})
             </button>
           </form>
           <a class="inline-flex items-center gap-1.5" href="{% url 'feed:publication_detail' publication.id %}">
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
               <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" />
             </svg>
-            Comment ({{ publication.comments_count }})
+            {% trans 'Comment' %} ({{ publication.comments_count }})
           </a>
           {% if request.user.id == publication.author_id %}
-          <form method="post" action="{% url 'feed:delete_publication' publication.id %}" class="inline ml-auto" onsubmit="return confirm('¿Eliminar esta publicacion?');">
+          <form method="post" action="{% url 'feed:delete_publication' publication.id %}" class="inline ml-auto" onsubmit="return confirm('{% trans '¿Eliminar esta publicacion?' %}');">
             {% csrf_token %}
             <input type="hidden" name="next" value="{{ request.get_full_path }}" />
-            <button class="inline-flex items-center gap-1.5 text-red-600 hover:text-red-700" type="submit">Eliminar</button>
+            <button class="inline-flex items-center gap-1.5 text-red-600 hover:text-red-700" type="submit">{% trans 'Eliminar' %}</button>
           </form>
           {% endif %}
         </div>
@@ -119,7 +120,7 @@
   </section>
 
   <aside class="hidden lg:block lg:col-span-3">
-    <h3 class="text-base font-bold text-black mb-3 px-2">Top Publicaciones</h3>
+    <h3 class="text-base font-bold text-black mb-3 px-2">{% trans 'Top Publicaciones' %}</h3>
     <div class="space-y-4">
       {% for top in top_publications %}
       <article class="bg-white rounded-xl border border-gray-300 shadow-sm p-3">
@@ -150,7 +151,7 @@
         </div>
       </article>
       {% empty %}
-      <p class="text-sm text-gray-600">Aun no hay publicaciones suficientes para mostrar el top.</p>
+      <p class="text-sm text-gray-600">{% trans 'Aun no hay publicaciones suficientes para mostrar el top.' %}</p>
       {% endfor %}
     </div>
   </aside>

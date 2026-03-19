@@ -45,9 +45,9 @@ def _publication_queryset_for_user(user):
             liked_by_me=Exists(
                 PublicationLike.objects.filter(publication=OuterRef('pk'), user=user)
             )
-        )
+        ).order_by('-created_at')
 
-    return publications.annotate(liked_by_me=Value(False, output_field=BooleanField()))
+    return publications.annotate(liked_by_me=Value(False, output_field=BooleanField())).order_by('-created_at')
 
 
 def _comment_queryset_for_user(publication, user, *, top_level_only=False, replies_only=False):

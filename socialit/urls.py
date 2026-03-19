@@ -17,7 +17,7 @@ Including another URLconf
 from django.contrib import admin
 from django.conf import settings
 from django.conf.urls.static import static
-from django.shortcuts import render
+from django.shortcuts import redirect
 from django.conf.urls.i18n import i18n_patterns
 from django.urls import include, path
 # Importamos gettext_lazy para permitir la traducción de los textos de la propia URL
@@ -26,13 +26,20 @@ from django.utils.translation import gettext_lazy as _
 
 
 def home_view(request):
-    return render(request, 'home.html')
+    if request.user.is_authenticated:
+        return redirect('feed:index')
+    return redirect('accounts:login')
 
 # URLs NO traducidas
 # Para rutas que no necesitan el prefijo de idioma (como APIs, webhooks o archivos estáticos).
 urlpatterns = [
     # Ejemplo: path('api/', include('apps.api.urls')),
 ]
+
+# Test 404 page in DEBUG mode
+if settings.DEBUG:
+    from socialit.views import custom_404
+    urlpatterns += [path('test-404/', lambda r: custom_404(r, None))]
 
 # URLs traducidas (añaden el prefijo /es/, /en/, etc.)
 # Agregamos todas las vistas de la aplicación aquí para que Django maneje el idioma correctamente.
@@ -52,7 +59,12 @@ urlpatterns += i18n_patterns(
     path(_('chat/'), include('apps.chat.urls')),
 )
 
-if settings.DEBUG:
-    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+from django.views.static import serve
+import re
+
+# Serve media files even with DEBUG=False
+urlpatterns += [
+    path('media/<path:path>', serve, {'document_root': settings.MEDIA_ROOT}),
+]
 
 handler404 = 'socialit.views.custom_404'
