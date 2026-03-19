@@ -1,21 +1,11 @@
 services:
-  db:
-    image: mysql:8.0
-    container_name: socialit_mysql
+  sqlite:
+    image: alpine:3.21
+    container_name: sqlite_data_container_prod
     restart: unless-stopped
-    environment:
-      MYSQL_ROOT_PASSWORD: rootpass
-      MYSQL_DATABASE: socialit_prod
-      MYSQL_USER: socialit_user
-      MYSQL_PASSWORD: socialit_pass
-    ports:
-      - "3306:3306"   # opcional
+    command: sh -c "mkdir -p /data && touch /data/db.sqlite3 && tail -f /dev/null"
     volumes:
-      - mysql_data:/var/lib/mysql
-    healthcheck:
-      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
-      timeout: 10s
-      retries: 5
+      - sqlite_data:/data
 
   web:
     build:
@@ -24,17 +14,13 @@ services:
     container_name: socialit_apache_django
     restart: unless-stopped
     ports:
-      - "8080:80"      
+      - "8080:80"
     depends_on:
-      - db
-        #condition: service_healthy
+      - sqlite
+    volumes:
+      - sqlite_data:/data
     environment:
-      - DJANGO_DB_ENGINE=mysql
-      - DJANGO_DB_NAME=socialit_prod
-      - DJANGO_DB_USER=socialit_user
-      - DJANGO_DB_PASSWORD=socialit_pass
-      - DJANGO_DB_HOST=db
-      - DJANGO_DB_PORT=3306
+      - SQLITE_PATH=/data/db.sqlite3
 
 volumes:
-  mysql_data:
+  sqlite_data:
