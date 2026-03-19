@@ -224,7 +224,7 @@
     <h3 class="text-xl md:text-2xl font-bold text-black mb-4">{% trans 'Top Publicaciones' %}</h3>
     <div class="space-y-5">
       {% for top in top_publications %}
-      <article class="bg-white rounded-xl border border-gray-300 shadow-sm p-3">
+      <article class="js-clickable-card bg-white rounded-xl border border-gray-300 shadow-sm p-3 cursor-pointer" data-click-url="{% url 'feed:publication_detail' top.id %}" role="link" tabindex="0" aria-label="{% trans 'Ver detalle de publicacion' %}">
         <div class="flex items-start gap-2 mb-2">
           {% if top.author.profileImage %}
           <img src="{{ top.author.profileImage.url }}" alt="{{ top.company }}" class="w-9 h-9 rounded-full object-cover border border-gray-200 shrink-0" />
@@ -247,7 +247,6 @@
           </button>
         </div>
         <p class="text-xs text-gray-600 leading-relaxed">{{ top.summary }}</p>
-        <div class="text-right text-sm text-gray-500 mt-1">...see more</div>
       </article>
       {% endfor %}
     </div>

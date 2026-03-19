@@ -44,8 +44,8 @@
 
     {% for publication in publications %}
     <div class="block">
-      <article class="bg-white rounded-xl border border-gray-300 shadow-sm overflow-hidden">
-        <div class="p-3 md:p-4">
+      <article class="js-clickable-card bg-white rounded-xl border border-gray-300 shadow-sm overflow-hidden cursor-pointer" data-click-url="{% url 'feed:publication_detail' publication.id %}" role="link" tabindex="0" aria-label="{% trans 'Ver detalle de publicacion' %}">
+        <a href="{% url 'feed:publication_detail' publication.id %}" class="block p-3 md:p-4">
           <div class="flex items-start gap-2 md:gap-3 mb-3">
             {% if publication.author.profileImage %}
             <img src="{{ publication.author.profileImage.url }}" alt="{{ publication.company }}" class="w-12 h-12 rounded-full object-cover border border-gray-200 shrink-0" />
@@ -59,23 +59,20 @@
               <p class="text-[1.3rem] md:text-xs text-gray-500 leading-tight">{{ publication.followers }}</p>
               <span class="text-[1.2rem] md:text-xs text-gray-500">{{ publication.age }} • 🌐</span>
             </div>
-            <button class="text-gray-500" aria-label="{% trans 'Opciones' %}">
+            <span class="text-gray-500" aria-hidden="true">
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                 <circle cx="5" cy="12" r="1" />
                 <circle cx="12" cy="12" r="1" />
                 <circle cx="19" cy="12" r="1" />
               </svg>
-            </button>
+            </span>
           </div>
 
           <p class="text-[1.6rem] md:text-sm text-gray-800 leading-relaxed mb-2 md:mb-1">{{ publication.summary }}</p>
           {% if publication.image %}
           <img src="{{ publication.image.url }}" alt="{% trans 'Imagen de la publicacion' %}" class="w-full rounded-lg border border-gray-200 object-cover max-h-96 mb-2" />
           {% endif %}
-          <div class="hidden md:flex justify-between items-center text-xs">
-            <a href="{% url 'feed:publication_detail' publication.id %}" class="text-gray-500 hover:text-primary">{% trans '...see more' %}</a>
-          </div>
-        </div>
+        </a>
 
         {% if forloop.first and not publication.image %}
         <div
@@ -123,7 +120,8 @@
     <h3 class="text-base font-bold text-black mb-3 px-2">{% trans 'Top Publicaciones' %}</h3>
     <div class="space-y-4">
       {% for top in top_publications %}
-      <article class="bg-white rounded-xl border border-gray-300 shadow-sm p-3">
+      <article class="js-clickable-card bg-white rounded-xl border border-gray-300 shadow-sm cursor-pointer" data-click-url="{% url 'feed:publication_detail' top.id %}" role="link" tabindex="0" aria-label="{% trans 'Ver detalle de publicacion' %}">
+        <a href="{% url 'feed:publication_detail' top.id %}" class="block p-3">
         <div class="flex items-start gap-2 mb-2">
           {% if top.author.profileImage %}
           <img src="{{ top.author.profileImage.url }}" alt="{{ top.company }}" class="w-9 h-9 rounded-full object-cover border border-gray-200 shrink-0" />
@@ -137,18 +135,16 @@
             <p class="text-[11px] text-gray-500 leading-tight">{{ top.followers }}</p>
             <span class="text-[11px] text-gray-500">{{ top.age }} • 🌐</span>
           </div>
-          <button class="text-gray-500">
+          <span class="text-gray-500" aria-hidden="true">
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
               <circle cx="5" cy="12" r="1" />
               <circle cx="12" cy="12" r="1" />
               <circle cx="19" cy="12" r="1" />
             </svg>
-          </button>
+          </span>
         </div>
         <p class="text-[11px] text-gray-600 leading-relaxed">{{ top.summary|truncatechars:140 }}</p>
-        <div class="text-right text-xs text-gray-500 mt-1">
-          <a href="{% url 'feed:publication_detail' top.id %}" class="hover:text-primary">...see more</a>
-        </div>
+        </a>
       </article>
       {% empty %}
       <p class="text-sm text-gray-600">{% trans 'Aun no hay publicaciones suficientes para mostrar el top.' %}</p>

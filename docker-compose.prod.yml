@@ -21,6 +21,7 @@ services:
       - sqlite_data:/data
     environment:
       - SQLITE_PATH=/data/db.sqlite3
+      - DJANGO_DEBUG=False
 
 volumes:
   sqlite_data:
