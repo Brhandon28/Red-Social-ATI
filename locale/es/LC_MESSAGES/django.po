@@ -46,197 +46,197 @@ msgstr ""
 #: .\templates\accounts\login.html:64 .\templates\accounts\register.html:166
 #: .\templates\profiles\edit_profile.html:88
 msgid "ejemplo@correo.com"
-msgstr ""
+msgstr "ejemplo@correo.com"
 
 #: .\templates\accounts\login.html:87 .\templates\accounts\register.html:174
 msgid "Contraseña"
-msgstr ""
+msgstr "Contraseña"
 
 #: .\templates\accounts\login.html:95
 msgid "Tu contraseña"
-msgstr ""
+msgstr "Tu contraseña"
 
 #: .\templates\accounts\login.html:119
 msgid "¿Olvido su contraseña?"
-msgstr ""
+msgstr "¿Olvido su contraseña?"
 
 #: .\templates\accounts\login.html:125
 msgid "¿No tienes una cuenta?"
-msgstr ""
+msgstr "¿No tienes una cuenta?"
 
 #: .\templates\accounts\login.html:127 .\templates\home.html:68
 msgid "Únete aquí"
-msgstr ""
+msgstr "Únete aquí"
 
 #: .\templates\accounts\register.html:7 .\templates\accounts\register.html:83
 #: .\templates\accounts\register.html:209
 msgid "Crear cuenta"
-msgstr ""
+msgstr "Crear cuenta"
 
 #: .\templates\accounts\register.html:109
 msgid "Profesional"
-msgstr ""
+msgstr "Profesional"
 
 #: .\templates\accounts\register.html:116
 msgid "Empresa"
-msgstr ""
+msgstr "Empresa"
 
 #: .\templates\accounts\register.html:124
 #: .\templates\profiles\edit_profile.html:74
 msgid "Nombre"
-msgstr ""
+msgstr "Nombre"
 
 #: .\templates\accounts\register.html:133
 #: .\templates\profiles\edit_profile.html:76
 msgid "Tu nombre"
-msgstr ""
+msgstr "Tu nombre"
 
 #: .\templates\accounts\register.html:141
 #: .\templates\profiles\edit_profile.html:80
 msgid "Apellido"
-msgstr ""
+msgstr "Apellido"
 
 #: .\templates\accounts\register.html:150
 #: .\templates\profiles\edit_profile.html:82
 msgid "Tu apellido"
-msgstr ""
+msgstr "Tu apellido"
 
 #: .\templates\accounts\register.html:158
 msgid "Correo Electronico"
-msgstr ""
+msgstr "Correo Electronico"
 
 #: .\templates\accounts\register.html:183
 msgid "Mínimo 8 caracteres"
-msgstr ""
+msgstr "Mínimo 8 caracteres"
 
 #: .\templates\accounts\register.html:194
 msgid "Confirmar contraseña"
-msgstr ""
+msgstr "Confirmar contraseña"
 
 #: .\templates\accounts\register.html:203
 msgid "Repite tu contraseña"
-msgstr ""
+msgstr "Repite tu contraseña"
 
 #: .\templates\accounts\register.html:216
 msgid "¿Ya tienes cuenta?"
-msgstr ""
+msgstr "¿Ya tienes cuenta?"
 
 #: .\templates\accounts\register.html:218
 msgid "Inicia sesión"
-msgstr ""
+msgstr "Inicia sesión"
 
 #: .\templates\base.html:59
 msgid "Cerrar alerta"
-msgstr ""
+msgstr "Cerrar alerta"
 
 #: .\templates\home.html:17
 msgid "Tu comunidad profesional de tecnología"
-msgstr ""
+msgstr "Tu comunidad profesional de tecnología"
 
 #: .\templates\home.html:49
 msgid "Únete Ahora"
-msgstr ""
+msgstr "Únete Ahora"
 
 #: .\templates\home.html:59
 msgid "¡Te damos la bienvenida a tu comunidad profesional de ATI!"
-msgstr ""
+msgstr "¡Te damos la bienvenida a tu comunidad profesional de ATI!"
 
 #: .\templates\home.html:67
 msgid "¿Primera vez en Social?"
-msgstr ""
+msgstr "¿Primera vez en Social?"
 
 #: .\templates\partials\footer.html:11
 msgid "Acerca de nosotros"
-msgstr ""
+msgstr "Acerca de nosotros"
 
 #: .\templates\partials\footer.html:21
 msgid "Contáctanos"
-msgstr ""
+msgstr "Contáctanos"
 
 #: .\templates\partials\footer.html:69
 msgid "Seleccionar Idioma"
-msgstr ""
+msgstr "Seleccionar Idioma"
 
 #: .\templates\partials\header_desktop.html:31
 msgid "Search..."
-msgstr ""
+msgstr "Buscar..."
 
 #: .\templates\partials\header_desktop.html:32
 msgid "Búsqueda global"
-msgstr ""
+msgstr "Búsqueda global"
 
 #: .\templates\partials\header_desktop.html:36
 msgid "Navegación principal"
-msgstr ""
+msgstr "Navegación principal"
 
 #: .\templates\partials\header_desktop.html:46
 msgid "Inicio"
-msgstr ""
+msgstr "Inicio"
 
 #: .\templates\partials\header_desktop.html:59
 msgid "Publicar"
-msgstr ""
+msgstr "Publicar"
 
 #: .\templates\partials\header_desktop.html:70
 msgid "Mensajes"
-msgstr ""
+msgstr "Mensajes"
 
 #: .\templates\partials\header_desktop.html:84
 msgid "Mi Red"
-msgstr ""
+msgstr "Mi Red"
 
 #: .\templates\partials\header_desktop.html:96
 msgid "Empleos"
-msgstr ""
+msgstr "Empleos"
 
 #: .\templates\partials\header_desktop.html:108
 msgid "Notificaciones"
-msgstr ""
+msgstr "Notificaciones"
 
 #: .\templates\partials\header_desktop.html:120
 msgid "Yo"
-msgstr ""
+msgstr "Yo"
 
 #: .\templates\partials\nav_mobile.html:5
 msgid "Navegación rápida"
-msgstr ""
+msgstr "Navegación rápida"
 
 #: .\templates\profiles\edit_profile.html:5
 msgid "Editar perfil"
-msgstr ""
+msgstr "Editar perfil"
 
 #: .\templates\profiles\edit_profile.html:51
 msgid "Volver al perfil"
-msgstr ""
+msgstr "Volver al perfil"
 
 #: .\templates\profiles\edit_profile.html:55
 msgid "Cerrar sesión"
-msgstr ""
+msgstr "Cerrar sesión"
 
 #: .\templates\profiles\edit_profile.html:60
 msgid "Editar Perfil"
-msgstr ""
+msgstr "Editar Perfil"
 
 #: .\templates\profiles\edit_profile.html:86
 msgid "Correo electrónico"
-msgstr ""
+msgstr "Correo electrónico"
 
 #: .\templates\profiles\edit_profile.html:92
 msgid "Nombre mostrado"
-msgstr ""
+msgstr "Nombre mostrado"
 
 #: .\templates\profiles\edit_profile.html:94
 msgid "Nombre que verán otros usuarios"
-msgstr ""
+msgstr "Nombre que verán otros usuarios"
 
 #: .\templates\profiles\edit_profile.html:99
 msgid "Guardar cambios"
-msgstr ""
+msgstr "Guardar cambios"
 
 #: .\templates\profiles\edit_profile.html:114
 msgid "Preferencias de la cuenta"
-msgstr ""
+msgstr "Preferencias de la cuenta"
 
 #: .\templates\profiles\edit_profile.html:122
 msgid "Modo Oscuro"
-msgstr ""
+msgstr "Modo Oscuro"

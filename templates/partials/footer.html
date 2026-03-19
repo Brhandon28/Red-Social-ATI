@@ -69,11 +69,20 @@
         {% trans "Seleccionar Idioma" %}
       </h4>
       <select
+        id="language-selector"
         class="w-44 px-3 py-2 text-sm rounded-lg border border-gray-400 bg-white focus:border-primary focus:outline-none"
+        onchange="changeLanguage(this.value)"
       >
-        <option value="es">Español</option>
-        <option value="en">English</option>
+        <option value="es" {% if LANGUAGE_CODE == 'es' %}selected{% endif %}>Español</option>
+        <option value="en" {% if LANGUAGE_CODE == 'en' %}selected{% endif %}>English</option>
       </select>
+      <script>
+        function changeLanguage(lang) {
+          const currentPath = window.location.pathname;
+          const newPath = currentPath.replace(/^\/(es|en)\//, '/' + lang + '/');
+          window.location.href = newPath;
+        }
+      </script>
     </div>
   </div>
 </footer>
