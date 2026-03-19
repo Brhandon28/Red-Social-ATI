@@ -95,14 +95,24 @@
 		<h3 class="text-base font-bold text-black mb-3 px-2">{% trans 'Top Publicaciones' %}</h3>
 		<div class="space-y-4">
 			{% for top in top_publications %}
-			<article class="bg-white rounded-xl border border-gray-300 shadow-sm p-3">
+			<article class="js-clickable-card bg-white rounded-xl border border-gray-300 shadow-sm p-3 cursor-pointer" data-click-url="{% url 'feed:publication_detail' top.id %}" role="link" tabindex="0" aria-label="{% trans 'Ver detalle de publicacion' %}">
+				<a href="{% url 'feed:publication_detail' top.id %}" class="block">
 				<div class="flex items-start gap-2 mb-2">
 					{% if top.author.profileImage %}
 					<img src="{{ top.author.profileImage.url }}" alt="{{ top.company }}" class="w-9 h-9 rounded-full object-cover border border-gray-200 shrink-0" />
 					{% else %}
+					{% if top.author.tipoUsuario == 'empresa' %}
 					<div class="w-9 h-9 rounded bg-white border border-gray-200 shrink-0"
 						style="background: linear-gradient(90deg, #000 50%, transparent 50%) 0 0 / 14px 14px, linear-gradient(#000 50%, transparent 50%) 0 0 / 14px 14px;">
 					</div>
+					{% else %}
+					<div class="w-9 h-9 rounded-full bg-gray-100 border border-gray-200 shrink-0 flex items-center justify-center">
+						<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#9ca3af" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+							<circle cx="12" cy="8" r="4" />
+							<path d="M4 20a8 8 0 0 1 16 0" />
+						</svg>
+					</div>
+					{% endif %}
 					{% endif %}
 					<div class="flex-1 min-w-0">
 						<h4 class="text-xs font-semibold text-gray-800 leading-tight">{{ top.company }}</h4>
@@ -118,9 +128,7 @@
 					</button>
 				</div>
 				<p class="text-[11px] text-gray-600 leading-relaxed">{{ top.summary|truncatechars:140 }}</p>
-				<div class="text-right text-xs text-gray-500 mt-1">
-					<a href="{% url 'feed:publication_detail' top.id %}" class="hover:text-primary">...see more</a>
-				</div>
+				</a>
 			</article>
 			{% empty %}
 			<p class="text-sm text-gray-600">{% trans 'Aun no hay publicaciones suficientes para mostrar el top.' %}</p>

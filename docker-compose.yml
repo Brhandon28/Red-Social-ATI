@@ -19,6 +19,7 @@ services:
       - sqlite_data:/data
     environment:
       - SQLITE_PATH=/data/db.sqlite3
+      - DJANGO_DEBUG=True
     command: sh /app/entrypoint.dev.sh
 
 volumes:

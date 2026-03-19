@@ -48,12 +48,12 @@ def job_list(request):
 	suggested_jobs = offers[2:5]
 	recent_searches = [
 		{
-			'title': 'Ultimas ofertas publicadas',
+			'title': 'Últimas ofertas publicadas',
 			'description': 'Explora nuevas oportunidades creadas recientemente.',
 		},
 		{
 			'title': 'Ofertas en tu zona',
-			'description': 'Filtra por ubicacion para encontrar empleo cerca de ti.',
+			'description': 'Filtra por ubicación para encontrar empleo cerca de ti.',
 		},
 	]
 
@@ -74,7 +74,7 @@ def job_list(request):
 @login_required
 def company_job_list(request):
 	if not _is_company_user(request.user):
-		messages.error(request, 'Esta seccion esta disponible solo para cuentas empresa.')
+		messages.error(request, 'Esta sección está disponible solo para cuentas de empresa.')
 		return redirect('jobs:job_list')
 
 	user_profile = _get_current_user_profile(request)
@@ -112,7 +112,7 @@ def job_detail(request, job_id):
 @login_required
 def create_offer(request):
 	if not _is_company_user(request.user):
-		messages.error(request, 'Solo una cuenta empresa puede crear ofertas de empleo.')
+		messages.error(request, 'Solo una cuenta de empresa puede crear ofertas de empleo.')
 		return redirect('jobs:job_list')
 
 	form_data = {
@@ -146,7 +146,7 @@ def create_offer(request):
 			salary_range=form_data['salary_range'],
 		)
 
-		messages.success(request, 'La oferta de empleo se creo correctamente.')
+		messages.success(request, 'La oferta de empleo se creó correctamente.')
 		return redirect('jobs:job_detail', job_id=new_offer.pk)
 
 	return render(request, 'jobs/create_job_offer.html', {'form_data': form_data})
@@ -169,7 +169,7 @@ def apply_offer(request, job_id):
 	if created:
 		messages.success(request, 'Te postulaste correctamente a la oferta.')
 	else:
-		messages.info(request, 'Ya te habias postulado a esta oferta.')
+		messages.info(request, 'Ya te habías postulado a esta oferta.')
 
 	return redirect('jobs:job_detail', job_id=offer.pk)
 
@@ -178,7 +178,7 @@ def apply_offer(request, job_id):
 @require_POST
 def delete_offer(request, job_id):
 	if not _is_company_user(request.user):
-		messages.error(request, 'Solo una cuenta empresa puede eliminar ofertas de empleo.')
+		messages.error(request, 'Solo una cuenta de empresa puede eliminar ofertas de empleo.')
 		return redirect('jobs:job_list')
 
 	offer = get_object_or_404(JobOffer, pk=job_id)

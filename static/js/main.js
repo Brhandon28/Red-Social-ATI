@@ -227,6 +227,43 @@ document.addEventListener('DOMContentLoaded', function () {
   }
 
   // ============================================
+  // Cards clicables de publicaciones
+  // ============================================
+  document.querySelectorAll('.js-clickable-card[data-click-url]').forEach(function (card) {
+    function isInteractiveTarget(target) {
+      return Boolean(
+        target.closest('a, button, input, textarea, select, label, form, [role="button"]')
+      );
+    }
+
+    card.addEventListener('click', function (e) {
+      if (isInteractiveTarget(e.target)) {
+        return;
+      }
+
+      var url = card.dataset.clickUrl;
+      if (url) {
+        window.location.href = url;
+      }
+    });
+
+    card.addEventListener('keydown', function (e) {
+      if (e.key !== 'Enter' && e.key !== ' ') {
+        return;
+      }
+      if (isInteractiveTarget(e.target)) {
+        return;
+      }
+
+      e.preventDefault();
+      var url = card.dataset.clickUrl;
+      if (url) {
+        window.location.href = url;
+      }
+    });
+  });
+
+  // ============================================
   // Smooth scroll for anchor links
   // ============================================
   document.querySelectorAll('a[href^="#"]').forEach(function (anchor) {
