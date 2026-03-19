@@ -1,4 +1,5 @@
 from django.contrib import messages
+from django.utils.translation import gettext as _
 from django.contrib.auth.decorators import login_required
 from django.db.models import BooleanField, Count, Exists, OuterRef, Value
 from django.shortcuts import get_object_or_404, redirect, render
@@ -48,12 +49,12 @@ def job_list(request):
 	suggested_jobs = offers[2:5]
 	recent_searches = [
 		{
-			'title': 'Últimas ofertas publicadas',
-			'description': 'Explora nuevas oportunidades creadas recientemente.',
+			'title': _('Últimas ofertas publicadas'),
+			'description': _('Explora nuevas oportunidades creadas recientemente.'),
 		},
 		{
-			'title': 'Ofertas en tu zona',
-			'description': 'Filtra por ubicación para encontrar empleo cerca de ti.',
+			'title': _('Ofertas en tu zona'),
+			'description': _('Filtra por ubicación para encontrar empleo cerca de ti.'),
 		},
 	]
 
