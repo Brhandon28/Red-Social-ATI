@@ -265,29 +265,29 @@
           }
 
           if (mode === 'empresarial') {
-            labelPrimary.textContent = 'Nombre de la Empresa';
-            labelSecondary.textContent = 'RIF / NIT';
-            labelEmail.textContent = 'Correo Corporativo';
-            labelPassword.textContent = 'Contraseña de Empresa';
+            labelPrimary.textContent = "{% trans 'Nombre de la Empresa' %}";
+            labelSecondary.textContent = "{% trans 'RIF / NIT' %}";
+            labelEmail.textContent = "{% trans 'Correo Corporativo' %}";
+            labelPassword.textContent = "{% trans 'Contraseña de Empresa' %}";
 
-            inputFirstName.placeholder = 'Nombre de la empresa';
-            inputLastName.placeholder = 'J-12345678-9';
-            inputEmail.placeholder = 'empresa@correo.com';
-            inputPassword.placeholder = 'Mínimo 8 caracteres';
+            inputFirstName.placeholder = "{% trans 'Nombre de la empresa' %}";
+            inputLastName.placeholder = "{% trans 'J-12345678-9' %}";
+            inputEmail.placeholder = "{% trans 'empresa@correo.com' %}";
+            inputPassword.placeholder = "{% trans 'Mínimo 8 caracteres' %}";
 
-            submitRegister.textContent = 'Registrar empresa';
+            submitRegister.textContent = "{% trans 'Registrar empresa' %}";
           } else {
-            labelPrimary.textContent = 'Nombre';
-            labelSecondary.textContent = 'Apellido';
-            labelEmail.textContent = 'Correo Electronico';
-            labelPassword.textContent = 'Contraseña';
+            labelPrimary.textContent = "{% trans 'Nombre' %}";
+            labelSecondary.textContent = "{% trans 'Apellido' %}";
+            labelEmail.textContent = "{% trans 'Correo Electronico' %}";
+            labelPassword.textContent = "{% trans 'Contraseña' %}";
 
-            inputFirstName.placeholder = 'Tu nombre';
-            inputLastName.placeholder = 'Tu apellido';
-            inputEmail.placeholder = 'ejemplo@correo.com';
-            inputPassword.placeholder = 'Mínimo 8 caracteres';
+            inputFirstName.placeholder = "{% trans 'Tu nombre' %}";
+            inputLastName.placeholder = "{% trans 'Tu apellido' %}";
+            inputEmail.placeholder = "{% trans 'ejemplo@correo.com' %}";
+            inputPassword.placeholder = "{% trans 'Mínimo 8 caracteres' %}";
 
-            submitRegister.textContent = 'Crear cuenta';
+            submitRegister.textContent = "{% trans 'Crear cuenta' %}";
           }
         };
 
