@@ -1,6 +1,7 @@
 from django.contrib.auth import get_user_model
 from django.core.management.base import BaseCommand
 from django.db import transaction
+from django.db.models import Q
 
 from apps.accounts.models import Empresa, Profesional, Usuario
 from apps.jobs.models import JobOffer
@@ -9,6 +10,19 @@ from apps.posts.models import Publication
 
 
 class Command(BaseCommand):
+    PROFESSIONAL_NAMES = [
+        ("Camila", "Rojas"),
+        ("Nicolás", "Salvatierra"),
+        ("María", "Fernández"),
+        ("Sofía", "Mendoza"),
+        ("Diego", "López"),
+        ("Valentina", "Quiroga"),
+        ("Andrés", "Paredes"),
+        ("Paola", "Vargas"),
+        ("Joaquín", "Montaño"),
+        ("Lucía", "Peña"),
+    ]
+
     COMPANY_PROFILES = [
         {
             "name": "AndesTech Solutions",
@@ -73,33 +87,33 @@ class Command(BaseCommand):
     JOB_TEMPLATES = [
         {
             "title": "Desarrollador Backend Python",
-            "description": "Participaras en diseno de APIs, integraciones y optimizacion de rendimiento para productos internos.",
+            "description": "Participarás en el diseño de APIs, integraciones y optimización de rendimiento para productos internos de la compañía.",
             "location": "Remoto",
             "salary_range": "$1,400 - $2,000",
         },
         {
             "title": "Analista de Datos",
-            "description": "Apoyaras decisiones de negocio con tableros, limpieza de datos y analisis de tendencias.",
-            "location": "Hibrido - La Paz",
+            "description": "Apoyarás la toma de decisiones del negocio con tableros, limpieza de datos y análisis de tendencias de desempeño.",
+            "location": "Híbrido - La Paz",
             "salary_range": "$1,100 - $1,600",
         },
         {
-            "title": "Especialista de Soporte Tecnico",
-            "description": "Gestionaras incidencias, documentacion tecnica y mejora continua de atencion al cliente.",
+            "title": "Especialista de Soporte Técnico",
+            "description": "Gestionarás incidencias, documentación técnica y mejora continua de la atención al cliente en operación diaria.",
             "location": "Presencial - Santa Cruz",
             "salary_range": "$900 - $1,300",
         },
         {
-            "title": "Disenador UI/UX",
-            "description": "Trabajaras con producto y desarrollo para construir experiencias claras y orientadas a conversion.",
-            "location": "Hibrido - Cochabamba",
+            "title": "Diseñador UI/UX",
+            "description": "Trabajarás con producto y desarrollo para construir experiencias claras, medibles y orientadas a conversión.",
+            "location": "Híbrido - Cochabamba",
             "salary_range": "$1,200 - $1,700",
         },
     ]
 
     help = (
-        "Crea datos demo: usuarios, publicaciones, ofertas laborales y conexiones "
-        "aceptadas entre usuarios."
+        "Crea datos iniciales: usuarios, publicaciones, ofertas laborales y "
+        "conexiones aceptadas entre usuarios."
     )
 
     def add_arguments(self, parser):
@@ -130,8 +144,8 @@ class Command(BaseCommand):
         parser.add_argument(
             "--password",
             type=str,
-            default="demo12345",
-            help="Password para todos los usuarios demo.",
+            default="SocialIT12345",
+            help="Contraseña para todos los usuarios de datos iniciales.",
         )
 
     @transaction.atomic
@@ -142,11 +156,13 @@ class Command(BaseCommand):
         ofertas_por_empresa = max(0, options["ofertas_por_empresa"])
         password = options["password"]
 
+        self._cleanup_legacy_seed_users()
+
         professionals = self._crear_profesionales(total_profesionales, password)
         companies = self._crear_empresas(total_empresas, password)
 
         all_users = professionals + companies
-        self._reset_demo_content(all_users, companies)
+        self._reset_seed_content(all_users, companies)
         publications_created = self._crear_publicaciones(
             all_users,
             publicaciones_por_usuario,
@@ -154,21 +170,29 @@ class Command(BaseCommand):
         offers_created = self._crear_ofertas(companies, ofertas_por_empresa)
         accepted_connections = self._crear_conexiones_aceptadas(all_users)
 
-        self.stdout.write(self.style.SUCCESS("Datos demo generados correctamente."))
+        self.stdout.write(self.style.SUCCESS("Datos iniciales generados correctamente."))
         self.stdout.write(f"- Usuarios profesionales: {len(professionals)}")
         self.stdout.write(f"- Usuarios empresa: {len(companies)}")
         self.stdout.write(f"- Publicaciones creadas: {publications_created}")
         self.stdout.write(f"- Ofertas creadas: {offers_created}")
         self.stdout.write(f"- Conexiones aceptadas: {accepted_connections}")
-        self.stdout.write("Prefijos de usuario creados: demo_prof_ y demo_emp_")
+        self.stdout.write("Prefijos de usuario creados: profesional_ y empresa_")
+
+    def _cleanup_legacy_seed_users(self):
+        User = get_user_model()
+        legacy_users = User.objects.filter(
+            Q(username__startswith='demo_prof_') |
+            Q(username__startswith='demo_emp_')
+        )
+        if legacy_users.exists():
+            legacy_users.delete()
 
     def _crear_profesionales(self, cantidad, password):
         users = []
         for i in range(1, cantidad + 1):
-            username = f"demo_prof_{i}"
-            email = f"{username}@example.com"
-            first_name = f"Profesional{i}"
-            last_name = "ATI"
+            first_name, last_name = self.PROFESSIONAL_NAMES[(i - 1) % len(self.PROFESSIONAL_NAMES)]
+            username = f"profesional_{i}"
+            email = f"{first_name.lower()}.{last_name.lower()}{i}@socialit.com"
 
             user = self._get_or_create_user(
                 username=username,
@@ -185,8 +209,8 @@ class Command(BaseCommand):
                 defaults={
                     "nombre": first_name,
                     "apellido": last_name,
-                    "experienciaLaboral": "Experiencia demo en proyectos web.",
-                    "certificaciones": "Certificacion demo ATI.",
+                    "experienciaLaboral": "Experiencia en proyectos web, integración de APIs y mejora de procesos digitales.",
+                    "certificaciones": "Certificación en desarrollo de software y metodologías ágiles.",
                 },
             )
             users.append(user)
@@ -196,8 +220,8 @@ class Command(BaseCommand):
         users = []
         for i in range(1, cantidad + 1):
             company_profile = self.COMPANY_PROFILES[(i - 1) % len(self.COMPANY_PROFILES)]
-            username = f"demo_emp_{i}"
-            email = f"{username}@example.com"
+            username = f"empresa_{i}"
+            email = f"contacto{i}@socialit.com"
             razon_social = company_profile["name"]
 
             user = self._get_or_create_user(
@@ -223,8 +247,8 @@ class Command(BaseCommand):
             users.append(user)
         return users
 
-    def _reset_demo_content(self, users, companies):
-        # Reemplaza contenido demo previo para mantener el dataset consistente.
+    def _reset_seed_content(self, users, companies):
+        # Reemplaza contenido previo para mantener el dataset consistente.
         Publication.objects.filter(author__in=users).delete()
         JobOffer.objects.filter(created_by__in=companies).delete()
 

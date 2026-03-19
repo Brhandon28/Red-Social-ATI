@@ -59,12 +59,16 @@
                   {% if publication.author.profileImage %}
                   <img src="{{ publication.author.profileImage.url }}" alt="{{ publication.author }}" style="width: 42px; height: 42px; border-radius: 9999px; object-fit: cover; border: 1px solid #d1d5db; flex-shrink: 0;" />
                   {% else %}
+                  {% if publication.author.tipoUsuario == 'empresa' %}
+                  <div style="width: 42px; height: 42px; border-radius: 6px; border: 1.5px solid #c9c9c9; background: linear-gradient(90deg, #000 50%, transparent 50%) 0 0 / 14px 14px, linear-gradient(#000 50%, transparent 50%) 0 0 / 14px 14px; flex-shrink:0;"></div>
+                  {% else %}
                   <div style="width: 42px; height: 42px; border-radius: 9999px; border: 1.5px solid #c9c9c9; display:flex; align-items:center; justify-content:center; flex-shrink:0;">
                     <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#b3b3b3" stroke-width="1.5">
                       <circle cx="12" cy="8" r="4" />
                       <path d="M4 20a8 8 0 0 1 16 0" />
                     </svg>
                   </div>
+                  {% endif %}
                   {% endif %}
                   <div class="card-header-info">
                     <h4 style="font-size: 0.95rem;">{{ publication.author }}</h4>
