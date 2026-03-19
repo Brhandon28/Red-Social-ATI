@@ -30,6 +30,7 @@ Usar prefijos para identificar cambios rápidamente en el historial:
 * `docs:` Cambios en documentación.
 * `style:` Cambios de formato (espacios, comas) sin cambio lógico.
 * `refactor:` Mejoras de código sin cambiar funcionalidad.
+* `nfr:` Non-funcional-requirement.
 
 ### 🔀 Pull Requests (PR)
 1.  Nunca hacer push directo a `main` o `develop`.

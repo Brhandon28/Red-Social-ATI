@@ -1,15 +1,49 @@
 <!-- Template: 404.html -->
-{% extends "base.html" %} {% load i18n %} {% block title %}{% trans "Página no
-encontrada" %}{% endblock %} {% block content %}
-<section class="error-page">
-  <h1>404</h1>
-  <h2>{% trans "Página no encontrada" %}</h2>
-  <p>
-    {% trans "La página que buscas no existe o fue movida. Verifica la dirección
-    o regresa al inicio." %}
-  </p>
-  <a href="{% url 'feed:index' %}" class="btn btn-primary"
-    >{% trans "Volver al inicio" %}</a
-  >
-</section>
-{% endblock %}
+{% load static %}
+{% load i18n %}
+<!DOCTYPE html>
+<html lang="{{ LANGUAGE_CODE }}">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>{% trans "Página no encontrada" %} — SocialIT</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="{% static 'css/styles.css' %}" />
+  <link rel="stylesheet" href="{% static 'css/landing.css' %}" />
+</head>
+<body class="landing-body">
+  <main class="landing-main flex items-center justify-center min-h-screen">
+    <div class="text-center px-4">
+      <!-- 404 Number -->
+      <h1 class="text-[120px] md:text-[180px] font-extrabold text-red-500 leading-none tracking-tight drop-shadow-lg">
+        404
+      </h1>
+      
+      <!-- Card -->
+      <div class="bg-white rounded-2xl p-8 md:p-10 max-w-md mx-auto mt-[-10px] shadow-2xl">
+        <h2 class="text-2xl md:text-3xl font-bold text-slate-800 mb-4">
+          {% trans "Página no encontrada" %}
+        </h2>
+        <p class="text-slate-600 text-base md:text-lg mb-8">
+          {% trans "La página que buscas no existe o fue movida. Verifica la dirección o regresa al inicio." %}
+        </p>
+        
+        <!-- Back Button -->
+        <a href="{% url 'feed:index' %}" class="landing-cta-btn inline-flex items-center gap-2">
+          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="m12 19-7-7 7-7"/>
+            <path d="M19 12H5"/>
+          </svg>
+          {% trans "Volver al inicio" %}
+        </a>
+      </div>
+      
+    </div>
+  </main>
+
+  <script src="{% static 'js/main.js' %}"></script>
+</body>
+</html>

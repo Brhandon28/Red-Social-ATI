@@ -12,6 +12,7 @@ https://docs.djangoproject.com/en/6.0/ref/settings/
 
 import os
 from pathlib import Path
+from django.utils.translation import gettext_lazy as _
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -24,7 +25,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-wzuhpp5v6)m_qo)1j5fd&ixn^!9556y_ltp=f+_hj1h8p3dgr!'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = os.getenv('DJANGO_DEBUG', 'True').lower() in ('1', 'true', 'yes', 'on')
 
 ALLOWED_HOSTS = ['*']
 
@@ -56,6 +57,7 @@ INSTALLED_APPS = [
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
+    "django.middleware.locale.LocaleMiddleware",
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
@@ -77,6 +79,7 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'django.template.context_processors.i18n',
             ],
         },
     },
@@ -145,7 +148,7 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/6.0/topics/i18n/
 
-LANGUAGE_CODE = 'es-es'
+LANGUAGE_CODE = 'es'
 
 TIME_ZONE = 'UTC'
 
@@ -155,11 +158,12 @@ USE_TZ = True
 
 # Idiomas  
 LANGUAGES = [
-    ('es', 'Español'),
-    ('en', 'Inglés'), 
-    ('fr', 'Francés'),
-    ('de', 'Alemán'),
-    ('zh', 'Chino'),
+    ('es', _('Spanish')),
+    ('en', _('English')),
+    # No se implementará en esta fase, pero se pueden agregar más idiomas fácilmente en el futuro. 
+    # ('fr', _('French')), 
+    # ('de', _('German')),
+    # ('zh', _('Chinese')),
 ]
 
 # Ruta donde se guardarán los archivos de traducción
@@ -167,6 +171,13 @@ LOCALE_PATHS = [
     BASE_DIR / 'locale',
 ]
 
+# Ejecutar este comando para generar los archivos de traducción:
+# python manage.py makemessages -l es
+# Nota: El parámetro -l en le indica a Django que cree la
+# estructura específica para el idioma español (es) 
+
+# Ejecutar este comando para compilar los archivos de traducción:
+# python manage.py compilemessages
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/6.0/howto/static-files/

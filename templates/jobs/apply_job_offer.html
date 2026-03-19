@@ -1,7 +1,8 @@
 {% extends "base.html" %}
 {% load static %}
+{% load i18n %}
 
-{% block title %}Detalle de empleo{% endblock %}
+{% block title %}{% trans 'Detalle de empleo' %}{% endblock %}
 {% block nav_jobs %}text-white border-primary bg-white/10{% endblock %}
 {% block mobile_nav_jobs %}text-white{% endblock %}
 
@@ -18,11 +19,11 @@
         <line x1="19" y1="12" x2="5" y2="12" />
         <polyline points="12 19 5 12 12 5" />
       </svg>
-      <span class="text-base hidden md:inline">Regresar</span>
-      <span class="text-base md:hidden">Ir atrás</span>
+      <span class="text-base hidden md:inline">{% trans 'Regresar' %}</span>
+      <span class="text-base md:hidden">{% trans 'Ir atrás' %}</span>
     </a>
 
-    <h2 class="text-2xl font-bold text-black mb-4 hidden md:block">Otros Empleos Similares</h2>
+    <h2 class="text-2xl font-bold text-black mb-4 hidden md:block">{% trans 'Otros Empleos Similares' %}</h2>
 
     <div class="space-y-3 hidden md:block">
       {% for similar in similar_jobs %}
@@ -72,7 +73,7 @@
           <h4>{{ job.company }}</h4>
           <span class="text-small text-light">{{ job.age }} · 🌐</span>
         </div>
-        <button class="btn-icon" aria-label="Opciones" style="width: 28px; height: 28px;">
+        <button class="btn-icon" aria-label="{% trans 'Opciones' %}" style="width: 28px; height: 28px;">
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
             <circle cx="5" cy="12" r="1" />
             <circle cx="12" cy="12" r="1" />
@@ -88,17 +89,17 @@
         {% csrf_token %}
         <button class="btn btn-primary" type="submit" style="border-radius: 9999px; padding-inline: 2rem; margin-bottom: 0;" {% if job.applied_by_me or request.user.id == job.created_by_id %}disabled{% endif %}>
           {% if request.user.id == job.created_by_id %}
-          Tu oferta
+          {% trans 'Tu oferta' %}
           {% elif job.applied_by_me %}
-          Ya postulaste
+          {% trans 'Ya postulaste' %}
           {% else %}
-          Aplicar
+          {% trans 'Aplicar' %}
           {% endif %}
         </button>
       </form>
 
       <section class="mb-8">
-        <h2 class="text-3xl md:text-2xl font-bold mb-3 text-gray-900" style="font-size: 2rem;">Acerca del empleo</h2>
+        <h2 class="text-3xl md:text-2xl font-bold mb-3 text-gray-900" style="font-size: 2rem;">{% trans 'Acerca del empleo' %}</h2>
         <p class="text-gray-700 text-base" style="line-height: 1.55;">
           Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin tristique neque vitae risus ornare porta.
           Sed elit diam, volutpat ac interdum ac, egestas sed leo. Duis quis porta sapien. Quisque ultricies
@@ -111,7 +112,7 @@
       </section>
 
       <section class="hidden md:block">
-        <h2 class="text-3xl md:text-2xl font-bold mb-3 text-gray-900" style="font-size: 2rem;">Acerca de la empresa</h2>
+        <h2 class="text-3xl md:text-2xl font-bold mb-3 text-gray-900" style="font-size: 2rem;">{% trans 'Acerca de la empresa' %}</h2>
         <p class="text-gray-700 text-base" style="line-height: 1.55;">
           Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin tristique neque vitae risus ornare porta.
           Sed elit diam, volutpat ac interdum ac, egestas sed leo. Duis quis porta sapien. Quisque ultricies
@@ -124,7 +125,7 @@
       </section>
 
       <section class="md:hidden mt-8">
-        <h2 class="text-xl font-bold mb-3 text-gray-900">Empleos similares</h2>
+        <h2 class="text-xl font-bold mb-3 text-gray-900">{% trans 'Empleos similares' %}</h2>
         <div class="space-y-2 border-t border-gray-300 pt-2">
           {% for similar in similar_jobs|slice:":3" %}
           <a href="{% url 'jobs:job_detail' similar.id %}"

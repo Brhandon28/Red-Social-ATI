@@ -1,0 +1,242 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-03-13 23:37-0400\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=3; plural=n == 1 ? 0 : n != 0 && n % 1000000 == 0 ? "
+"1 : 2;\n"
+#: .\templates\404.html:6
+msgid "Página no encontrada"
+msgstr ""
+
+#: .\templates\404.html:12
+msgid "Volver al inicio"
+msgstr ""
+
+#: .\templates\accounts\login.html:11 .\templates\home.html:44
+#: .\templates\home.html:63
+msgid "Iniciar sesión"
+msgstr ""
+
+#: .\templates\accounts\login.html:34 .\templates\accounts\login.html:114
+msgid "Iniciar Sesión"
+msgstr ""
+
+#: .\templates\accounts\login.html:44
+msgid "Correo o contraseña incorrectos. Verifica tus datos."
+msgstr ""
+
+#: .\templates\accounts\login.html:56
+msgid "Correo Electrónico"
+msgstr ""
+
+#: .\templates\accounts\login.html:64 .\templates\accounts\register.html:166
+#: .\templates\profiles\edit_profile.html:88
+msgid "ejemplo@correo.com"
+msgstr "ejemplo@correo.com"
+
+#: .\templates\accounts\login.html:87 .\templates\accounts\register.html:174
+msgid "Contraseña"
+msgstr "Contraseña"
+
+#: .\templates\accounts\login.html:95
+msgid "Tu contraseña"
+msgstr "Tu contraseña"
+
+#: .\templates\accounts\login.html:119
+msgid "¿Olvido su contraseña?"
+msgstr "¿Olvido su contraseña?"
+
+#: .\templates\accounts\login.html:125
+msgid "¿No tienes una cuenta?"
+msgstr "¿No tienes una cuenta?"
+
+#: .\templates\accounts\login.html:127 .\templates\home.html:68
+msgid "Únete aquí"
+msgstr "Únete aquí"
+
+#: .\templates\accounts\register.html:7 .\templates\accounts\register.html:83
+#: .\templates\accounts\register.html:209
+msgid "Crear cuenta"
+msgstr "Crear cuenta"
+
+#: .\templates\accounts\register.html:109
+msgid "Profesional"
+msgstr "Profesional"
+
+#: .\templates\accounts\register.html:116
+msgid "Empresa"
+msgstr "Empresa"
+
+#: .\templates\accounts\register.html:124
+#: .\templates\profiles\edit_profile.html:74
+msgid "Nombre"
+msgstr "Nombre"
+
+#: .\templates\accounts\register.html:133
+#: .\templates\profiles\edit_profile.html:76
+msgid "Tu nombre"
+msgstr "Tu nombre"
+
+#: .\templates\accounts\register.html:141
+#: .\templates\profiles\edit_profile.html:80
+msgid "Apellido"
+msgstr "Apellido"
+
+#: .\templates\accounts\register.html:150
+#: .\templates\profiles\edit_profile.html:82
+msgid "Tu apellido"
+msgstr "Tu apellido"
+
+#: .\templates\accounts\register.html:158
+msgid "Correo Electronico"
+msgstr "Correo Electronico"
+
+#: .\templates\accounts\register.html:183
+msgid "Mínimo 8 caracteres"
+msgstr "Mínimo 8 caracteres"
+
+#: .\templates\accounts\register.html:194
+msgid "Confirmar contraseña"
+msgstr "Confirmar contraseña"
+
+#: .\templates\accounts\register.html:203
+msgid "Repite tu contraseña"
+msgstr "Repite tu contraseña"
+
+#: .\templates\accounts\register.html:216
+msgid "¿Ya tienes cuenta?"
+msgstr "¿Ya tienes cuenta?"
+
+#: .\templates\accounts\register.html:218
+msgid "Inicia sesión"
+msgstr "Inicia sesión"
+
+#: .\templates\base.html:59
+msgid "Cerrar alerta"
+msgstr "Cerrar alerta"
+
+#: .\templates\home.html:17
+msgid "Tu comunidad profesional de tecnología"
+msgstr "Tu comunidad profesional de tecnología"
+
+#: .\templates\home.html:49
+msgid "Únete Ahora"
+msgstr "Únete Ahora"
+
+#: .\templates\home.html:59
+msgid "¡Te damos la bienvenida a tu comunidad profesional de ATI!"
+msgstr "¡Te damos la bienvenida a tu comunidad profesional de ATI!"
+
+#: .\templates\home.html:67
+msgid "¿Primera vez en Social?"
+msgstr "¿Primera vez en Social?"
+
+#: .\templates\partials\footer.html:11
+msgid "Acerca de nosotros"
+msgstr "Acerca de nosotros"
+
+#: .\templates\partials\footer.html:21
+msgid "Contáctanos"
+msgstr "Contáctanos"
+
+#: .\templates\partials\footer.html:69
+msgid "Seleccionar Idioma"
+msgstr "Seleccionar Idioma"
+
+#: .\templates\partials\header_desktop.html:31
+msgid "Search..."
+msgstr "Buscar..."
+
+#: .\templates\partials\header_desktop.html:32
+msgid "Búsqueda global"
+msgstr "Búsqueda global"
+
+#: .\templates\partials\header_desktop.html:36
+msgid "Navegación principal"
+msgstr "Navegación principal"
+
+#: .\templates\partials\header_desktop.html:46
+msgid "Inicio"
+msgstr "Inicio"
+
+#: .\templates\partials\header_desktop.html:59
+msgid "Publicar"
+msgstr "Publicar"
+
+#: .\templates\partials\header_desktop.html:70
+msgid "Mensajes"
+msgstr "Mensajes"
+
+#: .\templates\partials\header_desktop.html:84
+msgid "Mi Red"
+msgstr "Mi Red"
+
+#: .\templates\partials\header_desktop.html:96
+msgid "Empleos"
+msgstr "Empleos"
+
+#: .\templates\partials\header_desktop.html:108
+msgid "Notificaciones"
+msgstr "Notificaciones"
+
+#: .\templates\partials\header_desktop.html:120
+msgid "Yo"
+msgstr "Yo"
+
+#: .\templates\partials\nav_mobile.html:5
+msgid "Navegación rápida"
+msgstr "Navegación rápida"
+
+#: .\templates\profiles\edit_profile.html:5
+msgid "Editar perfil"
+msgstr "Editar perfil"
+
+#: .\templates\profiles\edit_profile.html:51
+msgid "Volver al perfil"
+msgstr "Volver al perfil"
+
+#: .\templates\profiles\edit_profile.html:55
+msgid "Cerrar sesión"
+msgstr "Cerrar sesión"
+
+#: .\templates\profiles\edit_profile.html:60
+msgid "Editar Perfil"
+msgstr "Editar Perfil"
+
+#: .\templates\profiles\edit_profile.html:86
+msgid "Correo electrónico"
+msgstr "Correo electrónico"
+
+#: .\templates\profiles\edit_profile.html:92
+msgid "Nombre mostrado"
+msgstr "Nombre mostrado"
+
+#: .\templates\profiles\edit_profile.html:94
+msgid "Nombre que verán otros usuarios"
+msgstr "Nombre que verán otros usuarios"
+
+#: .\templates\profiles\edit_profile.html:99
+msgid "Guardar cambios"
+msgstr "Guardar cambios"
+
+#: .\templates\profiles\edit_profile.html:114
+msgid "Preferencias de la cuenta"
+msgstr "Preferencias de la cuenta"
+
+#: .\templates\profiles\edit_profile.html:122
+msgid "Modo Oscuro"
+msgstr "Modo Oscuro"

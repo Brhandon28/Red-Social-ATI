@@ -115,14 +115,14 @@
           </form>
 
           <div style="margin-top: 1.2rem;">
-            <h2 style="font-size: 1.6rem; margin-bottom: 0.5rem;">Trayectoria</h2>
+            <h2 style="font-size: 1.6rem; margin-bottom: 0.5rem;">{% trans 'Trayectoria' %}</h2>
             <form method="post" action="{% url 'profiles:edit_profile' %}" class="space-y-2" style="margin-bottom: 0.7rem;">
               {% csrf_token %}
               <input type="hidden" name="form_type" value="work_add" />
-              <input type="text" name="position" class="form-input" placeholder="Cargo" required />
-              <input type="text" name="company" class="form-input" placeholder="Empresa" required />
-              <textarea name="description" rows="2" class="form-input" placeholder="Descripcion (opcional)"></textarea>
-              <button type="submit" class="btn btn-primary" style="border-radius: 9999px; padding: 0.35rem 1rem; font-size: 0.8rem;">Agregar trayectoria</button>
+              <input type="text" name="position" class="form-input" placeholder="{% trans 'Cargo' %}" required />
+              <input type="text" name="company" class="form-input" placeholder="{% trans 'Empresa' %}" required />
+              <textarea name="description" rows="2" class="form-input" placeholder="{% trans 'Descripcion (opcional)' %}"></textarea>
+              <button type="submit" class="btn btn-primary" style="border-radius: 9999px; padding: 0.35rem 1rem; font-size: 0.8rem;">{% trans 'Agregar trayectoria' %}</button>
             </form>
 
             <div class="space-y-2">
@@ -140,25 +140,25 @@
                     {% csrf_token %}
                     <input type="hidden" name="form_type" value="work_delete" />
                     <input type="hidden" name="item_id" value="{{ item.id }}" />
-                    <button type="submit" class="btn" style="background:#ef4444; color:#fff; border-radius:9999px; padding:0.2rem 0.7rem; font-size:0.75rem;">Eliminar</button>
+                    <button type="submit" class="btn" style="background:#ef4444; color:#fff; border-radius:9999px; padding:0.2rem 0.7rem; font-size:0.75rem;">{% trans 'Eliminar' %}</button>
                   </form>
                 </div>
               </div>
               {% empty %}
-              <p class="text-small text-light">Sin trayectoria laboral cargada.</p>
+              <p class="text-small text-light">{% trans 'Sin trayectoria laboral cargada.' %}</p>
               {% endfor %}
             </div>
           </div>
 
           <div style="margin-top: 1.2rem;">
-            <h2 style="font-size: 1.6rem; margin-bottom: 0.5rem;">Educación</h2>
+            <h2 style="font-size: 1.6rem; margin-bottom: 0.5rem;">{% trans 'Educación' %}</h2>
             <form method="post" action="{% url 'profiles:edit_profile' %}" class="space-y-2" style="margin-bottom: 0.7rem;">
               {% csrf_token %}
               <input type="hidden" name="form_type" value="education_add" />
-              <input type="text" name="degree" class="form-input" placeholder="Titulo" required />
-              <input type="text" name="institution" class="form-input" placeholder="Institucion" required />
-              <input type="text" name="field_of_study" class="form-input" placeholder="Campo de estudio (opcional)" />
-              <button type="submit" class="btn btn-primary" style="border-radius: 9999px; padding: 0.35rem 1rem; font-size: 0.8rem;">Agregar educacion</button>
+              <input type="text" name="degree" class="form-input" placeholder="{% trans 'Titulo' %}" required />
+              <input type="text" name="institution" class="form-input" placeholder="{% trans 'Institucion' %}" required />
+              <input type="text" name="field_of_study" class="form-input" placeholder="{% trans 'Campo de estudio (opcional)' %}" />
+              <button type="submit" class="btn btn-primary" style="border-radius: 9999px; padding: 0.35rem 1rem; font-size: 0.8rem;">{% trans 'Agregar educacion' %}</button>
             </form>
 
             <div class="space-y-2">
@@ -176,36 +176,36 @@
                     {% csrf_token %}
                     <input type="hidden" name="form_type" value="education_delete" />
                     <input type="hidden" name="item_id" value="{{ item.id }}" />
-                    <button type="submit" class="btn" style="background:#ef4444; color:#fff; border-radius:9999px; padding:0.2rem 0.7rem; font-size:0.75rem;">Eliminar</button>
+                    <button type="submit" class="btn" style="background:#ef4444; color:#fff; border-radius:9999px; padding:0.2rem 0.7rem; font-size:0.75rem;">{% trans 'Eliminar' %}</button>
                   </form>
                 </div>
               </div>
               {% empty %}
-              <p class="text-small text-light">Sin trayectoria educativa cargada.</p>
+              <p class="text-small text-light">{% trans 'Sin trayectoria educativa cargada.' %}</p>
               {% endfor %}
             </div>
           </div>
 
           <div style="margin-top: 1.2rem;">
-            <h2 style="font-size: 1.6rem; margin-bottom: 0.5rem;">Habilidades</h2>
+            <h2 style="font-size: 1.6rem; margin-bottom: 0.5rem;">{% trans 'Habilidades' %}</h2>
 
             <form method="post" action="{% url 'profiles:edit_profile' %}" class="space-y-2" style="margin-bottom: 0.7rem;">
               {% csrf_token %}
               <input type="hidden" name="form_type" value="skill_add_existing" />
               <select name="skill_id" class="form-input" required>
-                <option value="">Selecciona una habilidad del pool</option>
+                <option value="">{% trans 'Selecciona una habilidad del pool' %}</option>
                 {% for skill in available_skills %}
                 <option value="{{ skill.id }}">{{ skill.name }}</option>
                 {% endfor %}
               </select>
-              <button type="submit" class="btn btn-primary" style="border-radius: 9999px; padding: 0.35rem 1rem; font-size: 0.8rem;">Agregar habilidad existente</button>
+              <button type="submit" class="btn btn-primary" style="border-radius: 9999px; padding: 0.35rem 1rem; font-size: 0.8rem;">{% trans 'Agregar habilidad existente' %}</button>
             </form>
 
             <form method="post" action="{% url 'profiles:edit_profile' %}" class="space-y-2" style="margin-bottom: 0.7rem;">
               {% csrf_token %}
               <input type="hidden" name="form_type" value="skill_add_new" />
-              <input type="text" name="new_skill" class="form-input" placeholder="Nueva habilidad web (ej. Svelte)" required />
-              <button type="submit" class="btn btn-primary" style="border-radius: 9999px; padding: 0.35rem 1rem; font-size: 0.8rem;">Crear y agregar habilidad</button>
+              <input type="text" name="new_skill" class="form-input" placeholder="{% trans 'Nueva habilidad web (ej. Svelte)' %}" required />
+              <button type="submit" class="btn btn-primary" style="border-radius: 9999px; padding: 0.35rem 1rem; font-size: 0.8rem;">{% trans 'Crear y agregar habilidad' %}</button>
             </form>
 
             <div class="space-y-2">
@@ -216,11 +216,11 @@
                   {% csrf_token %}
                   <input type="hidden" name="form_type" value="skill_delete" />
                   <input type="hidden" name="item_id" value="{{ item.id }}" />
-                  <button type="submit" class="btn" style="background:#ef4444; color:#fff; border-radius:9999px; padding:0.2rem 0.7rem; font-size:0.75rem;">Quitar</button>
+                  <button type="submit" class="btn" style="background:#ef4444; color:#fff; border-radius:9999px; padding:0.2rem 0.7rem; font-size:0.75rem;">{% trans 'Quitar' %}</button>
                 </form>
               </div>
               {% empty %}
-              <p class="text-small text-light">Aun no agregaste habilidades.</p>
+              <p class="text-small text-light">{% trans 'Aun no agregaste habilidades.' %}</p>
               {% endfor %}
             </div>
           </div>
