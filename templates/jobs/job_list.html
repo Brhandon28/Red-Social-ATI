@@ -1,7 +1,8 @@
 {% extends "base.html" %}
 {% load static %}
+{% load i18n %}
 
-{% block title %}Empleos{% endblock %}
+{% block title %}{% trans 'Empleos' %}{% endblock %}
 {% block nav_jobs %}text-white border-primary bg-white/10{% endblock %}
 {% block mobile_nav_jobs %}text-white{% endblock %}
 
@@ -29,7 +30,7 @@
   {% include "../feed/index.html#profile_card" %}
 
   <section class="col-span-12 lg:col-span-6">
-    <h2 class="text-xl font-bold text-black mb-4">Recomendaciones para ti</h2>
+    <h2 class="text-xl font-bold text-black mb-4">{% trans 'Recomendaciones para ti' %}</h2>
 
     <div class="space-y-4">
       {% for job in recommendations %}
@@ -46,7 +47,7 @@
               <p class="text-sm text-gray-500 leading-tight">{{ job.location }}</p>
               <span class="text-xs text-gray-500">{{ job.age }} · 🌐</span>
             </div>
-            <button class="text-gray-500" aria-label="Opciones">
+            <button class="text-gray-500" aria-label="{% trans 'Opciones' %}">
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                 <circle cx="5" cy="12" r="1" />
                 <circle cx="12" cy="12" r="1" />
@@ -58,12 +59,12 @@
         </article>
       </a>
       {% empty %}
-      <p class="text-gray-600">No hay recomendaciones disponibles por ahora.</p>
+      <p class="text-gray-600">{% trans 'No hay recomendaciones disponibles por ahora.' %}</p>
       {% endfor %}
     </div>
 
     <div class="mt-8 md:mt-10">
-      <h2 class="text-xl font-bold text-black mb-3">Búsquedas recientes</h2>
+      <h2 class="text-xl font-bold text-black mb-3">{% trans 'Búsquedas recientes' %}</h2>
 
       <div class="space-y-3">
         {% for item in recent_searches %}
@@ -77,7 +78,7 @@
   </section>
 
   <aside class="hidden lg:block lg:col-span-3">
-    <h3 class="text-xl font-bold text-black mb-4">Podría interesarte</h3>
+    <h3 class="text-xl font-bold text-black mb-4">{% trans 'Podría interesarte' %}</h3>
     <div class="space-y-3">
       {% for job in suggested_jobs %}
       <a href="{% url 'jobs:job_detail' job.id %}" class="block bg-gray-100 border border-gray-300 px-3 py-3 hover:bg-white transition-colors">
@@ -95,7 +96,7 @@
         </div>
       </a>
       {% empty %}
-      <p class="text-gray-600">No hay sugerencias por ahora.</p>
+      <p class="text-gray-600">{% trans 'No hay sugerencias por ahora.' %}</p>
       {% endfor %}
     </div>
   </aside>

@@ -196,10 +196,10 @@ Este comando escaneará todas las carpetas en locale, tomará los archivos .po a
    ```
 
 7. **Acceder a la aplicación:**
-   - **Inicio:** http://127.0.0.1:8000/
+   - **Inicio:** http://localhost:8080
    - **Panel de Admin:** http://127.0.0.1:8000/admin/
 
-8. **Inspeccionar la base de datos (opcional):**
+9. **Inspeccionar la base de datos (opcional):**
 
    ```bash
    python manage.py dbshell
@@ -233,7 +233,8 @@ Este comando escaneará todas las carpetas en locale, tomará los archivos .po a
 #### Pasos para levantar el entorno (Produccion)
 
 ```bash
-docker compose -f docker-compose.prod.yml up --build
+docker compose -f docker-compose.prod.yml up -d --build web
+docker compose -f docker-compose.prod.yml exec -T web python manage.py seed_social_data
 ```
 
 Integrantes del equipo:
@@ -253,6 +254,25 @@ Por favor revisa nuestras normas de contribución:
 
 - [📘 Guía de Estilo y Buenas Prácticas](docs/STYLEGUIDE.md)
 - [🐙 Política de Git y Flujo de Trabajo](docs/GITFLOW.md)
+
+### Documentación de INCEPTION
+
+- Diagrama de Casos de Uso
+![Diagrama de casos de uso](docs/diagramas/SOCIALIT-UC.png)
+- Modelo del Dominio 
+![Modelo del Dominio](docs/diagramas/ModelodeDominio-ATI.png)
+
+### Documentación de DESIGN
+
+- Mapa de Navegación
+![Mapa de Navegacion](docs/diagramas/MapadeNavegaciónATI.png)
+-Wireframes
+[Wireframes](https://www.figma.com/design/zrbZkbwCQmTyiEJQ305gL8/ProyectoATI-Wireframes?node-id=0-1&t=nNzkk0RYOAAJWtiG-1)
+
+-Diagrama de Despliegue
+![Diagrama de Despliegue](docs/diagramas/Despliegue.png)
+-Diagrama de Clases de Analisis
+![Clases de Análisis](docs/diagramas/UC-Clasesdeanalisis.png)
 
 ## 📄 Licencia
 
