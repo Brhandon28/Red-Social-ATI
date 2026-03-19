@@ -196,10 +196,10 @@ Este comando escaneará todas las carpetas en locale, tomará los archivos .po a
    ```
 
 7. **Acceder a la aplicación:**
-   - **Inicio:** http://127.0.0.1:8000/
+   - **Inicio:** http://localhost:8080
    - **Panel de Admin:** http://127.0.0.1:8000/admin/
 
-8. **Inspeccionar la base de datos (opcional):**
+9. **Inspeccionar la base de datos (opcional):**
 
    ```bash
    python manage.py dbshell
@@ -233,7 +233,8 @@ Este comando escaneará todas las carpetas en locale, tomará los archivos .po a
 #### Pasos para levantar el entorno (Produccion)
 
 ```bash
-docker compose -f docker-compose.prod.yml up --build
+docker compose -f docker-compose.prod.yml up -d --build web
+docker compose -f docker-compose.prod.yml exec -T web python manage.py seed_social_data
 ```
 
 Integrantes del equipo:
